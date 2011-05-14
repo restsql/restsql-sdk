@@ -1,0 +1,4 @@
+org.restsql.core
+org.restsql.core.impl
+org.restsql.core.sqlresource
+org.restsql.service

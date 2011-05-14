@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Logging</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="doc.css">
+</head>
+<body>
+<h1>Logging</h1>
+<h2>Log Types</h2>
+<div class="text">restSQL produces for four types of logs: access, error, trace and internal. By default, all are set to the INFO level which is a development setting. For production, the trace and possibly the error log should be set to FATAL, which disables these logs.</div>
+
+<h3>Access</h3>
+<div class="text">The access log is very similar to a Apache HTTP Server's access log. The format is:</div>
+<pre>
+host-ip date time method uri response-status duration
+</pre>
+<div class="text">Here is an example:</div>
+<pre>
+127.0.0.1 2011-05-08 09:22:38,734 GET /restsql/res/FlatManyToOne?_offset=0&_limit=20 200 125ms
+127.0.0.1 2011-05-08 09:22:38,984 DELETE /restsql/res/FlatOneToOne?year=2012 200 109ms
+127.0.0.1 2011-05-08 09:22:39,093 GET /restsql/res/FlatOneToOne?year=2012 200 16ms
+127.0.0.1 2011-05-08 09:22:39,109 GET /restsql/res/SingleTable_FilmRating 200 78ms
+127.0.0.1 2011-05-08 09:22:39,281 DELETE /restsql/res/FlatOneToOne/5000 200 15ms
+127.0.0.1 2011-05-08 09:22:39,296 GET /restsql/res/FlatOneToOne?year=2012 200 16ms
+</pre>
+<div class="text">The one difference from conventional access logs it also list the response body for a non-200 response. Below is an example:</div>
+<pre>
+27.0.0.1 2011-05-08 09:22:43,015 POST /restsql/res/SingleTable 400 0ms
+   400: Error parsing request body: org.xml.sax.SAXParseException: 
+        The element type "actor" must be terminated by the matching end-tag "&lt;/actor&gt;".
+127.0.0.1 2011-05-08 09:22:43,078 GET /restsql/res/ErrorInQuery 500 140ms
+   500: You have an error in your SQL syntax; check the manual that corresponds to your MySQL 
+        server version for the right syntax to use near 'LIMIT 0,1' at line 1 :: 
+        select actor_id, first_name, last_name from  LIMIT 0,1
+</pre>
+
+<h3>Error</h3>
+<div class="text">Error logs provide more detail, but only for requests with non-200 responses. The record includes the request body, executed sql and the response body. Here is an example of two records:</div>
+<pre>
+---------------------
+127.0.0.1 2011-05-08 09:22:43,734 PUT /restsql/res/SingleTable_FilmRating?year=2012 400 16ms
+   request:
+blah=blah
+   response:
+No valid parameters found
+---------------------
+127.0.0.1 2011-05-08 09:22:44,515 POST /restsql/res/SingleTable 400 0ms
+   request:
+&lt;request&gt;
+   &lt;actor actor_id="1000" first_name="A first name that is too long for the domain rule"
+        last_name="Daniels" /&gt;
+&lt;/request&gt;
+   response:
+First name length must be less or equal to 25 characters
+---------------------
+</pre>
+
+<h3>Trace</h3>
+<div class="text">Trace logs provide detail like the error logs, but for all requests, including 200 responses. The record includes the request body, executed sql and the response body. Here is an example of two records:</div>
+<pre>
+---------------------
+127.0.0.1 2011-05-08 09:22:39,281 DELETE /restsql/res/FlatOneToOne/5000 200 15ms
+   request:
+
+   sql:
+DELETE FROM sakila.film_rating WHERE film_id = 5000
+DELETE FROM sakila.film WHERE film_id = 5000
+   response:
+&lt;writeResponse rowsAffected="2" /&gt;
+---------------------
+127.0.0.1 2011-05-08 09:22:39,296 GET /restsql/res/FlatOneToOne?year=2012 200 16ms
+   sql:
+select film.film_id, title, release_year "year", language_id,rental_duration,rental_rate,
+replacement_cost, film_rating_id, stars  from film, film_rating  where film.film_id = 
+film_rating.film_id AND film.release_year = 2012
+   response:
+&lt;readResponse&gt;
+	&lt;film film_id="5001" title="BLOOD PURPLE" year="2012" language_id="1" 
+         rental_duration="0" rental_rate="0.00" replacement_cost="0.00"
+         film_rating_id="2" stars="1" /&gt;
+	&lt;film film_id="5002" title="THE DARKENING" year="2012" language_id="1"
+         rental_duration="0" rental_rate="0.00" replacement_cost="0.00"
+         film_rating_id="3" stars="1" /&gt;
+&lt;/readResponse&gt;
+---------------------
+</pre>
+
+<h3>Internal</h3>
+<div class="text">Internal logs are for more for framework developers than users but do provide startup information. Here is an example:</div>
+<pre>
+2011-05-07 16:47:35,703 [main] INFO  org.restsql.internal- Loaded restsql properties from 
+/restsql/eclipse-workspace/restsql-test/src/resources/properties/restsql.properties
+2011-05-07 16:48:02,859 [http-8080-2] INFO  org.restsql.internal- SqlResources dir is 
+/restsql/eclipse-workspace/restsql-test/src/resources/xml/sqlresources
+2011-05-07 16:48:05,437 [http-8080-2] INFO  org.restsql.internal- Loaded database properties from 
+/resources/properties/default-database.properties
+2011-05-07 16:48:06,000 [http-8080-2] INFO  org.restsql.internal- Loading trigger definitions from 
+/restsql/eclipse-workspace/restsql-test/src/resources/properties/triggers.properties
+2011-05-07 16:48:06,000 [http-8080-2] INFO  org.restsql.internal- Loading triggers from classpath 
+/restsql/eclipse-workspace/restsql-test/obj/bin
+</pre>
+<div class="text">Finer grained messages like SQL statement logging is available by setting the internal log level to DEBUG (log4j) or FINEST (java).</div>
+
+<h2>Logging Configuration</h2>
+<div class="text">restSQL uses log4j by default but can be configured to use the java native logging facility. The facility, the location of the logging properties file and the logging directory is made in the restsql.properties. Here are the defaults:</div>
+<pre>
+    # logging.facility=[log4j,java]
+    # logging.config=relative/to/classpath
+    # logging.dir=/absolute/path  - this is only used by the /log service method to find logs
+    logging.facility=log4j
+    logging.config=resources/properties/default-log4j.properties
+    logging.dir=/var/log/restsql
+</pre>
+<div class="text">Unlike all other locations in restsql.properties, the <code>logging.config</code> location is RELATIVE to the classpath, not absolute. The default is to use the default-log4j.properties included in the jar/war. This logs to the location /var/log/restsql. The logging levels are set for development, not production mode.
+</div>
+<p class="text">The runtime logging configuration is accessible at http://yourhost:port/restsql/conf. This dumps all properties supplied and defaulted in structured text. The log4j or java logging configuration is available at http://yourhost:port/restsql/conf/log and this simply returns the contents of the file specified by <code>logging.config</code>.</p>
+<p class="text">It is possible to use a container-wide log4j or java native logging configuration file. In this case the container should set the standard System Property <code>log4j.configuration</code> (log4j) or <code>java.util.logging.config.file</code> (java) with the location of the file. In this case, the restsql.properties <code>logging.config</code> is optional. It would only be used if the logging configuration is requested through /restsql/conf/log. Note again that this location must be relative to restsql's classpath. If the container logging properties file must exist somewhere else, create a sym link in restsql/WEB-INF/classes to that location.</p>
+<p class="text">restSQL uses Apache Commons Logging to decouple the framework from the specific logging engine. Therefore when using a container logging properties it is also necessary to set the System Property <code>org.apache.commons.logging.Log</code> to <code>org.apache.commons.logging.impl.Log4JLogger</code> (log4j) <code>org.apache.commons.logging.impl.Jdk14Logger</code> (java).</p>
+<p class="text">The <code>logging.dir</code> property is not used by the logging facility. It is only used by restSQL to view logs. See the following section for more detail.</p>
+<p class="text">The default restsql.properties and log4j and java native logging properties files are found <a href="../defaults/properties/">here</a>.</p>
+
+<h2>Viewing Logs</h2>
+<div class="text">Logs may be accessed from the shell or via the service at the URL http://yourhost:port/restsql/log. This returns an html page with links to the current logs, as well as all historical logs. This requires the <code>logging.dir</code> property to be properly configured.</div>
+</body>
+</html>

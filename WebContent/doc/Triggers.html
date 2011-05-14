@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Triggers</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="doc.css">
+</head>
+<body>
+<h1>Triggers</h1>
+<div class="text">Java-based triggers may be deployed to enforce domain constraints in the middle-tier or perform business logic. These triggers implement the <code>Trigger</code> interface or extend the convenience class <code>AbstractTrigger</code>. Triggers have methods that fire before and after each CRUD operation. Throwing an <code>InvalidRequestException</code> on a beforeXxx method stops the request.</div>
+<p class="text">The restsql.properties defines the trigger classpath and the location of the trigger properties file that maps trigger classes to SQL Resources. Following is an example:</p>
+<pre>
+   # triggers.classpath=/absolute/path
+   # triggers.definition=/absolute/path
+   triggers.classpath=/opt/company/restsql/triggers
+   triggers.definition=/etc/opt/company/restsql/triggers.properties
+</pre>
+<div class="text">The triggers properties file contains one or more properties in the format:</div>
+<pre>
+   class=resName1,resName2,resName3,etc.
+</pre>
+<div class="text">Use the wildcard character <code>*</code> to indicate all SQL Resources. Following is an example of three trigger definitions:</div>
+<pre>
+   com.company.restsql.trigger.AllFilterTrigger=*
+   com.company.restsql.trigger.EmployeeTrigger=Employee
+   com.company.restsql.trigger.ProjectTrigger=Project,ProjectManagement,ProjectDelta
+</pre>
+<p class="text">Note that attribute validators are a lighter-weight alternative to triggers to enforce simple data type constraints. Standard validators enforce numeric ranges, string lengths and string formats (via regular expression). These are declared in the SQL Resource definition. Standard and custom attribute validators are a planned feature and not available yet. See the <a href="Concepts.html">Core Concepts</a> for more discussion.</p>
+</body>
+</html>

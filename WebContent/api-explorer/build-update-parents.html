@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Update Request Details</title>
+<script type="text/javascript">
+	function submitRequest() {
+		var path = "";
+		var query = "";
+		var body = null;
+		var contentType = null;
+		if (document.requestForm.requestStyle[0].checked) {			//requestStyle=path
+			if (document.requestForm.paramStyle[0].checked) {		// pk
+				if (document.requestForm.pkValue1.value == "") {
+					alert("Primary Key Value 1 required");
+					return;
+				} else {
+					path = "/" + escape(document.requestForm.pkValue1.value);
+					if (document.requestForm.pkValue2.value != "") {
+						path = path + "/" + escape(document.requestForm.pkValue2.value);
+					}
+				}
+			} else {												// query param
+				if (document.requestForm.queryName1.value == "" || document.requestForm.queryValue1.value == "") {
+					alert("At least one query name/value required");
+					return;
+				} else {
+					query = "?" + escape(document.requestForm.queryName1.value) + "=" + escape(document.requestForm.queryValue1.value);
+					if (document.requestForm.queryName2.value != "") {
+						query = query + "&" + escape(document.requestForm.queryName2.value)+ "=" + escape(document.requestForm.queryValue2.value);
+					}
+				}
+			}
+			var attributes = [document.requestForm.ueName1.value,
+				  				document.requestForm.ueValue1.value,
+								document.requestForm.ueName2.value,
+								document.requestForm.ueValue2.value];
+			body = parent.buildUrlEncodedBody(attributes);
+			if (body == "") {
+				alert("At least one body (update) name/value required");
+				return;
+			}
+			contentType = parent.CONTENT_TYPE_URLENCODED;
+		} else { 													//requestStyle=body
+			var attributes = [document.requestForm.bodyRow1Name1.value,
+				  				document.requestForm.bodyRow1Value1.value,
+								document.requestForm.bodyRow1Name2.value,
+								document.requestForm.bodyRow1Value2.value,
+								document.requestForm.bodyRow1Name3.value,
+								document.requestForm.bodyRow1Value3.value];
+			body = parent.buildXmlElement("parent", attributes);
+			attributes = [document.requestForm.bodyRow2Name1.value,
+			  				document.requestForm.bodyRow2Value1.value,
+							document.requestForm.bodyRow2Name2.value,
+							document.requestForm.bodyRow2Value2.value,
+							document.requestForm.bodyRow2Name3.value,
+							document.requestForm.bodyRow2Value3.value];
+			body = body + parent.buildXmlElement("parent", attributes);
+			if (body == "") {
+				alert("Name/values required");
+				return;
+			}
+			body = "<request>" + body + "\n</request>";
+			contentType = parent.CONTENT_TYPE_XML;
+		}
+
+		parent.submitRequest("PUT", path + query, body, "response", contentType);
+	}
+
+	function requestStyleSelected() {
+		if (document.requestForm.requestStyle[0].checked == true) {
+			paramStyleSelected();
+			pathVisibility = "visible";
+			bodyVisibility = "hidden";
+			pathBgColor = "#EFEFEF";
+			bodyBgColor = "#FFFFFF";
+		} else {
+			document.getElementById("tdPkParams").style.visibility = "hidden";
+			document.getElementById("tdQueryParams1").style.visibility = "hidden";
+			document.getElementById("tdQueryParams2").style.visibility = "hidden";
+			pathVisibility = "hidden";
+			bodyVisibility = "visible";
+			pathBgColor = "#FFFFFF";
+			bodyBgColor = "#EFEFEF";
+		}
+		document.getElementById("tdPathPk").style.visibility = pathVisibility;
+		document.getElementById("tdPathQuery").style.visibility = pathVisibility;
+		document.getElementById("trUEParams").style.visibility = pathVisibility;
+ 		document.getElementById("trBodyRow1").style.visibility = bodyVisibility;
+ 		document.getElementById("trBodyRow2").style.visibility = bodyVisibility;
+ 		document.getElementById("trPath").style.backgroundColor = pathBgColor;
+ 		document.getElementById("trBody").style.backgroundColor = bodyBgColor;
+	}
+
+	function paramStyleSelected() {
+		if (document.requestForm.paramStyle[0].checked) {
+			pkVisibility = "visible";
+			queryVisibility = "hidden";
+		} else {
+			pkVisibility = "hidden";
+			queryVisibility = "visible";
+		}
+					
+		document.getElementById("tdPkParams").style.visibility = pkVisibility;
+		document.getElementById("tdQueryParams1").style.visibility = queryVisibility;
+		document.getElementById("tdQueryParams2").style.visibility = queryVisibility;
+	}
+
+	function resetForm() {
+		document.requestForm.reset();
+		requestStyleSelected();
+		parent.resetOuputFrames();
+	}
+</script>
+</head>
+<body style="font-family:sans-serif">
+<span style='font-weight:bold'>Request Details</span><br/>
+<form name="requestForm" onsubmit="submitRequest(); return false">
+	<table border="0">
+		<tr id="trPath" style="background-color: #EFEFEF">
+			<td><input type="radio" name="requestStyle" value="path" onclick="requestStyleSelected()" checked="checked">Use Path / URL Encoded Body</td>
+			<td id="tdPathPk"><input type="radio" name="paramStyle" value="pk" onclick="paramStyleSelected()" checked="checked">Use PK</td>
+			<td id="tdPathQuery" colspan="2"><input type="radio" name="paramStyle" value="query" onclick="paramStyleSelected()" />Use Query Param</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td id="tdPkParams">PK Value 1: <input type="text" name="pkValue1" size="5" /><br/>
+			PK Value 2: <input type="text" name="pkValue2" size="5" /></td>
+			<td id="tdQueryParams1" style="visibility:hidden">
+				Name: <input type="text" name="queryName1" size="8" /><br/>
+				Value: <input type="text" name="queryValue1" size="8" />
+			</td>
+			<td id="tdQueryParams2" style="visibility:hidden">
+				Name: <input type="text" name="queryName2" size="8" /><br/>
+				Value: <input type="text" name="queryValue2" size="8" />
+			</td>
+		</tr>
+		<tr id="trUEParams">
+			<td align="right">Body (Update) Params:</td>
+			<td>
+				Name: <input type="text" name="ueName1" size="8" /><br/>
+				Value: <input type="text" name="ueValue1" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="ueName2" size="8" /><br/>
+				Value: <input type="text" name="ueValue2" size="8" />
+			</td>
+		</tr>
+		<tr id="trBody">
+			<td colspan="1"><input type="radio" name="requestStyle" value="body" onclick="requestStyleSelected()"/>Use XML Body</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr id="trBodyRow1" style="visibility:hidden">
+			<td align="right">Row 1:</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name1" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value1" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name2" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value2" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name3" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value3" size="8" />
+			</td>
+		</tr>
+		<tr id="trBodyRow2" style="visibility:hidden">
+			<td align="right">Row 2:</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name1" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value1" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name2" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value2" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name3" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value3" size="8" />
+			</td>
+		</tr>
+	</table>
+	<p>
+		<input type="button" value="Reset" onclick="resetForm()" /> 
+		&nbsp; <input type="submit" value="Submit" />
+	</p>
+</form>
+</body>
+</html>

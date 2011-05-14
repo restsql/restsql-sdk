@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SQL Resource DELETE Path</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="../doc.css">
+</head>
+<body>
+<h1>SQL Resource DELETE Path</h1>
+<table>
+	<tbody>
+		<tr>
+			<td><strong>Method</strong></td>
+			<td colspan="3">DELETE</td>
+		</tr>
+		<tr>
+			<td><strong>Path</strong></td>
+			<td colspan="3">/res/{resName}/{resId}</td>
+		</tr>
+		<tr>
+			<td><strong>Query Params</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Request body</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Response body</strong></td>
+			<td>Number of rows deleted.</td>
+			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+			<td>Content-Type: application/xml</td>
+		</tr>
+	</tbody>
+</table>
+<h2>Description</h2>
+<div class="text">Deletes one of the following:</div>
+<ul>
+	<li>one row of a flat SQL Resource</li>
+	<li>parents and children of a one-to-many hierarchial SQL Resource</li>
+	<li>parents and associations to children of a many-to-many hierarchical SQL Resource</li>
+</ul>
+<h2>Examples</h2>
+<div class="text">A flat SQL Resource:</div>
+<pre>DELETE /restsql/res/Actor/123 HTTP/1.1
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="1" /&gt;</pre>
+
+<div class="text">A delete to parents and children of a one-to-many hierarchical SQL Resource:</div>
+<pre>DELETE /restsql/res/LanguageFilm/3 HTTP/1.1
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="13" /&gt;</pre>
+
+<div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
+<pre>DELETE /restsql/res/ActorFilm/123 HTTP/1.1
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="9" /&gt;</pre>
+</body>
+</html>

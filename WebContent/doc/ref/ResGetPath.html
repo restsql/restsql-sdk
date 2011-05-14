@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SQL Resource GET Path</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="../doc.css">
+</head>
+<body>
+<h1>SQL Resource GET Path</h1>
+<table>
+	<tbody>
+		<tr>
+			<td><strong>Method</strong></td>
+			<td colspan="3">GET</td>
+		</tr>
+		<tr>
+			<td><strong>Path</strong></td>
+			<td colspan="3">/res/{resName}/{resId}</td>
+		</tr>
+		<tr>
+			<td><strong>Query Params</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Request body</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Response body</strong></td>
+			<td>Results as XML</td>
+			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+			<td>Content-Type: application/xml</td>
+		</tr>
+	</tbody>
+</table>
+<h2>Description</h2>
+<div class="text">Returns row matching path parameters. Separate
+compound primary key values by slashes. Empty <code>readResponse</code>
+document is returned if no rows match criteria.</div>
+<h2>Examples</h2>
+<pre>GET /restsql/res/Actor/123 HTTP/1.1</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+<div class="text">a hierarchical SQL resource:</div>
+<pre>GET /restsql/res/ActorFilm/123 HTTP/1.1</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH"&gt;
+      &lt;film year="2006" title="ADAPTATION HOLES" film_id="3" /&gt;
+      &lt;film year="2006" title="ATLANTIS CAUSE" film_id="43" /&gt;
+      &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
+      &lt;film year="2006" title="BULL SHAWSHANK" film_id="105" /&gt;
+      &lt;film year="2006" title="CHOCOLATE DUCK" film_id="148" /&gt;
+   &lt;/actor&gt;
+&lt;/readResponse&gt;
+</pre>
+</body>
+</html>

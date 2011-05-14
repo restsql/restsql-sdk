@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SQL Resource GET Query</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="../doc.css">
+</head>
+<body>
+<h1>SQL Resource GET Query</h1>
+<table>
+	<tbody>
+		<tr>
+			<td><strong>Method</strong></td>
+			<td colspan="3">GET</td>
+		</tr>
+		<tr>
+			<td><strong>Path</strong></td>
+			<td colspan="3">/res/{resName}?{name}={value}</td>
+		</tr>
+		<tr>
+			<td><strong>Query Params</strong></td>
+			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query. Use '%' for wildcard, which is URL encoded as <code>%25</code>.<br/>
+			Special parameters: _limit={integer}, _offset={integer}.
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Request body</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Response body</strong></td>
+			<td>Results as XML</td>
+			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+			<td>Content-Type: application/xml</td>
+		</tr>
+	</tbody>
+</table>
+<h2>Description</h2>
+<div class="text">Returns rows matching query parameters. A no-parameter request returns all rows. Empty <code>readResponse</code> document is returned if the no rows match criteria.</div>
+<h2>Examples</h2>
+<pre>GET /restsql/res/Actor?first_name=JULIANNE&last_name=DENCH HTTP/1.1</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+<div class="text">A wildcarded query:</div>
+<pre>GET /restsql/res/Actor?first_name=S%25 HTTP/1.1</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="180" first_name="JEFF" last_name="SILVERSTONE" /&gt;
+   &lt;actor actor_id="195" first_name="JAYNE" last_name="SILVERSTONE" /&gt;
+   &lt;actor actor_id="78" first_name="GROUCHO" last_name="SINATRA" /&gt;
+   &lt;actor actor_id="31" first_name="SISSY" last_name="SOBIESKI" /&gt;
+   &lt;actor actor_id="44" first_name="NICK" last_name="STALLONE" /&gt;
+   &lt;actor actor_id="24" first_name="CAMERON" last_name="STREEP" /&gt;
+   &lt;actor actor_id="116" first_name="DAN" last_name="STREEP" /&gt;
+   &lt;actor actor_id="192" first_name="JOHN" last_name="SUVARI" /&gt;
+   &lt;actor actor_id="9" first_name="JOE" last_name="SWANK" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+<div class="text">A limited query:</div>
+<pre>GET /restsql/res/Actor?_limit=10&_offset=0 HTTP/1.1</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="1" first_name="PENELOPE" last_name="GUINESS" /&gt;
+   &lt;actor actor_id="2" first_name="NICK" last_name="WAHLBERG" /&gt;
+   &lt;actor actor_id="3" first_name="ED" last_name="CHASE" /&gt;
+   &lt;actor actor_id="4" first_name="JENNIFER" last_name="DAVIS" /&gt;
+   &lt;actor actor_id="5" first_name="JOHNNY" last_name="LOLLOBRIGIDA" /&gt;
+   &lt;actor actor_id="6" first_name="BETTE" last_name="NICHOLSON" /&gt;
+   &lt;actor actor_id="7" first_name="GRACE" last_name="MOSTEL" /&gt;
+   &lt;actor actor_id="8" first_name="MATTHEW" last_name="JOHANSSON" /&gt;
+   &lt;actor actor_id="9" first_name="JOE" last_name="SWANK" /&gt;
+   &lt;actor actor_id="10" first_name="CHRISTIAN" last_name="GABLE" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+<div class="text">A hierarchical SQL resource:</div>
+<pre>GET /restsql/res/ActorFilm?first_name=JULIANNE&last_name=DENCH HTTP/1.1</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH"&gt;
+      &lt;film year="2006" title="ADAPTATION HOLES" film_id="3" /&gt;
+      &lt;film year="2006" title="ATLANTIS CAUSE" film_id="43" /&gt;
+      &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
+      &lt;film year="2006" title="BULL SHAWSHANK" film_id="105" /&gt;
+      &lt;film year="2006" title="CHOCOLATE DUCK" film_id="148" /&gt;
+   &lt;/actor&gt;
+&lt;/readResponse&gt;
+</pre>
+</body>
+</html>

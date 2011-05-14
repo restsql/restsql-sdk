@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SQL Resource DELETE Query</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="../doc.css">
+</head>
+<body>
+<h1>SQL Resource DELETE Query</h1>
+<table>
+	<tbody>
+		<tr>
+			<td><strong>Method</strong></td>
+			<td colspan="3">DELETE</td>
+		</tr>
+		<tr>
+			<td><strong>Path</strong></td>
+			<td colspan="3">/res/{resName}?{name}={value}</td>
+		</tr>
+		<tr>
+			<td><strong>Query Params</strong></td>
+			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query. Use '%' for wildcard, which is URL encoded as <code>%25</code>.
+			</td>
+		</tr>
+		<tr>
+			<td><strong>Request body</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Response body</strong></td>
+			<td>Number of rows deleted</td>
+			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+			<td>Content-Type: application/xml</td>
+		</tr>
+	</tbody>
+</table>
+<h2>Description</h2>
+<div class="text">Deletes one of the following, matching the query parameters:</div>
+<ul>
+	<li>one or more rows of a flat SQL Resource</li>
+	<li>one or more parents and children of a one-to-many hierarchial SQL Resource</li>
+	<li>one or more parents and associations to children of a many-to-many hierarchical SQL Resource</li>
+</ul>
+<h2>Examples</h2>
+<div class="text">A flat SQL Resource:</div>
+<pre>DELETE /restsql/res/Film?title=DARK%25&rating=R HTTP/1.1
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="3" /&gt;</pre>
+
+<div class="text">A delete to parents of a one-to-many hierarchical SQL Resource (child rows are also deleted):</div>
+<pre>DELETE /restsql/res/LanguageFilm/3 HTTP/1.1
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="18" /&gt;</pre>
+
+<div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
+<pre>DELETE /restsql/res/ActorFilm?last_name=DENCH HTTP/1.1
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="9" /&gt;</pre>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="restsql-sdk" default="all">
+	<property file="../restsql/build.properties" />
+
+	<target name="all" depends="database,javadoc,sqlresources,wadl,lib" />
+
+	<target name="clean">
+		<delete dir="obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
+	</target>
+
+	<target name="database">
+		<copy todir="WebContent/database">
+			<fileset dir="../restsql-test/src/resources/database" />
+		</copy>
+	</target>
+
+	<target name="defaults">
+		<copy todir="WebContent/defaults/properties">
+			<fileset dir="../restsql/src/resources/properties/" includes="default-*.properties"/>
+		</copy>
+	</target>
+
+	<target name="lib">
+		<mkdir dir="obj/lib" />
+		<jar destfile="obj/lib/restsql-sdk-${build.version}.war">
+			<fileset dir="WebContent" />
+			<fileset file="CONTRIBUTORS.txt" />
+			<fileset file="LICENSE.txt" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Specification-Vendor" value="${manifest.vendor}" />
+				<attribute name="Specification-Title" value="${manifest.title.sdk}" />
+				<attribute name="Specification-Version" value="${build.version}" />
+				<attribute name="Implementation-Vendor" value="${manifest.vendor}" />
+				<attribute name="Implementation-Title" value="${manifest.title.sdk}" />
+				<attribute name="Implementation-Version" value="${build.version}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="javadoc">
+		<copy todir="WebContent/javadoc">
+			<fileset dir="../restsql/obj/doc/javadoc" />
+		</copy>
+	</target>
+
+	<target name="sqlresources">
+		<copy todir="WebContent/sqlresources">
+			<fileset dir="../restsql-test/src/resources/xml/sqlresources" />
+		</copy>
+	</target>
+
+	<target name="wadl">
+		<copy todir="WebContent/wadl">
+			<fileset dir="../restsql/WebContent/wadl" />
+		</copy>
+	</target>
+</project>

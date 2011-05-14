@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Request Type</title>
+<script type="text/javascript">
+	function optionSelected() {
+		var type = getSelectedRadio("requestType", document.requestBuilder.requestType);
+		var scope = getSelectedRadio("scope", document.requestBuilder.scope);
+		parent.setRequestType(type, scope)
+		if (parent.resHierarchical && type != "select") {
+			setScopeVisible(true);
+		} else {
+			setScopeVisible(false);
+		}
+	}
+
+	function getSelectedRadio(name, object) {
+		for (i = 0; i < document.requestBuilder[name].length; i++) {
+			if (object[i].checked) {
+				type = object[i].value;
+			}
+		}
+		return type;
+	}
+
+	function resetForm() {
+		document.requestBuilder.reset();
+		optionSelected();
+	}
+
+	function setScopeVisible(visible) {
+		if (visible == true) {
+			scopeVisibility = "visible";
+		} else {
+			scopeVisibility = "hidden";
+		}
+		document.getElementById("scope").style.visibility = scopeVisibility;
+	}
+</script>
+</head>
+<body style="font-family:sans-serif">
+<form name="requestBuilder">
+	<span style="font-weight:bold">Request Type</span>
+	<table>
+		<tr><td><input type="radio" name="requestType" value="select" onclick="optionSelected()" checked="checked" />Select</td></tr>
+		<tr><td><input type="radio" name="requestType" value="insert" onclick="optionSelected()" />Insert</td></tr>
+		<tr><td><input type="radio" name="requestType" value="update" onclick="optionSelected()" />Update</td></tr>
+		<tr><td><input type="radio" name="requestType" value="delete" onclick="optionSelected()" />Delete</td></tr>
+	</table>
+	<br/>
+	<div id="scope" style="visibility:hidden">
+	<span style="font-weight:bold">Scope</span>
+	<table>
+		<tr>
+			<td><input type="radio" name="scope" value="parents" " onclick="optionSelected()" checked="checked" />Parents</td>
+			<td><input type="radio" name="scope" value="children" " onclick="optionSelected()" />Children</td>
+		</tr>
+	</table>
+	</div>
+</form>
+</body>
+</html>

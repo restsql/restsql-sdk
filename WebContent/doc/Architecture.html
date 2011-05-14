@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>restSQL Overview</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="doc.css">
+</head>
+<body>
+<h1>Architecture</h1>
+<p class="text">restSQL may be deployed in two modes: a Web Service and a Java library. The Web Service is a standard JEE web application. The following diagram depicts an application using the HTTP interface:</p>
+<p class="image"><img src="HttpApiDeployment.png" title="HTTP API Deployment" /></p>
+<p class="text">The Java library is a standard JAR. The following diagram depicts an application using the Java interface:</p>
+<p class="image"><img src="JavaApiDeployment.png" title="Java API Deployment" /></p>
+<p class="text">The following diagram depicts the layers of the software stack:</p>
+<p class="image"><img src="Layers.png" title="Software Layers" /></p>
+<h2>Requirements</h2>
+<ul>
+	<li>Platform Independent - Pure Java solution</li>
+	<li>Java Runtime Environment (JRE) - Tested with 1.6</li>
+	<li>SQL Database - Currently tested with MySQL 5.5, others are planned e.g. PostgreSQL, SQL Server, Oracle</li>
+	<li>JEE Container for Web Service deployment mode - Curently tested with Apache Tomcat 6/7, others are planned e.g. WebLogic and JBoss</li>
+	<li>Java Archive (JAR) Tool for deployment - Tested with 1.6</li>
+	<li>Web Browser for SDK - Tested with IE 7, Firefox 4, Chrome 10</li>
+</ul>
+</body>
+</html>

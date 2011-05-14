@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SQL Resource POST XML</title>
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
+	href="../doc.css">
+</head>
+<body>
+<h1>SQL Resource POST XML</h1>
+<table>
+	<tbody>
+		<tr>
+			<td><strong>Method</strong></td>
+			<td colspan="3">POST</td>
+		</tr>
+		<tr>
+			<td><strong>Path</strong></td>
+			<td colspan="3">/res/{resName}</td>
+		</tr>
+		<tr>
+			<td><strong>Query Params</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Request body</strong></td>
+			<td>One or more rows to insert.</td>
+			<td><a href="../../wadl/Request.xsd">Request.xsd</a></td>
+			<td>Content-Type: application/xml</td>
+		</tr>
+		<tr>
+			<td><strong>Response body</strong></td>
+			<td>Number of rows inserted.</td>
+			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+			<td>Content-Type: application/xml</td>
+		</tr>
+	</tbody>
+</table>
+<h2>Description</h2>
+<div class="text">Creates one or more rows of a flat SQL Resource or the parents or the children of a hierarchial SQL Resource. Inserts to both parent and children in the same request for the same parent are disallowed, even if non-pk parent attributes are provided.</div>
+<h2>Examples</h2>
+<div class="text">A flat SQL Resource:</div>
+<pre>POST /restsql/res/Actor HTTP/1.1
+Content-Type: application/xml
+
+&lt;request&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH" /&gt;
+   &lt;actor actor_id="124" first_name="SCARLETT" last_name="BENING" /&gt;
+   &lt;actor actor_id="125" first_name="ALBERT" last_name="NOLTE" /&gt;
+&lt;/request&gt;
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="3" /&gt;</pre>
+
+<p class="text">An insert to parents of a hierarchical SQL Resource would look identical to the proceeding.</p>
+
+<div class="text">An insert to children of one parent and another parent for a one-to-many hierarchical SQL Resource (child rows are created):</div>
+<pre>POST /restsql/res/LanguageFilm HTTP/1.1
+Content-Type: application/xml
+
+&lt;request&gt;
+   &lt;language language_id="1"&gt;
+	   &lt;film year="2006" title="ADAPTATION HOLES" film_id="3" /&gt;
+	   &lt;film year="2006" title="ATLANTIS CAUSE" film_id="43" /&gt;
+	   &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
+   &lt;/language&gt;
+   &lt;language language_id="4" name="Quechua" /&gt;
+&lt;/request&gt;
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="4" /&gt;</pre>
+
+<div class="text">An insert to children of one parent and another parent for a many-to-many hierarchical SQL Resource (child rows are only associated to parent):</div>
+<pre>POST /restsql/res/ActorFilm HTTP/1.1
+Content-Type: application/xml
+
+&lt;request&gt;
+   &lt;actor actor_id="123"&gt;
+      &lt;film film_id="3" /&gt;
+      &lt;film film_id="43" /&gt;
+      &lt;film film_id="67" /&gt;
+   &lt;/actor&gt;
+   &lt;actor actor_id="124" first_name="BENITO" last_name="BENINGS" /&gt;
+&lt;/request&gt;
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="4" /&gt;</pre>
+</body>
+</html>

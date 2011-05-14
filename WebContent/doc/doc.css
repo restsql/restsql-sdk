@@ -1,0 +1,85 @@
+html {
+	background-color: white;
+	color: black;
+	font-family: sans-serif;
+	font-size: 1em;
+}
+
+body {
+}
+
+table
+{
+	margin: 0.5em 0 0 0.5em;
+	border-collapse: collapse;
+}
+
+th
+{
+	font-weight: normal;
+	color: black;
+	background-color: #E0E0E0;
+	border: 1pt solid #ADB9CC;
+}
+
+td
+{
+	padding: 0.25em 0.5em 0.25em 0.5em;
+	border: 1pt solid #ADB9CC;
+}
+
+td p {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-size: 1.5em;
+}
+
+h2 {
+	font-size: 1.25em;
+	margin-bottom: .25em;
+}
+
+h3 {
+	font-size: 1.1em;
+	margin-bottom: .25em;
+}
+
+h4 {
+	font-size: 1em;
+	margin-bottom: .25em;
+}
+
+.image {
+	margin-left: .5em;
+}
+
+.text {
+	margin-left: .5em;
+}
+
+.centered {
+	margin-left: .5em;
+	text-align: center;
+}
+
+a.link {
+	font-size: .8em;
+}
+
+ul {
+	margin-top: 0;
+}
+
+pre {
+	margin-left: .5em;
+	margin-right: .5em;
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+	font-size: .85em;
+	white-space: pre;
+}

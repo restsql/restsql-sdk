@@ -1,0 +1,183 @@
+	<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert Parents Request Details</title>
+<script type="text/javascript">
+	function submitRequest() {
+		var uri = "";
+		var body = null;
+		var contentType = null;
+		if (document.requestForm.requestStyle[0].checked) {			//requestStyle=ue
+			var attributes = [document.requestForm.ueName1.value,
+				  				document.requestForm.ueValue1.value,
+								document.requestForm.ueName2.value,
+								document.requestForm.ueValue2.value,
+								document.requestForm.ueName3.value,
+								document.requestForm.ueValue3.value,
+								document.requestForm.ueName4.value,
+								document.requestForm.ueValue4.value,
+								document.requestForm.ueName5.value,
+								document.requestForm.ueValue5.value];
+			body = parent.buildUrlEncodedBody(attributes);
+			if (body == "") {
+				alert("At least one name/value required");
+				return;
+			}
+			contentType = parent.CONTENT_TYPE_URLENCODED;
+		} else { 													//requestStyle=body
+
+			var attributes = [document.requestForm.bodyRow1Name1.value,
+				  				document.requestForm.bodyRow1Value1.value,
+								document.requestForm.bodyRow1Name2.value,
+								document.requestForm.bodyRow1Value2.value,
+								document.requestForm.bodyRow1Name3.value,
+								document.requestForm.bodyRow1Value3.value,
+								document.requestForm.bodyRow1Name4.value,
+								document.requestForm.bodyRow1Value4.value,
+								document.requestForm.bodyRow1Name5.value,
+								document.requestForm.bodyRow1Value5.value];
+			body = parent.buildXmlElement("parent", attributes);
+			attributes = [document.requestForm.bodyRow2Name1.value,
+			  				document.requestForm.bodyRow2Value1.value,
+							document.requestForm.bodyRow2Name2.value,
+							document.requestForm.bodyRow2Value2.value,
+							document.requestForm.bodyRow2Name3.value,
+							document.requestForm.bodyRow2Value3.value,
+							document.requestForm.bodyRow2Name4.value,
+							document.requestForm.bodyRow2Value4.value,
+							document.requestForm.bodyRow2Name5.value,
+							document.requestForm.bodyRow2Value5.value];
+			body = body + parent.buildXmlElement("parent", attributes);
+			if (body == "") {
+				alert("At least one name/value required");
+				return;
+			}
+			body = "<request>" + body + "\n</request>";
+			contentType = parent.CONTENT_TYPE_XML;
+		}
+		parent.submitRequest("POST", uri, body, "response", contentType);
+	}
+
+	function requestStyleSelected() {
+		if (document.requestForm.requestStyle[0].checked == true) {
+			ueVisibility = "visible";
+			bodyVisibility = "hidden";
+			pathBgColor = "#EFEFEF";
+			bodyBgColor = "#FFFFFF";
+		} else {
+			ueVisibility = "hidden";
+			bodyVisibility = "visible";
+			pathBgColor = "#FFFFFF";
+			bodyBgColor = "#EFEFEF";
+		}
+ 		document.getElementById("trUERow").style.visibility = ueVisibility;
+ 		document.getElementById("trBodyRow1").style.visibility = bodyVisibility;
+ 		document.getElementById("trBodyRow2").style.visibility = bodyVisibility;
+ 		document.getElementById("trUE").style.backgroundColor = pathBgColor;
+ 		document.getElementById("trBody").style.backgroundColor = bodyBgColor;
+	}
+
+	function resetForm() {
+		document.requestForm.reset();
+		requestStyleSelected();
+		parent.resetOuputFrames();
+	}
+</script>
+</head>
+<body style="font-family:sans-serif">
+<span style='font-weight:bold'>Request Details</span><br/>
+<form name="requestForm" onsubmit="submitRequest(); return false">
+	<table border="0">
+		<tr id="trUE" bgcolor="#EFEFEF">
+			<td colspan="2"><input type="radio" name="requestStyle" value="ue" onclick="requestStyleSelected()" checked="checked">Use URL Encoded Body</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr id="trUERow">
+			<td align="right">Row:</td>
+			<td>
+				Name: <input type="text" name="ueName1" size="8" /><br/>
+				Value: <input type="text" name="ueValue1" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="ueName2" size="8" /><br/>
+				Value: <input type="text" name="ueValue2" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="ueName3" size="8" /><br/>
+				Value: <input type="text" name="ueValue3" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="ueName4" size="8" /><br/>
+				Value: <input type="text" name="ueValue4" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="ueName5" size="8" /><br/>
+				Value: <input type="text" name="ueValue5" size="8" />
+			</td>
+		</tr>
+		</tr>
+		<tr id="trBody">
+			<td colspan="2"><input type="radio" name="requestStyle" value="body" onclick="requestStyleSelected()"/>Use XML Body</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr id="trBodyRow1" style="visibility:hidden">
+			<td align="right">Row 1:</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name1" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value1" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name2" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value2" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name3" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value3" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name4" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value4" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow1Name5" size="8" /><br/>
+				Value: <input type="text" name="bodyRow1Value5" size="8" />
+			</td>
+		</tr>
+		<tr id="trBodyRow2" style="visibility:hidden">
+			<td align="right">Row 2:</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name1" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value1" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name2" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value2" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name3" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value3" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name4" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value4" size="8" />
+			</td>
+			<td>
+				Name: <input type="text" name="bodyRow2Name5" size="8" /><br/>
+				Value: <input type="text" name="bodyRow2Value5" size="8" />
+			</td>
+		</tr>
+	</table>
+	<p>
+		<input type="button" value="Reset" onclick="resetForm()" /> 
+		&nbsp; <input type="submit" value="Submit" />
+	</p>
+</form>
+</body>
+</html>

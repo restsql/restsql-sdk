@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Select Request Details</title>
+<script type="text/javascript">
+	function submitRequest() {
+		var path = "";
+		var query = "";
+		if (document.requestForm.filter.checked) {
+			if (document.requestForm.paramStyle[0].checked) {		// pk path
+				if (document.requestForm.pkValue1.value == "") {
+					alert("Primary Key Value 1 required");
+					return;
+				} else {
+					path = "/" + escape(document.requestForm.pkValue1.value);
+					if (document.requestForm.pkValue2.value != "") {
+						path = path + "/" + escape(document.requestForm.pkValue2.value);
+					}
+				}
+			} else {
+				if (document.requestForm.queryName1.value == "" || document.requestForm.queryValue1.value == "") {
+					alert("At least one query name/value required");
+					return;
+				} else {
+					query = "?" + escape(document.requestForm.queryName1.value) + "=" + escape(document.requestForm.queryValue1.value);
+					if (document.requestForm.queryName2.value != "") {
+						query = query + "&" + escape(document.requestForm.queryName2.value)+ "=" + escape(document.requestForm.queryValue2.value);
+					}
+				}
+			}
+		}
+
+		if (document.requestForm.limit.checked) {
+			if (query.length == 0) {
+				query = "?";
+			} else {
+				query = query + "&";
+			}
+			query = query + "_limit=" + document.requestForm._limit.value + "&_offset=" + document.requestForm._offset.value;
+		}
+
+		parent.submitRequest("GET", path + query, null, "response", null);
+	}
+
+	function limitStateChanged() {
+		if (document.requestForm.limit.checked == true) {
+			visibility = "visible";
+		} else {
+			visibility = "hidden";
+		}
+ 		document.getElementById("tdLimit").style.visibility = visibility;
+ 		document.getElementById("tdOffset").style.visibility = visibility;
+	}
+
+	function filterStateChanged() {
+		if (document.requestForm.filter.checked == true) {
+			visibility = "visible";
+			paramStyleSelected();
+		} else {
+			document.getElementById("tablePkParams").style.visibility = "hidden";
+			document.getElementById("tableQueryParams").style.visibility = "hidden";
+			visibility = "hidden";
+		}
+ 		document.getElementById("tdPath").style.visibility = visibility;
+ 		document.getElementById("tdQuery").style.visibility = visibility;
+	}
+
+	function paramStyleSelected() {
+		if (document.requestForm.paramStyle[0].checked) {
+			pkVisibility = "visible";
+			queryVisibility = "hidden";
+		} else {
+			pkVisibility = "hidden";
+			queryVisibility = "visible";
+		}
+					
+		document.getElementById("tablePkParams").style.visibility = pkVisibility;
+		document.getElementById("tableQueryParams").style.visibility = queryVisibility;
+	}
+
+	function resetForm() {
+		document.requestForm.reset();
+		filterStateChanged();
+		parent.resetOuputFrames();
+	}
+</script>
+</head>
+<body style="font-family:sans-serif">
+<span style='font-weight:bold'>Request Details</span><br/>
+<form name="requestForm" onsubmit="submitRequest(); return false">
+	<table border="0">
+		<tr>
+			<td><input type="checkbox" name="limit" onclick="limitStateChanged()" />Limit Results</td>
+			<td>&nbsp;</td>
+			<td id="tdLimit" style="visibility:hidden">Limit: <input type="text" name="_limit" value="20" size="2" /></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>&nbsp;</td>
+			<td id="tdOffset" style="visibility:hidden">Offset: <input type="text" name="_offset" value="0" size="2" /></td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" name="filter" onclick="filterStateChanged()" />Filter Results</td>
+			<td>&nbsp;</td>
+			<td id="tdPath" style="visibility:hidden"><input type="radio" name="paramStyle" value="path" onclick="paramStyleSelected()" checked="checked">Use Path</td>
+			<td id="tdQuery" style="visibility:hidden"><input type="radio" name="paramStyle" value="query" onclick="paramStyleSelected()" />Use Query Param</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>&nbsp;</td>
+			<td>
+				<table id="tablePkParams" style="visibility:hidden">
+					<tr>
+						<td>PK Value 1: <input type="text" name="pkValue1" size="5" /></td>
+					</tr>
+					<tr>
+						<td>PK Value 2: <input type="text" name="pkValue2" size="5" /></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table id="tableQueryParams" style="visibility:hidden">
+					<tr>
+						<td>
+							Name: <input type="text" name="queryName1" size="8" /><br/>
+							Value: <input type="text" name="queryValue1" size="8" />
+						</td>
+						<td>
+							Name: <input type="text" name="queryName2" size="8" /><br/>
+							Value: <input type="text" name="queryValue2" size="8" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<p>
+		<input type="button" value="Reset" onclick="resetForm()" /> 
+		&nbsp; <input type="submit" value="Submit" />
+	</p>
+</form>
+</body>
+</html>

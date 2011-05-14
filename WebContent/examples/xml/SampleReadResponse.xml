@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<readResponse xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://restsql.org/schema Response.xsd ">
+	<actor actor_id="1" first_name="PENELOPE" last_name="GUINESS" />
+	<actor actor_id="2" first_name="NICK" last_name="WAHLBERG" />
+	<actor actor_id="3" first_name="ED" last_name="CHASE" />
+	<actor actor_id="4" first_name="JENNIFER" last_name="DAVIS" />
+	<actor actor_id="5" first_name="JOHNNY" last_name="LOLLOBRIGIDA" />
+	<actor actor_id="6" first_name="BETTE" last_name="NICHOLSON" />
+	<actor actor_id="7" first_name="GRACE" last_name="MOSTEL" />
+	<actor actor_id="8" first_name="MATTHEW" last_name="JOHANSSON" />
+	<actor actor_id="9" first_name="JOE" last_name="SWANK" />
+	<actor actor_id="10" first_name="CHRISTIAN" last_name="GABLE" />
+</readResponse>

@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Delete Children Request Details</title>
+<script type="text/javascript">
+	function submitRequest() {
+		var uri = "";
+		var body = null;
+		var contentType = parent.CONTENT_TYPE_XML;
+		if (document.requestForm.requestStyle[0].checked) {			//requestStyle=path
+			if (document.requestForm.pkValue1.value == "") {
+				alert("Primary Key Value 1 required");
+				return;
+			} else {
+				uri = "/" + escape(document.requestForm.pkValue1.value);
+				if (document.requestForm.pkValue2.value != "") {
+					path = path + "/" + escape(document.requestForm.pkValue2.value);
+				}
+				var attributes = [document.requestForm.pathChild1Name1.value,
+					  				document.requestForm.pathChild1Value1.value,
+									document.requestForm.pathChild1Name2.value,
+									document.requestForm.pathChild1Value2.value];
+				body = parent.buildXmlElement("child", attributes);
+				var attributes = [document.requestForm.pathChild2Name1.value,
+					  				document.requestForm.pathChild2Value1.value,
+									document.requestForm.pathChild2Name2.value,
+									document.requestForm.pathChild2Value2.value];
+				body = body + parent.buildXmlElement("child", attributes);
+				if (body == "") {
+					alert("Child name/value required");
+					return;
+				}
+			}
+		} else { 													//requestStyle=body
+			if (document.requestForm.bodyParentName1.value == "" || document.requestForm.bodyParentValue1.value == "") {
+				alert("Parent name/value required");
+				return;
+			}				
+			else if (document.requestForm.bodyChild1Name1.value == "" || document.requestForm.bodyChild1Value1.value == "") {
+				alert("Child name/value required");
+				return;
+			} else {
+				var attributes = [document.requestForm.bodyParentName1.value,
+					  				document.requestForm.bodyParentValue1.value,
+									document.requestForm.bodyParentName2.value,
+									document.requestForm.bodyParentValue2.value];
+				body = parent.buildXmlElement("parent", attributes);
+				attributes = [document.requestForm.bodyChild1Name1.value,
+				  				document.requestForm.bodyChild1Value1.value,
+								document.requestForm.bodyChild1Name2.value,
+								document.requestForm.bodyChild1Value2.value];
+				body = body + parent.buildXmlElement("child", attributes);
+				attributes = [document.requestForm.bodyChild2Name1.value,
+				  				document.requestForm.bodyChild2Value1.value,
+								document.requestForm.bodyChild2Name2.value,
+								document.requestForm.bodyChild2Value2.value];
+				body = body + parent.buildXmlElement("child", attributes);
+				body = body + "\n\t</" + parent.resParentName + ">";
+			}
+		}
+		body = "<request>" + body + "\n</request>";
+		parent.submitRequest("DELETE", uri, body, "response", contentType);
+	}
+
+	function requestStyleSelected() {
+		if (document.requestForm.requestStyle[0].checked == true) {
+			pathVisibility = "visible";
+			bodyVisibility = "hidden";
+			pathBgColor = "#EFEFEF";
+			bodyBgColor = "#FFFFFF";
+		} else {
+			pathVisibility = "hidden";
+			bodyVisibility = "visible";
+			pathBgColor = "#FFFFFF";
+			bodyBgColor = "#EFEFEF";
+		}
+		document.getElementById("trPkParams").style.visibility = pathVisibility;
+ 		document.getElementById("trPathChild1").style.visibility = pathVisibility;
+ 		document.getElementById("trPathChild2").style.visibility = pathVisibility;
+ 		document.getElementById("trBodyParent").style.visibility = bodyVisibility;
+ 		document.getElementById("trBodyChild1").style.visibility = bodyVisibility;
+ 		document.getElementById("trBodyChild2").style.visibility = bodyVisibility;
+ 		document.getElementById("trPath").style.backgroundColor = pathBgColor;
+ 		document.getElementById("trBody").style.backgroundColor = bodyBgColor;
+	}
+
+	function resetForm() {
+		document.requestForm.reset();
+		requestStyleSelected();
+		parent.resetOuputFrames();
+	}
+</script>
+</head>
+<body style="font-family:sans-serif">
+<span style='font-weight:bold'>Request Details</span><br/>
+<form name="requestForm" onsubmit="submitRequest(); return false">
+	<table border="0">
+		<tr id="trPath" bgcolor="#EFEFEF">
+			<td colspan="2"><input type="radio" name="requestStyle" value="path" onclick="requestStyleSelected()" checked="checked">Use Path / XML Body</td>
+			<td></td>
+		</tr>
+		<tr id="trPkParams">
+			<td align="right">Parent:</td>
+			<td>
+				<table>
+					<tr>
+						<td>PK Value 1: <input type="text" name="pkValue1" size="5" /></td>
+					</tr>
+					<tr>
+						<td>PK Value 2: <input type="text" name="pkValue2" size="5" /></td>
+					</tr>
+				</table>
+			</td>
+			<td></td>
+		</tr>
+		<tr id="trPathChild1">
+			<td align="right">Child 1:</td>
+			<td>
+				PK Name: <input type="text" name="pathChild1Name1" size="8" /><br/>
+				PK Value: <input type="text" name="pathChild1Value1" size="8" />
+			</td>
+			<td>
+				PK Name: <input type="text" name="pathChild1Name2" size="8" /><br/>
+				PK Value: <input type="text" name="pathChild1Value2" size="8" />
+			</td>
+		</tr>
+		<tr id="trPathChild2">
+			<td align="right">Child 2:</td>
+			<td>
+				PK Name: <input type="text" name="pathChild2Name1" size="8" /><br/>
+				PK Value: <input type="text" name="pathChild2Value1" size="8" />
+			</td>
+			<td>
+				PK Name: <input type="text" name="pathChild2Name2" size="8" /><br/>
+				PK Value: <input type="text" name="pathChild2Value2" size="8" />
+			</td>
+		</tr>
+		<tr id="trBody">
+			<td colspan="1"><input type="radio" name="requestStyle" value="body" onclick="requestStyleSelected()"/>Use XML Body</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr id="trBodyParent" style="visibility:hidden">
+			<td align="right">Parent:</td>
+			<td>
+				PK Name: <input type="text" name="bodyParentName1" size="8" /><br/>
+				PK Value: <input type="text" name="bodyParentValue1" size="8" />
+			</td>
+			<td>
+				PK Name: <input type="text" name="bodyParentName2" size="8" /><br/>
+				PK Value: <input type="text" name="bodyParentValue2" size="8" />
+			</td>
+		</tr>
+		<tr id="trBodyChild1" style="visibility:hidden">
+			<td align="right">Child 1:</td>
+			<td>
+				PK Name: <input type="text" name="bodyChild1Name1" size="8" /><br/>
+				PK Value: <input type="text" name="bodyChild1Value1" size="8" />
+			</td>
+			<td>
+				PK Name: <input type="text" name="bodyChild1Name2" size="8" /><br/>
+				PK Value: <input type="text" name="bodyChild1Value2" size="8" />
+			</td>
+		</tr>
+		<tr id="trBodyChild2" style="visibility:hidden">
+			<td align="right">Child 2:</td>
+			<td>
+				PK Name: <input type="text" name="bodyChild2Name1" size="8" /><br/>
+				PK Value: <input type="text" name="bodyChild2Value1" size="8" />
+			</td>
+			<td>
+				PK Name: <input type="text" name="bodyChild2Name2" size="8" /><br/>
+				PK Value: <input type="text" name="bodyChild2Value2" size="8" />
+			</td>
+		</tr>
+	</table>
+	<p>
+		<input type="button" value="Reset" onclick="resetForm()" /> 
+		&nbsp; <input type="submit" value="Submit" />
+	</p>
+</form>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd " name="FlatManyToOne"
+	defaultDatabase="sakila" parent="film" parentExt="language">
+	<query>
+		select film_id, title, release_year "year", language.language_id, language.name
+		from language, film
+		where film.language_id = language.language_id
+	</query>
+</rs:sqlResource>

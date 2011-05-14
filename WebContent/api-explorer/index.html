@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>restSQL HTTP API Explorer</title>
+<script type="text/javascript">
+	var CONTENT_TYPE_XML = "application/xml";
+	var CONTENT_TYPE_URLENCODED = "application/x-www-form-urlencoded";
+
+	var restsqlHost = "";
+	var restsqlBaseUri = "/restsql";
+
+	var requestType = "?";
+	var resName = "?";
+	var resParentName = "?";
+	var resChildName = "?";
+	var resHierarchical = false;
+
+	function buildUrlEncodedBody(attributes) {
+		var xml = "";
+		var i = 0;
+		while (i < attributes.length) {
+			if (attributes[i] != "" && attributes[i+1] != "") {
+				if (xml.length > 0) {
+					xml = xml + "&";
+				}
+				xml = xml + escape(attributes[i]) + "=" + escape(attributes[i+1]);
+			}
+			i = i + 2;
+		}
+		return xml;
+	} 
+
+	function buildXmlElement(element, attributes) {
+		var xml = "";
+		var i = 0;
+		while (i < attributes.length) {
+			xml = xml + buildXmlAttribute(attributes[i], attributes[i+1]);
+			i = i + 2;
+		}
+		if (xml.length > 0) {
+			if (element == "parent") {
+				xml = "\n\t<" + resParentName + xml;
+				if (resHierarchical == true) {
+					xml = xml + ">";
+				} else {
+					xml = xml + " />";
+				}
+			} else {
+				xml = "\n\t\t<" + resChildName + xml + " />";
+			}
+		}
+		return xml;
+	} 
+
+	function buildXmlAttribute(name, value) {
+		if (name != "" && value != "") {
+			return " " + name + '="' + value + '"';
+		} else {
+			return "";
+		}
+	}
+	
+	function convertXmlToHtml(xml) {
+		var html = "<pre style='margin-top:0'>";
+		for (i = 0; i < xml.length; i++) {
+			character = xml.charAt(i);
+			if (character == "<") {
+				html = html + "&lt;";
+			} else if (character == ">") {
+				html = html + "&gt;";
+			} else if (character == "\t") {
+				html = html + "&nbsp;&nbsp;&nbsp;";
+			} else {
+				html = html + character;
+			}
+		}
+		return html + "</pre>";
+	}
+
+	function getResName() {
+		return resName;
+	}
+
+	function getResUri() {
+		return restsqlBaseUri + "/res/" + resName;
+	}
+
+	function resetOuputFrames() {
+		window.frames[4].location = "request.html";
+		window.frames[5].location = "response.html";
+	}
+
+	function setResName(newResName) {
+		resName = newResName;
+		submitRequest("GET", "?_definition", null, "definition", null);
+		window.frames[3].location = "build-select.html";
+		window.frames[5].location = "response.html";
+	}
+
+	function setRequestType(type, scope) {
+		requstType = type;
+		if (type == "select") {
+			window.frames[3].location = "build-select.html";
+		} else {
+			window.frames[3].location = "build-" + type + "-" + scope + ".html";
+		}
+		window.frames[4].location = "request.html";
+		window.frames[5].location = "response.html";
+	}
+
+	function submitRequest(method, uri, requestBody, targetFrame, contentType) {
+		var uri = getResUri() + uri;
+		var url = restsqlHost + uri;
+		var responseBody = "";
+		var xmlhttp;
+
+		if (navigator.appName == "Microsoft Internet Explorer") {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} else {
+			xmlhttp = new XMLHttpRequest();
+		}
+
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4) {
+				if (xmlhttp.status == 200) {
+					responseBody = convertXmlToHtml(xmlhttp.responseText);
+				} else {
+					responseBody = "<code>" + xmlhttp.responseText + "</code>";
+				}
+				responseStatus = "HTTP/1.1 " + xmlhttp.status + " " + xmlhttp.statusText;
+
+				if (targetFrame == "definition") {
+					sqlResource = xmlhttp.responseXML.getElementsByTagName("rs:sqlResource")[0];
+					if (sqlResource == null) {
+						sqlResource = xmlhttp.responseXML.getElementsByTagName("sqlResource")[0];
+					}
+					resParentName = sqlResource.getAttribute("parent");
+					resChildName = sqlResource.getAttribute("child");
+
+					if (resChildName != null) {
+						resHierarchical = true;
+					} else {
+						resHierarchical = false;
+					}
+					window.frames[1].resetForm();
+
+					window.frames[2].document.getElementById("definition").innerHTML = responseBody;
+				} else {		// targetFrame == "response"
+					var requestDoc = window.frames[4].document;
+					requestDoc.getElementById("methodUriProtocol").innerHTML = method + " " + uri + " HTTP/1.1";
+					if (contentType != null) {
+						requestDoc.getElementById("headers").innerHTML = "<code>Content-Type: "
+							+ contentType + "</code><br/>";
+					}
+					if (requestBody == null) {
+						requestDoc.getElementById("body").innerHTML = "<pre>{empty body}</pre>";
+					} else {
+						requestDoc.getElementById("body").innerHTML = convertXmlToHtml(requestBody);
+					}					
+
+					window.frames[5].document.getElementById("status").innerHTML = responseStatus;
+					window.frames[5].document.getElementById("headers").innerHTML = "Content-Type: application/xml<br/>";
+					window.frames[5].document.getElementById("body").innerHTML = responseBody;
+				}
+			}
+		}
+
+		xmlhttp.open(method, url, true);
+		if (contentType != null) {
+			xmlhttp.setRequestHeader("Content-Type", contentType);
+		}
+		xmlhttp.send(requestBody);
+	}
+</script>
+</head>
+<frameset rows="60%, 40%"  onload="setResName('SingleTable')">
+	<frameset cols="20%, 80%">
+		<frameset rows="50%, 50%">
+			<frame src="resources.html" name="resources">
+			<frame src="request-type.html" name="request-type">
+		</frameset>
+		<frameset rows="40%, 60%">
+			<frame src="definition.html" name="definition">
+			<frame src="blank.html" name="builder">
+		</frameset>
+	</frameset>
+	<frameset cols="50%, 50%">
+		<frame src="request.html" name="request">
+		<frame src="response.html" name="response">
+	</frameset>
+	<noframes>
+		<p>Your browser must support frames to use this tool.</p>
+	</noframes>
+</frameset>
+</html>
