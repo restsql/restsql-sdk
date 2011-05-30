@@ -1,12 +1,46 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Deployment</title>
-<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
-	href="doc.css">
-</head>
+	<title>restSQL Deployment</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
 <body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Javadoc
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/properties/">Default Props</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/properties/">Example Props</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/xml">Example XML</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+</div>
+
+<div id="content"> 
 <h1>Deployment</h1>
 <h2>Structure and Distributions</h2>
 <div class="text">restSQL source code is contained in three eclipse projects:</div>
@@ -92,7 +126,7 @@
     response.useXmlDirective=false
 </pre>
 
-<div class="text">The default settings indicate that request documents may be sent without schema references. Likewise response documents are sent without the xml directive (<?xml version="1.0" encoding="UTF-8"?>) and without schema references.</div> 
+<div class="text">The default settings indicate that request documents may be sent without schema references. Likewise response documents are sent without the xml directive (&lt;?xml version="1.0" encoding="UTF-8"?&gt;) and without schema references.</div> 
 
 <p class="text">The Triggers configuration is optional. Here is an example:</p>
 <pre>
@@ -136,7 +170,7 @@
     &lt;context-param&gt;
         &lt;param-name&gt;org.restsql.properties&lt;/param-name&gt;
         &lt;param-value&gt;/etc/opt/company/restsql/restsql.properties&lt;/param-value&gt;
-    &lt;/context-param>
+    &lt;/context-param&gt;
 </pre>
 
 <p class="text">Naming: You may deploy this as a single file or exploded war to your JEE container. Rename it to restsql.war or webapps/restsql if you want the path to be http://yourhost:port/restsql. Containers like Tomcat use the war file name instead of the web.xml's id to name the web app. Additionally, the SDK's HTTP API Explorer will work without any customization.</p>
@@ -192,6 +226,6 @@
 </pre>
 <p class="text">Test results will appear on the screen. Failure detail is available in restsql-test/obj/test.</p>
 <p class="text">Database: If you have not deployed the SDK yet, you will need to deploy the extended sakila database. Bash and Windows batch scripts are provided to create the base and extended database for MySQL. The bash script is restsql-test/database/create-sakila.sh and the Windows batch script is restsql-test/database/create-sakila.bat. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.</p>
-
+</div>
 </body>
 </html>

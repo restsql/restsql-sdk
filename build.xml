@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="restsql-sdk" default="all">
-	<property file="../restsql/build.properties" />
+	<property file="build.properties" />
 
 	<target name="all" depends="database,javadoc,sqlresources,wadl,lib" />
 

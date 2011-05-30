@@ -1,12 +1,46 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>restSQL Overview</title>
-<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
-	href="doc.css">
-</head>
+	<title>restSQL Overview</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
 <body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Javadoc
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/properties/">Default Props</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/properties/">Example Props</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/xml">Example XML</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+</div>
+
+<div id="content"> 
 <h1>restSQL Overview</h1>
 <div class="text">restSQL is an ultra-lightweight data access layer for HTTP clients. restSQL is a persistence framework or engine in the middle tier of a classic three tier architecture: client, application server and database. It may also be embedded in any middle-tier as a Java library.</div>
 
@@ -65,7 +99,7 @@
 	</li>
 </ul>
 
-<h4>The bottom line &#8211 80/20</h4>
+<h4>The bottom line &#8211; 80/20</h4>
 <ul>
 	<li>restSQL is targeted at the 80% of data access that is basic CRUD</li>
 	<li>No more messing around with basic SQL, some complex ORM tool, oodles of Objects and Interfaces, or quirky OQL.</li>
@@ -79,11 +113,12 @@
 </ul>
 
 <h2>Description</h2>
-<div class="text">restSQL is a different kind of middle tier framework. There is no object-relational mapping, no object query language and no beans. It is intentionally not an object-oriented view of the database. It provides an interface based on <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer" target="_parent">Representational State Transfer</a> (REST) principles, which use HTTP’s built-in features, rather than abstracting away from them. The framework makes it simple to put a RESTful interface on a database.</div>
+<div class="text">restSQL is a different kind of middle tier framework. There is no object-relational mapping, no object query language and no beans. It is intentionally not an object-oriented view of the database. It provides an interface based on <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">Representational State Transfer</a> (REST) principles, which use HTTP’s built-in features, rather than abstracting away from them. The framework makes it simple to put a RESTful interface on a database.</div>
 <p class="text">The framework is used in two ways: 1) Clients may connect directly to the restSQL engine using the HTTP API, and 2) your Services use a Java API.</p>
 <p class="text">Optionally, applications provide Java-based triggers to manage data validation and business logic.
 restSQL right-sizes five technologies: SQL, XML, JSON, Java and HTTP. SQL is embedded in XML files that define resources, like database views, that may be queried, added to, updated or deleted using HTTP or a Java access API. Data is serialized over XML or JSON. The framework itself is written in Java and deployed as a JAR or WAR on a standard JEE Container.</p>
 <p class="text">restSQL enables you to build multiple SQL Resources, queryable and updatable database “views” that exist on the middle tier and are accessible via Java or HTTP APIs. SQL Resources may be flat views or hierarchical parent-child. The SQL Resource is defined in an XML file. The core of the definition is the query expression, an SQL DML expression.</p>
-<p style="font-size: 1.25em">restSQL &#8211 <span style="text-decoration:none">Trim your Middle</span></p>
+<p style="font-size:1.25em">restSQL &#8211; <span style="text-decoration:none">Trim your Middle</span></p>
+</div>
 </body>
 </html>

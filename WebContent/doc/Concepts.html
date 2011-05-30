@@ -1,14 +1,48 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Concepts</title>
-<link rel="stylesheet" type="text/css" charset="utf-8" media="all"
-	href="doc.css">
-</head>
+	<title>restSQL Concepts</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
 <body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Javadoc
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/properties/">Default Props</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/properties/">Example Props</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/xml">Example XML</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+</div>
+
+<div id="content"> 
 <h1>Concepts</h1>
-<p class="centered"><img src="Concepts.png" title="Concept Map" /></p>
+<p class="centered"><img src="Concepts.png" alt="Concept Map" title="Concept Map" /></p>
 
 <h2>restSQL</h2>
 <div class="text">restSQL is a persistence framework or engine in the middle tier of a classic three tier architecture: client, application server and database. restSQL is not an HTTP to JDBC/ODBC bridge that tunnels SQL over HTTP. Nor is restSQL an Object-Relational Mapping tool, abstracting SQL by mapping tables to objects. restSQL is an SQL generator with Java and HTTP APIs. restSQL keeps SQL out of the client but also eliminates the need for the middle-tier to construct SQL for basic CRUD (Create-Read-Update-Delete) operations. restSQL does not offer sophisticated query or report generation, nor OLAP-style cube or data warehousing support. restSQL is targeted at OLTP applications needing basic CRUD access.</div>
@@ -27,7 +61,7 @@
 <h2>Table Role</h2>
 <div class="text">Each table in the defining query has a role that is declared in the attributes of the sqlResource element. The roles define the structure for restSQL such that data is differentiated in request processing.</div>
 <p class="text">A many-to-many hierarchical SQL Resource called ActorFilm is used to elaborate the concept. The following diagram depicts the physical data model for its tables:</p>
-<p class="centered"><img src="ActorFilmDataModel.png" title="ActorFilm Phyisical Data Model"/></p>
+<p class="centered"><img src="ActorFilmDataModel.png" alt="ActorFilm Phyisical Data Model" title="ActorFilm Phyisical Data Model"/></p>
 <p class="text">The roles are defined in the following table with examples from ActorFilm:</p>
 <table>
 	<tbody>
@@ -38,33 +72,33 @@
 			<th>ActorFilm Example</th>
 		</tr>
 		<tr>
-			<td nowrap="nowrap">Parent</td>
+			<td style="white-space: nowrap">Parent</td>
 			<td>Driving table. XML/JSON objects will be named using this table for all flat rows and hierarchical parent rows.</td>
-			<td  nowrap="nowrap">Flat, Hierarchical</td>
+			<td style="white-space: nowrap">Flat, Hierarchical</td>
 			<td>actor</td>
 		</tr>
 		<tr>
-			<td nowrap="nowrap">Parent Extension</td>
+			<td style="white-space: nowrap">Parent Extension</td>
 			<td>Joined table to the parent that adds more columns. Appears to the client as if parent and extensions are one row/object.</td>
-			<td nowrap="nowrap">Flat, Hierarchical</td>
+			<td style="white-space: nowrap">Flat, Hierarchical</td>
 			<td>actor_rating</td>
 		</tr>
 		<tr>
-			<td nowrap="nowrap">Child</td>
+			<td style="white-space: nowrap">Child</td>
 			<td>Defines row/objects that are contained by the parent and will be nested in an XML/JSON representation. The child in a master-detail form/view.</td>
-			<td nowrap="nowrap">Hierarchical</td>
+			<td style="white-space: nowrap">Hierarchical</td>
 			<td>film</td>
 		</tr>
 		<tr>
-			<td nowrap="nowrap">Child Extension</td>
+			<td style="white-space: nowrap">Child Extension</td>
 			<td>Joined table to the child that adds more columns. Appears to the client as if child and extensions are one row/object.</td>
-			<td nowrap="nowrap">Hierarchical</td>
+			<td style="white-space: nowrap">Hierarchical</td>
 			<td>film_rating</td>
 		</tr>
 		<tr>
-			<td nowrap="nowrap">Join</td>
+			<td style="white-space: nowrap">Join</td>
 			<td>The join table in a many-to-many relationship.</td>
-			<td nowrap="nowrap">Hierarchical Many-to-Many</td>
+			<td style="white-space: nowrap">Hierarchical Many-to-Many</td>
 			<td>film_actor</td>
 		</tr>
 	</tbody>
@@ -175,7 +209,7 @@
 <pre>PUT /restsql/res/Film?title=DARK%25 HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
-rating=R&rental_duration=2
+rating=R&amp;rental_duration=2
 </pre>
 <div class="text">or sometimes just a body:</div>
 <pre>POST /restsql/res/Actor HTTP/1.1
@@ -211,7 +245,7 @@ Content-Type: application/xml
 <pre>POST /restsql/res/Actor HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
-actor_id=201&first_name=JULIANNE&last_name=DENCH
+actor_id=201&amp;first_name=JULIANNE&amp;last_name=DENCH
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
@@ -253,5 +287,6 @@ select actor_id, first_name, last_name from  LIMIT 0,1
 </pre>
 <div class="text">restSQL will stop the request and return a 400 Bad Request if an attribute does not meet declared rules.</div>
 <p class="text">Custom Java-based attribute validators may be deployed to enforce more complex domain logic. The design of this feature is pending.</p>
+</div>
 </body>
 </html>
