@@ -1,4 +1,4 @@
-README.txt (14-May-2011)
+README.txt (14-Jul-2011)
 
 restSQL SDK Deployment Guide
 
@@ -24,7 +24,7 @@ restSQL source distributions consist of one jar:
 -------------------------------------------------------------------------------
 Installing restSQL SDK
 
-Requirements: JEE Container, JAR tool, MySQL, Web Browser
+Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser
 
 Install restsql WAR mode (see restSQL README.txt) with one variation: the restsql.properties must be changed to reference the sdk's SQL Resources definition directory. Below is an example:
 
@@ -48,12 +48,12 @@ Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory,
     
     Note that the restsql-sdk war contains only static web content. 
 
-Database: The HTTP API Explorer requires access to an extended sakila database (http://dev.mysql.com/doc/sakila/en/sakila.html). It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL. The bash script is restsql-sdk/database/create-sakila.sh and the Windows batch script is restsql-sdk/database/create-sakila.bat. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
+Database: The HTTP API Explorer requires access to an extended sakila database (http://dev.mysql.com/doc/sakila/en/sakila.html). It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and for PostgreSQL. The bash script is restsql-sdk/database/<database>/create-sakila.sh and the Windows batch script is restsql-sdk/database/<database>/create-sakila.bat, where database is either mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
 
 Troubleshooting: The HTTP API Explorer requires access to a restsql service instance. If you have not deployed restsql to the same host/port as the SDK and to the location /restsql, then you will need to make one small tweak. Change two Javascript variables in restsql-sdk/api-explorer/index.html. Here is an example:
 
     var restsqlHost = "http://somehost:8080";
-    var restsqlBaseUri = "/restsql-0.5";
+    var restsqlBaseUri = "/restsql-0.6";
 
 
 -------------------------------------------------------------------------------

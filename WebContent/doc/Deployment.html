@@ -72,39 +72,32 @@
 </ol>
 
 <h2>Configuring restSQL</h2>
-<div class="text">restSQL uses three configuration files in both WAR and JAR modes:</div>
+<div class="text">restSQL uses two configuration files in both WAR and JAR modes:</div>
 <ol>
     <li>restsql.properties - general framework settings</li>
-    <li>database.properties - database settings</li>
     <li>log4j.properties - logging settings</li>
 </ol>
 <div class="text">The files may be called anything you wish; these are only the suggested names.</div>
 
-<p class="text">The general restsql.properties is set through a System Property, "org.restsql.properties". The value is an absolute path to your properties file, e.g. /etc/opt/company/restsql/restsql.properties. The WAR mode should use a context-param in the web.xml to set this (See Installation section later for details). The JAR mode will default to default-restsql.properties (source location: restsql/src/resources/properties) that is included in the jar.</p>
+<p class="text">The general restsql.properties is set through a System Property, "org.restsql.properties". The value is an absolute path to your properties file, e.g. /etc/opt/business/restsql/restsql.properties. The WAR mode should use a context-param in the web.xml to set this (See Installation section later for details). The JAR mode will default to default-restsql.properties (source location: restsql/src/resources/properties) that is included in the jar.</p>
 
 <p class="text">The general restsql.properties contains the following configurations:</p>
 <ol>
-    <li>Database.properties location - required</li>
     <li>Logging - required</li>
-    <li>SQL Resource definition - location required</li>
+    <li>SQL Resource definition location - required</li>
     <li>Triggers - optional</li>
     <li>XML - optional</li>
-    <li>Factories - optional</li>
+    <li>Database - required</li>
+    <li>Implementation classes - optional</li>
 </ol>
-<p class="text">Database.properties location example:</p>
-<pre>
-    # database.config=/absolute/path
-    database.config=/etc/opt/company/restsql/database.properties
-</pre>
-
 <p class="text">Logging configuration example:</p>
 <pre>
-    # logging.facility=[log4j,java]
-    # logging.config=relative/to/classpath
-    # logging.dir=/absolute/path  - this is only used by the /log service method to find logs
-    logging.facility=log4j
-    logging.config=resources/properties/default-log4j.properties
-    logging.dir=/var/log/restsql
+   # logging.facility=[log4j,java]
+   # logging.config=relative/to/classpath
+   # logging.dir=/absolute/path  - this is only used by the /log service method to find logs
+   logging.facility=log4j
+   logging.config=com/business/config/log4j.properties
+   logging.dir=/var/log/restsql
 </pre>
 
 <div class="text">Note that unlike all other locations, the logging.config location is RELATIVE to the classpath, not absolute. The default logging framework is log4j, using the default-log4j.properties included in the jar/war. This logs to the location /var/log/restsql. The logging levels are set for development, not production mode.
@@ -113,7 +106,7 @@
 <p class="text">The location of SQL Resource definitions is critical. An example:</p>
 <pre>
     # sqlresources.dir=/absolute/path
-    sqlresources.dir=/etc/opt/company/restsql/sqlresources
+    sqlresources.dir=/opt/business/sqlresources
 </pre>
 
 <div class="text">The XML configuration is optional. The defaults are:</div>
@@ -130,21 +123,42 @@
 
 <p class="text">The Triggers configuration is optional. Here is an example:</p>
 <pre>
-    # triggers.classpath=/absolute/path
-    # triggers.definition=/absolute/path
-    triggers.classpath=/opt/company/restsql/triggers
-    triggers.definition=/opt/company/restsql/triggers/triggers.properties
+   # triggers.classpath=/absolute/path
+   # triggers.definition=/absolute/path
+   triggers.classpath=/opt/business/triggers
+   triggers.definition=/opt/business/triggers.properties
 </pre>
 
-<div class="text">The Factories configuration is optional. The defaults are:</div>
+<p class="text">The Databse configuration is required. for a database with built-in support:</p>
 <pre>
-    #### Implementation settings. Use these to provide framework extensions. ####
-    # org.restsql.core.Factory.Connection=fully.qualified.class.name
-    # org.restsql.core.Factory.Request=fully.qualified.class.name
-    # org.restsql.core.Factory.SqlResource=fully.qualified.class.name
-    org.restsql.core.Factory.Connection=org.restsql.core.impl.ConnectionFactoryImpl
-    org.restsql.core.Factory.Request=org.restsql.core.impl.RequestFactoryImpl
-    org.restsql.core.Factory.SqlResource=org.restsql.core.impl.SqlResourceFactoryImpl
+   # database.url=jdbc:etc:etc
+   # database.user=userName
+   # database.password=password
+   database.url=jdbc:mysql://localhost:3306/
+   database.user=restsql
+   database.password=Rest00sql#
+	
+   # MetaData implemenation class - match the implementation to your database
+   # For MySQL:
+   #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.SqlResourceMetaDataMySql
+   # For PostgreSQL:
+   #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.SqlResourceMetaDataPostgreSql
+   org.restsql.core.SqlResourceMetaData=com.business.restsql.SqlResourceMetaDataMySql
+</pre>
+
+<p class="text">Implementation classes configuration is optional. The defaults are:</p>
+<pre>
+   # Implementation classes - use these to customize the framework
+   # org.restsql.core.SqlBuilder=full.qualified.class.name
+   # org.restsql.core.Factory.ConnectionFactory=fully.qualified.class.name
+   # org.restsql.core.Factory.RequestFactory=fully.qualified.class.name
+   # org.restsql.core.Factory.RequestLoggerFactory=fully.qualified.class.name
+   # org.restsql.core.Factory.SqlResourceFactory=fully.qualified.class.name
+   org.restsql.core.SqlBuilder=org.restsql.core.impl.SqlBuilderImpl
+   org.restsql.core.Factory.ConnectionFactory=org.restsql.core.impl.ConnectionFactoryImpl
+   org.restsql.core.Factory.RequestFactory=org.restsql.core.impl.RequestFactoryImpl
+   org.restsql.core.Factory.RequestLoggerFactory=org.restsql.core.impl.RequestLoggerFactoryImpl
+   org.restsql.core.Factory.SqlResourceFactory=org.restsql.core.impl.SqlResourceFactoryImpl
 </pre>
 
 <p class="text">See the SDK for more detail on Logging and Trigger configuration.</p>
@@ -152,7 +166,7 @@
 <p class="text">Access http://yourhost:port/restsql for links to the effective runtime configuration.</p>
 
 <h2>Installing restSQL WAR mode</h2>
-<p class="text">Requirements: JEE Container, JAR tool, MySQL</p>
+<p class="text">Requirements: JEE Container, JAR tool, RDBMS</p>
 
 <p class="text">The restsql-{version}.war contains the service and framework classes as well as dependencies. Extract it's contents to some temp area, e.g. /tmp/restsql. Use the standard jar tool that comes with your JRE/JDK. The command is jar -xf war-file-name. It extracts all contents in the current directory. The contents looks like:</p>
 <pre>
@@ -163,17 +177,17 @@
         index.html
 </pre>
 
-<p class="text">Properties Files: Create your restsql.properties, database.properties and log4j.properties (or logging.properties) as above. The restsql.properties and database.properties can exist outside the restSQL webapp, however the log4j.properties/logging.properties must exist within the classpath in WEB-INF/classes. Note that it will not load properly if you put the logging properties in WEB-INF/lib. You do not have to create the logging directory or directories, e.g. /var/log/restsql. The logging frameworks will do this automatically.</p>
+<p class="text">Properties Files: Create your restsql.properties and log4j.properties (or logging.properties) as above. The restsql.properties can exist outside the restSQL webapp, however the log4j.properties/logging.properties must exist within the classpath in WEB-INF/classes. Note that it will not load properly if you put the logging properties in WEB-INF/lib. You do not have to create the logging directory or directories, e.g. /var/log/restsql. The logging frameworks will do this automatically.</p>
 
 <p class="text">web.xml: Change the restSQL WEB-INF/web.xml. The LifecycleManager needs to know where to load your restsql.properties. Here's an example:</p>
 <pre>
     &lt;context-param&gt;
         &lt;param-name&gt;org.restsql.properties&lt;/param-name&gt;
-        &lt;param-value&gt;/etc/opt/company/restsql/restsql.properties&lt;/param-value&gt;
+        &lt;param-value&gt;/etc/opt/business/restsql/restsql.properties&lt;/param-value&gt;
     &lt;/context-param&gt;
 </pre>
 
-<p class="text">Naming: You may deploy this as a single file or exploded war to your JEE container. Rename it to restsql.war or webapps/restsql if you want the path to be http://yourhost:port/restsql. Containers like Tomcat use the war file name instead of the web.xml's id to name the web app. Additionally, the SDK's HTTP API Explorer will work without any customization.</p>
+<p class="text">Naming: You may deploy this as a single file or exploded war to your JEE container. Rename it to restsql.war or webapps/restsql if you want the path to be http://yourhost:port/restsql. Containers generally use the war file name instead of the web.xml's id to name the web app. Additionally, the SDK's HTTP API Explorer will work without any customization.</p>
 
 <p class="text">Deploy: Copy your exploded war or war to your container's webapps dir and restart the container, or deploy the webapp in your preferred style. All third party dependencies are included in the war distribution in the WEB-INF/lib.</p>
 
@@ -182,12 +196,16 @@
 <p class="text">Deploy: Copy jar to the classpath of your web app, e.g. WEB-INF/lib. The following third party dependencies also need to be in your classpath:</p>
 <ul>
 	<li>commons-logging.jar  - tested with version 1.1.1</li>
-	<li>mysql-connector-java.jar - tested with version 5.1.14</li>
 	<li>log4j.jar - tested with 1.2.16</li>
+</ul>
+<p class="text">Additionally one of the following jdbc drivers is necessary for databases with built-in support:</p>
+<ul>
+	<li>mysql-connector-java.jar (tested with MySQL version 5.5)</li>
+	<li>postgresql-9.0-801.jdbc4.jar (tested with PostgreSQL version 9.0)</li>
 </ul>
 
 <h2>Installing restSQL SDK</h2>
-<p class="text">Requirements: JEE Container, JAR tool, MySQL, Web Browser</p>
+<p class="text">Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser</p>
 <p class="text">Install restsql WAR mode as above with one variation: the restsql.properties must be changed to reference the sdk's SQL Resources definition directory. Below is an example:</p>
 <pre>
     # sqlresources.dir=/absolute/path
@@ -208,24 +226,24 @@
          wadl/
          WEB-INF/
 </pre>
-<p class="text">Database: The HTTP API Explorer requires access to an extended <a href="http://dev.mysql.com/doc/sakila/en/sakila.html">sakila</a> database. It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL. The bash script is restsql-sdk/database/create-sakila.sh and the Windows batch script is restsql-sdk/database/create-sakila.bat. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
+<p class="text">Database: The HTTP API Explorer requires access to an extended <a href="http://dev.mysql.com/doc/sakila/en/sakila.html">sakila</a> database. It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and for PostgreSQL. The bash script is restsql-sdk/database/&lt;database&gt;/create-sakila.sh and the Windows batch script is restsql-sdk/database/&lt;database&gt;/create-sakila.bat, where database is either mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
 </p>
 <p class="text">Troubleshooting: The HTTP API Explorer requires access to a restsql service instance. If you have not deployed restsql to the same host/port as the SDK and to the location /restsql, then you will need to make one small tweak. Change two Javascript variables in restsql-sdk/api-explorer/index.html. Here is an example:
 </p>
 <pre>
     var restsqlHost = "http://somehost:8080";
-    var restsqlBaseUri = "/restsql-0.5";
+    var restsqlBaseUri = "/restsql-0.6";
 </pre>
 
 <h2>Installing restSQL Test</h2>
 <p class="text">Requirements: restSQL project or deployed restSQL, JDK, Ant</p>
 <p class="text">The test project contains component test code, artifacts and a harness that exercise the framework and the service using the Java and HTTP APIs, respectively. The Java API tests use straight JUnit tests. The HTTP API tests use an XML-driven test case harness built with JUnit. The Java API tests require the restsql project, since it relies on its build file and source code. The HTTP API tests only require a deployed restsql service.</p>
+<p class="text">Database: If you have not deployed the SDK yet, you will need to deploy the extended sakila database. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and PostgreSQL. The bash script is restsql-test/database/&lt;database&gt;/create-sakila.sh and the Windows batch script is restsql-test/database/&lt;database&gt;/create-sakila.bat, where database is mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.</p>
 <p class="text">Execution: The tests are executed using the Ant build file (restsql-test/build.xml). Executing the default target, all, will run everything, but you can also run test-api (Java API) or test-service (HTTP API) to run one or either half. If the service is not running in the default location, http://localhost:8080/restsql/, then the System Property, org.restsql.baseUri, must be set. For example:</p>
 <pre>
-    ant -Dorg.restsql.baseUri=http://somehost:8080/restsql-0.5/ test-service-http
+    ant -Dorg.restsql.baseUri=http://somehost:8080/restsql-0.6/ test-service-http
 </pre>
-<p class="text">Test results will appear on the screen. Failure detail is available in restsql-test/obj/test.</p>
-<p class="text">Database: If you have not deployed the SDK yet, you will need to deploy the extended sakila database. Bash and Windows batch scripts are provided to create the base and extended database for MySQL. The bash script is restsql-test/database/create-sakila.sh and the Windows batch script is restsql-test/database/create-sakila.bat. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.</p>
+<p class="text">Test results will appear on the screen. Test detail is available in restsql-test/obj/test.</p>
 </div>
 </body>
 </html>

@@ -1,5 +1,8 @@
 -- Sakila Sample Database Schema
 -- Version 0.8
+-- with modifications for restsql
+-- 		1) changed all TINYINT types to SMALLINT to be compatible with PostgreSQL
+--		2) changed language.name to be varchar so it is not right padded in PostgreSQL
 
 -- Copyright (c) 2006, MySQL AB
 -- All rights reserved.
@@ -57,7 +60,7 @@ CREATE TABLE address (
 --
 
 CREATE TABLE category (
-  category_id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  category_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(25) NOT NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (category_id)
@@ -94,7 +97,7 @@ CREATE TABLE country (
 
 CREATE TABLE customer (
   customer_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  store_id TINYINT UNSIGNED NOT NULL,
+  store_id SMALLINT UNSIGNED NOT NULL,
   first_name VARCHAR(45) NOT NULL,
   last_name VARCHAR(45) NOT NULL,
   email VARCHAR(50) DEFAULT NULL,
@@ -119,9 +122,9 @@ CREATE TABLE film (
   title VARCHAR(255) NOT NULL,
   description TEXT DEFAULT NULL,
   release_year YEAR DEFAULT NULL,
-  language_id TINYINT UNSIGNED NOT NULL,
-  original_language_id TINYINT UNSIGNED DEFAULT NULL,
-  rental_duration TINYINT UNSIGNED NOT NULL DEFAULT 3,
+  language_id SMALLINT UNSIGNED NOT NULL,
+  original_language_id SMALLINT UNSIGNED DEFAULT NULL,
+  rental_duration SMALLINT UNSIGNED NOT NULL DEFAULT 3,
   rental_rate DECIMAL(4,2) NOT NULL DEFAULT 4.99,
   length SMALLINT UNSIGNED DEFAULT NULL,
   replacement_cost DECIMAL(5,2) NOT NULL DEFAULT 19.99,
@@ -156,7 +159,7 @@ CREATE TABLE film_actor (
 
 CREATE TABLE film_category (
   film_id SMALLINT UNSIGNED NOT NULL,
-  category_id TINYINT UNSIGNED NOT NULL,
+  category_id SMALLINT UNSIGNED NOT NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (film_id, category_id),
   CONSTRAINT fk_film_category_film FOREIGN KEY (film_id) REFERENCES film (film_id) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -211,7 +214,7 @@ DELIMITER ;
 CREATE TABLE inventory (
   inventory_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
   film_id SMALLINT UNSIGNED NOT NULL,
-  store_id TINYINT UNSIGNED NOT NULL,
+  store_id SMALLINT UNSIGNED NOT NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (inventory_id),
   KEY idx_fk_film_id (film_id),
@@ -225,8 +228,8 @@ CREATE TABLE inventory (
 --
 
 CREATE TABLE language (
-  language_id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  name CHAR(20) NOT NULL,
+  language_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(20) NOT NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (language_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -238,7 +241,7 @@ CREATE TABLE language (
 CREATE TABLE payment (
   payment_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   customer_id SMALLINT UNSIGNED NOT NULL,
-  staff_id TINYINT UNSIGNED NOT NULL,
+  staff_id SMALLINT UNSIGNED NOT NULL,
   rental_id INT DEFAULT NULL,
   amount DECIMAL(5,2) NOT NULL,
   payment_date DATETIME NOT NULL,
@@ -262,7 +265,7 @@ CREATE TABLE rental (
   inventory_id MEDIUMINT UNSIGNED NOT NULL,
   customer_id SMALLINT UNSIGNED NOT NULL,
   return_date DATETIME DEFAULT NULL,
-  staff_id TINYINT UNSIGNED NOT NULL,
+  staff_id SMALLINT UNSIGNED NOT NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (rental_id),
   UNIQUE KEY  (rental_date,inventory_id,customer_id),
@@ -279,13 +282,13 @@ CREATE TABLE rental (
 --
 
 CREATE TABLE staff (
-  staff_id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  staff_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(45) NOT NULL,
   last_name VARCHAR(45) NOT NULL,
   address_id SMALLINT UNSIGNED NOT NULL,
   picture BLOB DEFAULT NULL,
   email VARCHAR(50) DEFAULT NULL,
-  store_id TINYINT UNSIGNED NOT NULL,
+  store_id SMALLINT UNSIGNED NOT NULL,
   active BOOLEAN NOT NULL DEFAULT TRUE,
   username VARCHAR(16) NOT NULL,
   password VARCHAR(40) BINARY DEFAULT NULL,
@@ -302,8 +305,8 @@ CREATE TABLE staff (
 --
 
 CREATE TABLE store (
-  store_id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  manager_staff_id TINYINT UNSIGNED NOT NULL,
+  store_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  manager_staff_id SMALLINT UNSIGNED NOT NULL,
   address_id SMALLINT UNSIGNED NOT NULL,
   last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY  (store_id),
@@ -444,7 +447,7 @@ GROUP BY a.actor_id, a.first_name, a.last_name;
 DELIMITER //
 
 CREATE PROCEDURE rewards_report (
-    IN min_monthly_purchases TINYINT UNSIGNED
+    IN min_monthly_purchases SMALLINT UNSIGNED
     , IN min_dollar_amount_purchased DECIMAL(10,2) UNSIGNED
     , OUT count_rewardees INT
 )
