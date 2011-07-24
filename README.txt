@@ -1,4 +1,4 @@
-README.txt (14-Jul-2011)
+README.txt (23-Jul-2011)
 
 restSQL SDK Deployment Guide
 
@@ -20,6 +20,12 @@ restSQL binary distributions contain three libraries:
 restSQL source distributions consist of one jar:
     1. restsql-{version}-src.jar    (service and core framework)
     
+
+-------------------------------------------------------------------------------
+Versions
+
+The restsql and restsql-sdk versions are found in the jar and war's META-INF/MANIFEST.MF. It is also found in the the source tree in restsql/build.properties and restsql-sdk/build.properties in the property build.version. 
+
 
 -------------------------------------------------------------------------------
 Installing restSQL SDK
