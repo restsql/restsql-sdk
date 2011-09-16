@@ -1,8 +1,8 @@
-README.txt (23-Jul-2011)
+README.txt (15-Sep-2011)
 
 restSQL SDK Deployment Guide
 
-Project website is at http://restsql.org. Distributions at http://restsql.org/dist. Source code hosted at http://github.com/restsql.
+Project website is at http://restsql.org. Distributions at http://restsql.org/dist. Release history at http://restsql.org/doc/ReleaseHistory.html. Source code hosted at http://github.com/restsql.
 
 -------------------------------------------------------------------------------
 Structure and Distributions
@@ -59,7 +59,7 @@ Database: The HTTP API Explorer requires access to an extended sakila database (
 Troubleshooting: The HTTP API Explorer requires access to a restsql service instance. If you have not deployed restsql to the same host/port as the SDK and to the location /restsql, then you will need to make one small tweak. Change two Javascript variables in restsql-sdk/api-explorer/index.html. Here is an example:
 
     var restsqlHost = "http://somehost:8080";
-    var restsqlBaseUri = "/restsql-0.6";
+    var restsqlBaseUri = "/restsql-0.7";
 
 
 -------------------------------------------------------------------------------

@@ -28,16 +28,17 @@
     </div>
     <div class="nav-category">Configuration
         <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../defaults/properties/">Default Props</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/properties/">Example Props</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/xml">Example XML</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
         <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
         <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
     </div>
-    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
     <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
     <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
 </div>
 
 <div id="content"> 
@@ -50,6 +51,7 @@
 	<li>uses a simple RESTful HTTP API with XML or JSON serialization</li>
 	<li>presents flat or hierarchical views of relational database tables</li>
 	<li>organizes access through query-able and updatable database views called SQL Resources</li>
+	<li>uses declarative authorization</li>
 	<li>offers declarative and plugin mechanisms for implementing domain constraints and business logic</li>
 	<li>a JEE web application or a Java library</li>
 	<li>platform, JEE container and database agnostic</li>
@@ -113,11 +115,11 @@
 </ul>
 
 <h2>Description</h2>
-<div class="text">restSQL is a different kind of middle tier framework. There is no object-relational mapping, no object query language and no beans. It is intentionally not an object-oriented view of the database. It provides an interface based on <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">Representational State Transfer</a> (REST) principles, which use HTTP’s built-in features, rather than abstracting away from them. The framework makes it simple to put a RESTful interface on a database.</div>
+<div class="text">restSQL is a different kind of middle tier framework. There is no object-relational mapping, no object query language and no beans. It is intentionally not an object-oriented view of the database. It provides an interface based on <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">Representational State Transfer</a> (REST) principles, which use HTTP's built-in features, rather than abstracting away from them. The framework makes it simple to put a RESTful interface on a database.</div>
 <p class="text">The framework is used in two ways: 1) Clients may connect directly to the restSQL engine using the HTTP API, and 2) your Services use a Java API.</p>
 <p class="text">Optionally, applications provide Java-based triggers to manage data validation and business logic.
 restSQL right-sizes five technologies: SQL, XML, JSON, Java and HTTP. SQL is embedded in XML files that define resources, like database views, that may be queried, added to, updated or deleted using HTTP or a Java access API. Data is serialized over XML or JSON. The framework itself is written in Java and deployed as a JAR or WAR on a standard JEE Container.</p>
-<p class="text">restSQL enables you to build multiple SQL Resources, queryable and updatable database “views” that exist on the middle tier and are accessible via Java or HTTP APIs. SQL Resources may be flat views or hierarchical parent-child. The SQL Resource is defined in an XML file. The core of the definition is the query expression, an SQL DML expression.</p>
+<p class="text">restSQL enables you to build multiple SQL Resources, queryable and updatable database views that exist on the middle tier and are accessible via Java or HTTP APIs. SQL Resources may be flat views or hierarchical parent-child. The SQL Resource is defined in an XML file. The core of the definition is the query expression, an SQL DML expression.</p>
 <p style="font-size:1.25em">restSQL &#8211; <span style="text-decoration:none">Trim your Middle</span></p>
 </div>
 </body>

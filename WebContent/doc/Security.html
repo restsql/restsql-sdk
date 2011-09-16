@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL Security</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Javadoc
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>Security</h1>
+<div class="text">restSQL access may be encrypted, authenticated, authorized and validated. The JEE Container provides encryption and authentication. restSQL provides resource authorization capability, ensuring users only access the SQL Resources and methods appropriate to their assigned role(s). Applications provide Java-based Triggers to perform input validation.</div>
+
+<h2>Encryption and Authentication</h2>
+<p class="text">The JEE Web Application Deployment Descriptor, web.xml, provides declarative mechanisms to enable encryption and authentication. restSQL's web.xml may be configured to match application needs. See the <a href="../defaults/xml/web.xml">default web.xml</a>. For a complete tutorial, see <a href="http://java.sun.com/javaee/6/docs/tutorial/doc/bncbe.html">Web Application Security using Deployment Descriptors</a>.</p>
+<p class="text">The &lt;login-config&gt; element defines the HTTP authentication method (BASIC or DIGEST) and the realm. Here is an example of BASIC authentication with Tomcat's file-based realm, UserDatabase:</p>
+<pre>
+   &lt;login-config&gt;
+      &lt;auth-method&gt;BASIC&lt;/auth-method&gt;
+      &lt;realm-name&gt;UserDatabase&lt;/realm-name&gt;
+   &lt;/login-config&gt;
+</pre>
+<p class="text">The UserDatabase realm is configured using the $TOMCAT_HOME/conf/tomcat-users.xml file. The file defines the roles, user names, passwords and role assignments. File-, RDBMS- and LDAP-backed implementations are also available in most JEE containers. See your container's documentation for instructions.</p>
+<p class="text">The &lt;security-constraint&gt; element defines URLs to be protected, the roles that may access them and the transport guarantee (NONE = HTTP, CONFIDENTIAL = HTTPS). Following is an example that declares the "all", "limited", and "readonly" roles may access /res/*, or all SQL Resources. (The next section will describe how those roles are mapped to SQL Resources and operations). The example also coerces all connections to HTTPS, i.e. HTTP over SSL/TLS.</p>
+<pre>
+   &lt;security-constraint&gt;
+       &lt;web-resource-collection&gt;
+           &lt;web-resource-name&gt;SQL Resources&lt;/web-resource-name&gt;
+           &lt;url-pattern&gt;/res/*&lt;/url-pattern&gt;
+       &lt;/web-resource-collection&gt;
+       &lt;auth-constraint&gt;
+           &lt;role-name&gt;all&lt;/role-name&gt;
+           &lt;role-name&gt;limited&lt;/role-name&gt;
+           &lt;role-name&gt;readonly&lt;/role-name&gt;
+       &lt;/auth-constraint&gt;
+       &lt;user-data-constraint&gt;
+           &lt;transport-guarantee&gt;CONFIDENTIAL&lt;/transport-guarantee&gt;
+       &lt;/user-data-constraint&gt;
+   &lt;/security-constraint&gt;
+</pre>
+
+<p class="text">The following &lt;security-constraint&gt; requires the "admin" role for all administrative URLs and no encryption:</p>
+<pre>
+   &lt;security-constraint&gt;
+       &lt;web-resource-collection&gt;
+           &lt;web-resource-name&gt;Admin Resources&lt;/web-resource-name&gt;
+           &lt;url-pattern&gt;/conf/*&lt;/url-pattern&gt;
+           &lt;url-pattern&gt;/log/*&lt;/url-pattern&gt;
+           &lt;url-pattern&gt;/stats/*&lt;/url-pattern&gt;
+       &lt;/web-resource-collection&gt;
+       &lt;auth-constraint&gt;
+           &lt;role-name&gt;admin&lt;/role-name&gt;
+       &lt;/auth-constraint&gt;
+       &lt;user-data-constraint&gt;
+           &lt;transport-guarantee&gt;NONE&lt;/transport-guarantee&gt;
+       &lt;/user-data-constraint&gt;
+   &lt;/security-constraint&gt;
+</pre>
+
+<h2>Authorization</h2>
+<p class="text"> Role to SQL Resource and request type assignments (privileges) are provided via a simple configuration file. The restsql.properties defines the absolute path to the privileges configuration file. Here is an example:</p>
+<pre>
+   # security.privileges=/absolute/path
+   security.privileges=/etc/opt/business/restsql/privileges.properties
+</pre>
+<p class="text">The privileges.properties file concisely defines the operations on SQL Resources available to each role. Here is an example file:</p>
+<pre>
+   # SQL Resource Privilege definitions
+   
+   # [SqlResource,*].[requestType,*]=[*,role]      Note: comma-separate multiple roles
+   
+   Country.select=*                     select on all Country to all roles
+   *.select=all,limited,readonly        select on all SQL Resources to "all", "limited" and "readonly" roles
+   *.insert,update,delete=all           insert, update and delete methods on all SQL Resources to the "all" role
+   Film.insert=creator                  insert method on Film to the "editor" role
+   Film.insert,update,delete=editor     insert, update and delete methods on Film to the "editor" role
+</pre>
+<p class="text">Privileges properties control access to /res/* URLs only. Authorization of admin resources (/conf/*, /log/*, /stats/*) is controlled solely by the Deployment Descriptor (web.xml) constraints. </p>
+<p class="text">Invalid Definitions: Any invalid definitions are discarded, with a warning in the internal.log. If no valid definitions are found, or the file is is not found, an error appears in the internal.log and no operations are permitted on an any SQL Resources.</p>
+<p class="text">Disabling Authorization: If <code>security.privileges</code> is missing from the restsql.properties, authorization is disabled and all operations are permitted regardless of user role.</p>
+<p class="text">Access http://yourhost:port/restsql for links to the effective runtime configuration.</p>
+<p class="text">In restSQL WAR mode, authorization is implicit in HTTP requests. In restSQL Jar mode, authorization is explicit. Neither Request nor SQL Resource methods are protected. The app must create a <code>SecurityContext</code> implementation and pass it as well as the <code>Request</code> to the <code>Authorizer</code>, as in <code>Authorizer.isAuthorized(securityContext, request)</code>.</p>
+
+<h2>Validation</h2>
+<p class="text">Server-side input validation (data types, values, etc.) may be provided by application-provided, Java-based <a href="Triggers.html">Triggers</a>.</p>
+
+</div>
+</body>
+</html>

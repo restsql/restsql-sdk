@@ -28,16 +28,17 @@
     </div>
     <div class="nav-category">Configuration
         <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../defaults/properties/">Default Props</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../examples/properties/">Example Props</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../examples/xml">Example XML</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
         <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
         <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
     </div>
-    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
     <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
     <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
 </div>
 
 <div id="content"> 
@@ -47,7 +48,7 @@
 	<li>The HTTP verison is 1.1</li>
 	<li>Some methods accept XML (Content-Type: application/xml) or URL Encoded Params (Content-Type: application/x-www-form-urlencoded)</li>
 	<li>All methods return XML (Content-Type: application/xml) with a no-cache directive (Cache-Control: no-cache)</li>
-	<li>Normal responses are 200 OK, invalid requests are 400 and SQL errors are 500 - See <a href="ResHttpStatus.html">HTTP Status Codes</a> for more detail</li>
+	<li>Normal responses are 200 OK, invalid requests are 4xx and SQL errors are 500 - See <a href="ResHttpStatus.html">HTTP Status Codes</a> for more detail</li>
 </ul>
 <table>
 	<tbody>
@@ -190,6 +191,11 @@
 			<td>GET</td>
 			<td>/conf/log</td>
 			<td>Returns logging configuration in structured text</td>
+		</tr>
+		<tr>
+			<td>GET</td>
+			<td>/conf/security</td>
+			<td>Returns security configuration, currently the privileges for authorization, in structured text</td>
 		</tr>
 	</tbody>
 </table>

@@ -28,16 +28,17 @@
     </div>
     <div class="nav-category">Configuration
         <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../defaults/properties/">Default Props</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/properties/">Example Props</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/xml">Example XML</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
         <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
         <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
     </div>
-    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
     <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
     <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
 </div>
 
 <div id="content"> 
@@ -46,7 +47,7 @@
 
 <h2>restSQL</h2>
 <div class="text">restSQL is a persistence framework or engine in the middle tier of a classic three tier architecture: client, application server and database. restSQL is not an HTTP to JDBC/ODBC bridge that tunnels SQL over HTTP. Nor is restSQL an Object-Relational Mapping tool, abstracting SQL by mapping tables to objects. restSQL is an SQL generator with Java and HTTP APIs. restSQL keeps SQL out of the client but also eliminates the need for the middle-tier to construct SQL for basic CRUD (Create-Read-Update-Delete) operations. restSQL does not offer sophisticated query or report generation, nor OLAP-style cube or data warehousing support. restSQL is targeted at OLTP applications needing basic CRUD access.</div>
-<p class="text">restSQL may be deployed in two modes: as an HTTP Service or as a Java library. In both cases, restSQL is more of an engine than a framework, because very few extensions are required. No object hierarchy needs to be created and no persistence managers need be customized. A simple XML file defines an SQL Resource, an queryable and updatable database view that is managed by the engine. Declarative attribute validators may be employed to enforce simple data constraints (e.g. numeric ranges, string length or format), or applications may provide custom Java-based attribute validators for more enforcing more complex domain constraints. Additionally Java-based triggers may be deployed to enforce domain constraints or perform business logic.</p>
+<p class="text">restSQL may be deployed in two modes: as an HTTP Service (WAR) or as a Java library (JAR). In both cases, restSQL is more of an engine than a framework, because very few extensions are required. No object hierarchy needs to be created and no persistence managers need be customized. A simple XML file defines an SQL Resource, an queryable and updatable database view that is managed by the engine. Declarative attribute validators may be employed to enforce simple data constraints (e.g. numeric ranges, string length or format), or applications may provide custom Java-based attribute validators for more enforcing more complex domain constraints. Additionally Java-based triggers may be deployed to enforce domain constraints or perform business logic.</p>
 <p class="text">restSQL was designed from the ground up for its implementation to be customized. The API interfaces are distinct from the implementation. Applications access implementations of various constructs using Factories. Applications may provide their own implementations by registering their factories which create the custom implementations. This may be useful for users needing application-specific extensions or support for new databases.</p>
 
 <h2>SQL Resource</h2>
@@ -266,6 +267,22 @@ You have an error in your SQL syntax; check the manual that corresponds to your 
 server version for the right syntax to use near 'LIMIT 0,1' at line 1 :: 
 select actor_id, first_name, last_name from  LIMIT 0,1
 </pre>
+
+<h2>Authorizer</h2>
+<div class="text">Requests on SQL Resources can be authorized using the Authorizer. The Authorizer uses a role-based access control (RBAC) approach. Roles are mapped to SQL Resources and actions (request types) in a simple configuration file, the privileges.properties.  The path to it is entered in the <code>security.privileges</code> property in the restsql.properties. Following is an example:</div>
+<pre>
+   # SQL Resource Privilege definitions
+
+   # [SqlResource,*].[requestType,*]=[*,role]		Note: comma-separate multiple roles
+   *.select=all,limited,readonly
+   Film.insert,update=limited
+</pre>
+<div class="text">The above example declares that the all, limited and readonly roles may perform SELECT requests on all SQL Resources. The limited role may additionally perform inserts and updates on the SQL Resource "Film".</div>
+
+<p class="text">In the restSQL WAR mode, clients use standard HTTP Basic or Digest authentication and standard JEE web app declarative security mechanisms. Credentials and role assignments are provided by a standard Realm plugin, which could be file-, RDBMS- or LDAP-based. The authentication method, realm and protected resources are declared in restSQL's Deployment Descriptor (web.xml). The Authorizer, when configured, is used by the restSQL HTTP Service. The container will send 401 responses for requests without credentials or with invalid credentials. restSQL will send 403 responses for unauthorized requests.</p>
+
+<p class="text">In the restSQL JAR mode, the app is responsible for authenticating users and associating users with roles. The app will call restSQL's <code>Authorizer</code> with a <code>SecurityContext</code> implementation prior to executing SQL Resource requests.</p>
+
 <h2>Trigger</h2>
 <div class="text">Java-based triggers may be deployed to enforce domain constraints in the middle-tier or perform business logic. These triggers implement the <code>Trigger</code> interface or extend the convenience class <code>AbstractTrigger</code>. Triggers have methods that fire before and after each CRUD operation. Throwing an <code>InvalidRequestException</code> on a beforeXxx method stops the request. A properties file maps trigger classes to one or more SQL Resources.</div>
 

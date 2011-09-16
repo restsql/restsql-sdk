@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL Release History</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Javadoc
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>Release History</h1>
+<h3>0.7 - Sept 15, 2011</h3>
+<div class="text">restSQL 0.7 release adds role-based access control.</div>
+<p class="text">The release adds resource authorization capability, ensuring users only access the SQL Resources and methods appropriate to their assigned role(s). It uses standard HTTP Basic or Digest authentication and standard JEE web app declarative security mechanisms. Credentials and role assignments are provided by a standard Realm plugin, which could be file-, RDBMS- or LDAP-based. Role to SQL Resource and request type assignments are provided via a simple configuration file.</p>
+
+<h3>0.6 - July 15, 2011</h3>
+<div class="text">restSQL 0.6 release adds PostgreSQL interoperability.</div>
+<p class="text">The release extends database interoperability from MySQL to PostgreSQL. It also includes extension mechanisms to easily develop support for other database engines. The release additionally was tested with multiple application servers to ensure interoperability with any standard JEE container.</p>
+
+<h3>0.5 - May 14, 2011</h3>
+<div class="text">restSQL 0.5 is the initial public release of the framework and Java and HTTP APIs. It interoperates with MySQL and Apache Tomcat.</div>
+
+</div>
+</body>
+</html>
