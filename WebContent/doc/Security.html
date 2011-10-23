@@ -55,6 +55,21 @@
    &lt;/login-config&gt;
 </pre>
 <p class="text">The UserDatabase realm is configured using the $TOMCAT_HOME/conf/tomcat-users.xml file. The file defines the roles, user names, passwords and role assignments. File-, RDBMS- and LDAP-backed implementations are also available in most JEE containers. See your container's documentation for instructions.</p>
+<p class="text">The &lt;security-role&gt; element defines the roles. For example:</p>
+<pre>
+   &lt;security-role&gt;
+       &lt;role-name&gt;all&lt;/role-name&gt;
+   &lt;/security-role&gt;
+   &lt;security-role&gt;
+       &lt;role-name&gt;limited&lt;/role-name&gt;
+   &lt;/security-role&gt;
+   &lt;security-role&gt;
+       &lt;role-name&gt;readonly&lt;/role-name&gt;
+   &lt;/security-role&gt;  
+   &lt;security-role&gt;
+       &lt;role-name&gt;admin&lt;/role-name&gt;
+   &lt;/security-role&gt;  
+</pre>
 <p class="text">The &lt;security-constraint&gt; element defines URLs to be protected, the roles that may access them and the transport guarantee (NONE = HTTP, CONFIDENTIAL = HTTPS). Following is an example that declares the "all", "limited", and "readonly" roles may access /res/*, or all SQL Resources. (The next section will describe how those roles are mapped to SQL Resources and operations). The example also coerces all connections to HTTPS, i.e. HTTP over SSL/TLS.</p>
 <pre>
    &lt;security-constraint&gt;

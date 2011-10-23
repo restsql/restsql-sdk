@@ -205,13 +205,32 @@
 
 <p class="text">The default deployment descriptor (web.xml) contains login config (authentication method) and security constraints (authorization declarations). See the restSQL <a href="../defaults/xml/web.xml">default deployment descriptor</a>.</p>
 
-<p class="text">Disabling Security: To disable authentication/authorization, simply remove or comment out the security-constraint and login-config elements in the web.xml.</p>
+<p class="text">Disabling Authorization and Authentication: To disable authentication/authorization, simply remove or comment out the security-constraint and login-config elements in the web.xml.</p>
 
-<p class="text">Enabling Security: You may use the default security constraints and login config or change it to conform to your specific roles, realm and other requirements. More information on Web Application Security using deployment descriptors is available at http://java.sun.com/javaee/6/docs/tutorial/doc/bncbe.html. Or consult your container's documentation. Authentication mechanisms (credential management, user to role assigment) are typically container-specific/proprietary. You will also need to configure a privileges properties file and reference it in the restsql properties file. See the SDK's Security configuration for instructions.</p>
+<p class="text">Enabling Authorization and Authentication: You may use the default security constraints and login config or change it to conform to your specific roles, realm and other requirements. More information on Web Application Security using deployment descriptors is available at http://java.sun.com/javaee/6/docs/tutorial/doc/bncbe.html. Or consult your container's documentation. Authentication mechanisms (credential management, user to role assigment) are typically container-specific/proprietary. You will also need to configure a privileges properties file and reference it in the restsql properties file. See the SDK's Security configuration for instructions.</p>
 
 <p class="text">Naming: You may deploy this as a single file or exploded war to your JEE container. Rename it from restsql-#.war to to restsql.war or webapps/restsql if you want the path to be http://yourhost:port/restsql. Containers generally use the war file name instead of the web.xml's id to name the web app. Additionally, the SDK's HTTP API Explorer will work without any customization.</p>
 
 <p class="text">Deploy: Copy your exploded war or war to your container's webapps dir and restart the container, or deploy the webapp in your preferred style. All third party dependencies are included in the war distribution in the WEB-INF/lib.</p>
+
+<p class="text">Java Security Manager: If Java Security is enabled in your container, permissions must be added to your container's policy file. restSQL requires:
+<ul>
+	<li>read/write access (java.util.PropertyPermission) to the following system properties:
+		<ul>
+			<li>org.restsql.properties</li>
+			<li>org.apache.commons.logging.Log</li>
+			<li>either log4j.configuration for log4j logging or java.util.logging.config.file for Java Native logging</li>
+		</ul>
+	</li>
+	<li>read access (java.io.FilePermission) to the various properties files, and SQL Resources and triggers directories</li>
+</ul>
+However, restsql uses other libraries (jersey, jdbc, logging) which need some unknown combination of access permissions. The only configuration that has been demonstrated to work is to grant all permissions to restsql. For example for Tomcat, add this to the end of the ${TOMCAT_HOME}/conf/catalina.policy file:
+<pre>
+    grant codeBase "file:${catalina.base}/webapps/restsql/-" {
+        permission java.security.AllPermission;
+    };
+</pre>
+</p> 
 
 <h2>Installing restSQL JAR mode</h2>
 <p class="text">Properties: Follow the instructions for Configuring restSQL.</p>
@@ -227,7 +246,9 @@
 	<li>mysql-connector-java-#.jar (tested with MySQL version 5.5)</li>
 	<li>postgresql-#.jdbc4.jar (tested with PostgreSQL version 9.0)</li>
 </ul>
-<p class="text">Enabling Security: restSQL will authorize SQL Resource operations. Your app will authenticate users and associate users with roles. You must provide a priviliges properties file and reference it in the restsql.properties. Your app will call restSQL's <code>Authorizer</code> and provide a <code>SecurityContext</code> implementation. See the SDK's Security configuration for more instructions.</p>
+<p class="text">Authorization and Authentication: restSQL will authorize SQL Resource operations. Your app will authenticate users and associate users with roles. You must provide a priviliges properties file and reference it in the restsql.properties. Your app will call restSQL's <code>Authorizer</code> and provide a <code>SecurityContext</code> implementation. See the SDK's Security configuration for more instructions.</p>
+
+<p class="text">Java Security Manager: If you run enable Java Security, restSQL requires read/write access (java.util.PropertyPermission) to the following system properties: org.restsql.properties, org.apache.commons.logging.Log and either log4j.configuration for log4j logging or java.util.logging.config.file for Java Native logging. Additionally it needs read access (java.io.FilePermission) to the various properties files, and SQL Resources and triggers directories.</p> 
 
 <h2>Installing restSQL SDK</h2>
 <p class="text">Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser</p>

@@ -157,8 +157,36 @@
 <div class="text">Group By queries are not supported (yet).</div>
 <p class="text">If tables are unqualified, restSQL uses the defaultDatabase. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions. The parentExt and childExt may contain multiple tables, delimited by commas.</p>
 
-<h2>Column Label</h2>
-<div class="text">Column labels may be used. In the ActorFilm example release_year will appear in requests/responses as year. Query columns may include functions as long as they are labeled. Do not use select * or select table.*; columns must be declared explictly.</div>
+<h2>Column and Table Aliases</h2>
+<div class="text">Column labels may be used to alias a column. In the ActorFilm example release_year will appear in requests/responses as year. Query columns may include functions as long as they are labeled. Do not use select * or select table.*; columns must be declared explictly.</div>
+<p class="text">Warning: Aliasing primary keys in hierarchical resources is currently not supported.</p>
+<p class="text">The parent and child tables may also be aliased. These names will appear in the elements of the request or response XML. The LanguageFilm example below uses table aliases:</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
+   name="LanguageFilm" defaultDatabase="sakila" parent="language" parentAlias="lang" child="film" childAlias="movie"&gt;
+   &lt;query&gt;
+      select language.language_id, language.name, film_id, title, release_year "year"
+      from language
+      left outer join film on film.language_id = language.language_id
+   &lt;/query&gt;
+&lt;/rs:sqlResource&gt;
+</pre>
+<p class="text">Instead of using element names language and film, the names lang and movie are used, as in:</p>
+<pre>
+    &lt;readResponse&gt;
+        &lt;lang language_id="100" langName="New Esperanto"&gt;
+            &lt;movie year="2011" title="ESCAPE FROM TOMORROW" film_id="5000" /&gt;
+            &lt;movie year="2012" title="BLOOD PURPLE" film_id="5001" /&gt;
+        &lt;/lang&gt;
+        &lt;lang language_id="101" langName="New Greek"&gt;
+            &lt;movie year="2012" title="THE DARKENING" film_id="5002" /&gt;
+            &lt;movie year="2012" title="THE LIGHTENING" film_id="5003" /&gt;
+        &lt;/lang&gt;
+    &lt;/readResponse&gt;
+</pre>
 
 <h2>MetaData</h2>
 <div class="text">restSQL creates a construct containing the metadata for the SQL Resource on its first use (initial request for it). This metadata is used to generate SQL for requests. The metadata includes the defining query, the table roles and default database, as well as data derived by interrogating the database. That includes column type information, and primary and foreign keys. This is done by executing the defining query as well as querying the database's data dictionary (information schema).</div>

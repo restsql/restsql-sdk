@@ -1,4 +1,4 @@
-README.txt (15-Sep-2011)
+README.txt (23-Oct-2011)
 
 restSQL SDK Deployment Guide
 

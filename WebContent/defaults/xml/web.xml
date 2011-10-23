@@ -36,13 +36,26 @@
 	<listener>
 		<listener-class>org.restsql.service.LifecycleListener</listener-class>
 	</listener>
+
 	<!-- Configure absolute path to restsql properties file -->
 	<context-param>
 		<param-name>org.restsql.properties</param-name>
 		<param-value>/etc/opt/business/restsql/restsql.properties</param-value>
 	</context-param>
 
-	<!-- Remove security-constraints and login-config for no authentication/authorization -->
+	<!-- Remove security-roles, security-constraints and login-config for no authentication/authorization -->
+	<security-role>
+	    <role-name>all</role-name>
+	</security-role>
+	<security-role>
+	    <role-name>limited</role-name>
+	</security-role>
+	<security-role>
+	    <role-name>readonly</role-name>
+	</security-role>	
+	<security-role>
+	    <role-name>admin</role-name>
+	</security-role>	
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>SQL Resources</web-resource-name>
@@ -68,7 +81,7 @@
 			<role-name>admin</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			<transport-guarantee>NONE</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 	<login-config>
