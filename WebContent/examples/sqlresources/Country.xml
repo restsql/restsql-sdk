@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd " name="TestTimestamp" defaultDatabase="sakila"
-	parent="test_timestamp">
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd " defaultDatabase="sakila" parent="country">
 	<query>
-		select id, time
-		from test_timestamp
+		select country_id, country, last_update
+		from country
 	</query>
 </rs:sqlResource>

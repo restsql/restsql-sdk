@@ -112,7 +112,7 @@
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   name="FilmRating" defaultDatabase="sakila" parent="film" parentExt="film_rating"&gt;
+   defaultDatabase="sakila" parent="film" parentExt="film_rating"&gt;
    &lt;query&gt;
       select film.film_id, title, release_year "year",
              language_id,rental_duration,rental_rate,replacement_cost, film_rating_id, stars
@@ -127,7 +127,7 @@
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   name="LanguageFilm" defaultDatabase="sakila" parent="language" child="film"&gt;
+   defaultDatabase="sakila" parent="language" child="film"&gt;
    &lt;query&gt;
       select language.language_id, language.name, film_id, title, release_year "year"
       from language
@@ -141,7 +141,7 @@
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   name="ActorFilm" defaultDatabase="sakila" parent="actor" parentExt="actor_rating"
+   defaultDatabase="sakila" parent="actor" parentExt="actor_rating"
    child="film" childExt="film_rating" join="film_actor"&gt;
    &lt;query&gt;
       select actor.actor_id, first_name, last_name, actor_rating.stars,
@@ -154,8 +154,11 @@
    &lt;/query&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
-<div class="text">Group By queries are not supported (yet).</div>
+<p class="text">Group By queries are not supported (yet).</p>
 <p class="text">If tables are unqualified, restSQL uses the defaultDatabase. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions. The parentExt and childExt may contain multiple tables, delimited by commas.</p>
+
+<h2>SQL Resource Names</h2>
+<div class="text">The SQL resource name is inferred from the file name and its location if it is in a subdirectory below the resources root directory (<code>sqlresources.dir</code>). SQL resource namespaces may be organized into arbitrary-depth directories. The directory path is converted into dotted notation, following the Java package concept. For example, if ActorFilm.xml is placed in the subdirectory <code>actor/ext</code>, as in <code>{sqlresources.dir}/actor/ext/ActorFilm.xml</code>, then its name is <code>actor.ext.ActorFilm</code>. In the HTTP requests, it would be available at the URI <code>/restsql/res/actor.ext.ActorFilm</code>. If ActorFilm.xml is placed in the resources root, it would be available at the URI <code>/restsql/res/ActorFilm</code>.</div>
 
 <h2>Column and Table Aliases</h2>
 <div class="text">Column labels may be used to alias a column. In the ActorFilm example release_year will appear in requests/responses as year. Query columns may include functions as long as they are labeled. Do not use select * or select table.*; columns must be declared explictly.</div>
@@ -166,7 +169,7 @@
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   name="LanguageFilm" defaultDatabase="sakila" parent="language" parentAlias="lang" child="film" childAlias="movie"&gt;
+   defaultDatabase="sakila" parent="language" parentAlias="lang" child="film" childAlias="movie"&gt;
    &lt;query&gt;
       select language.language_id, language.name, film_id, title, release_year "year"
       from language
@@ -252,8 +255,22 @@ Content-Type: application/xml
 </pre>
 
 <h2>HTTP Response</h2>
-<div class="text">Responses use W3C standard HTTP status codes, generally 200 for success, 400 for an invalid request and 500 for an SQL error. The content type is XML (or JSON coming soon). Following is an example of a Read request with query parameters on a many-to-many hierarchical SQL Resource:</div>
-<pre>GET /restsql/res/ActorFilm?last_name=SMITH HTTP/1.1</pre>
+<div class="text">Responses use W3C standard HTTP status codes, generally 200 for success, 400 for an invalid request and 500 for an SQL error. The content type is XML (or JSON coming soon).</div>
+
+<p class="text">Following is an example of a Create request for a flat SQL Resource:</p>
+<pre>POST /restsql/res/Actor HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+actor_id=201&amp;first_name=JULIANNE&amp;last_name=DENCH
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="1" /&gt;
+</pre>
+
+<p class="text">Following is an example of a Read request with query parameters on a many-to-many hierarchical SQL Resource:</p>
+<pre>GET /restsql/res/actor.ext.ActorFilm?last_name=SMITH HTTP/1.1</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -270,17 +287,7 @@ Content-Type: application/xml
    &lt;/actor&gt;
 &lt;/readResponse&gt;
 </pre>
-<div class="text">Following is an example of a Create request for a flat SQL Resource:</div>
-<pre>POST /restsql/res/Actor HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
 
-actor_id=201&amp;first_name=JULIANNE&amp;last_name=DENCH
-</pre>
-<pre>HTTP/1.1 200 OK
-Content-Type: application/xml
-
-&lt;writeResponse rowsAffected="1" /&gt;
-</pre>
 <div class="text">Following is an example of an invalid query:</div>
 <pre>DELETE /restsql/res/Film?blah=blah HTTP/1.1</pre>
 <pre>HTTP/1.1 400 Bad Request

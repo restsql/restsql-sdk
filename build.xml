@@ -2,7 +2,7 @@
 <project name="restsql-sdk" default="all">
 	<property file="build.properties" />
 
-	<target name="all" depends="defaults,database,javadoc,sqlresources,wadl,lib" />
+	<target name="all" depends="defaults,database,javadoc,wadl,lib" />
 
 	<target name="clean">
 		<delete dir="obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
@@ -41,12 +41,6 @@
 	<target name="javadoc">
 		<copy todir="WebContent/javadoc">
 			<fileset dir="../restsql/obj/doc/javadoc" />
-		</copy>
-	</target>
-
-	<target name="sqlresources">
-		<copy todir="WebContent/sqlresources">
-			<fileset dir="../restsql-test/src/resources/xml/sqlresources" />
 		</copy>
 	</target>
 

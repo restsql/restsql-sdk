@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd " name="HierOneToMany"
-	defaultDatabase="sakila" parent="language" parentAlias="lang" child="film" childAlias="movie">
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd " defaultDatabase="sakila" parent="language"
+	parentAlias="lang" child="film" childAlias="movie">
 	<query>
 		select language.language_id, language.name "langName", film_id, title, release_year "year"
 		from language

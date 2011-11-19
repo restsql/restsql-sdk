@@ -1,4 +1,4 @@
-README.txt (23-Oct-2011)
+README.txt (19-Nov-2011)
 
 restSQL SDK Deployment Guide
 
@@ -35,7 +35,7 @@ Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser
 Install restsql WAR mode (see restSQL README.txt) with one variation: the restsql.properties must be changed to reference the sdk's SQL Resources definition directory. Below is an example:
 
     # sqlresources.dir=/absolute/path
-    sqlresources.dir=/opt/tomcat/webapps/restsql-sdk/sqlresources
+    sqlresources.dir=/opt/tomcat/webapps/restsql-sdk/examples/sqlresources
 
 Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory, e.g. /opt/tomcat/webapps/restsql-sdk. Restart the container or use your preferred deloyment method.
 
@@ -48,7 +48,6 @@ Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory,
             examples/
             javadoc/
             META-INF/
-            sqlresources/
             wadl/
             WEB-INF/
     

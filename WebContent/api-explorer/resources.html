@@ -7,13 +7,12 @@
 <body style="font-family:sans-serif">
 <form name="resources">
 	<span style="font-weight:bold">SQL Resources</span><br/>
-	<input type="radio" name="resName" value="FlatManyToOne" onclick="parent.setResName(this.value)"/>FlatManyToOne<br />
-	<input type="radio" name="resName" value="FlatOneToOne"  onclick="parent.setResName(this.value)"/>FlatOneToOne<br />
-	<input type="radio" name="resName" value="HierManyToMany"  onclick="parent.setResName(this.value)"/>HierManyToMany<br />
-	<input type="radio" name="resName" value="HierManyToManyExt"  onclick="parent.setResName(this.value)"/>HierManyToManyExt<br />
-	<input type="radio" name="resName" value="HierOneToMany"  onclick="parent.setResName(this.value)"/>HierOneToMany<br />
-	<input type="radio" checked="checked" name="resName" value="SingleTable"  onclick="parent.setResName(this.value)"/>SingleTable<br />
-	<input type="radio" name="resName" value="SingleTable_MultiPK"  onclick="parent.setResName(this.value)"/>SingleTable_MultiPK<br />
+	<input type="radio" checked="checked" name="resName" value="Country" onclick="parent.setResName(this.value)"/>Country<br />
+	<input type="radio" name="resName" value="actor.Actor"  onclick="parent.setResName(this.value)"/>actor.Actor<br />
+	<input type="radio" name="resName" value="actor.ext.ActorFilm"  onclick="parent.setResName(this.value)"/>actor.ext.ActorFilm<br />
+	<input type="radio" name="resName" value="film.Film"  onclick="parent.setResName(this.value)"/>film.Film<br />
+	<input type="radio" name="resName" value="film.FilmLanguage"  onclick="parent.setResName(this.value)"/>film.FilmLanguage<br />
+	<input type="radio" name="resName" value="language.LanguageFilm"  onclick="parent.setResName(this.value)"/>language.LanguageFilm<br />
 </form>
 </body>
 </html>

@@ -255,7 +255,7 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
 <p class="text">Install restsql WAR mode as above with one variation: the restsql.properties must be changed to reference the sdk's SQL Resources definition directory. Below is an example:</p>
 <pre>
     # sqlresources.dir=/absolute/path
-    sqlresources.dir=/opt/tomcat/webapps/restsql-sdk/sqlresources
+    sqlresources.dir=/opt/tomcat/webapps/restsql-sdk/examples/sqlresources
 </pre>
 <p class="text">Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory, e.g. /opt/tomcat/webapps/restsql-sdk. Restart the container or use your preferred deloyment method.</p>
 <p class="text">The SDK war contents are:</p>
@@ -268,7 +268,6 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
          examples/
          javadoc/
          META-INF/
-         sqlresources/
          wadl/
          WEB-INF/
 </pre>
