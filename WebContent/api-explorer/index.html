@@ -135,9 +135,15 @@
 					if (sqlResource == null) {
 						sqlResource = xmlhttp.responseXML.getElementsByTagName("sqlResource")[0];
 					}
-					resParentName = sqlResource.getAttribute("parent");
-					resChildName = sqlResource.getAttribute("child");
-
+					tables = xmlhttp.responseXML.getElementsByTagName("table");
+					for (i = 0; i < tables.length; i++) {
+						if (tables[i].getAttribute("role") == "Parent") {
+							resParentName = tables[i].getAttribute("name");
+						} else if (tables[i].getAttribute("role") == "Child") {
+							resChildName = tables[i].getAttribute("name");
+						}
+					}
+					
 					if (resChildName != null) {
 						resHierarchical = true;
 					} else {

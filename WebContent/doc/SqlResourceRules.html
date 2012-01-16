@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL SQL Resource Rules</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Javadoc
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>SQL Resource Rules</h1>
+<p class="text">This page elaborates on the constraints referenced in the SQL Resources sections in the <a href="Concepts.html">Concepts</a> page. SQL Resource definitions are defined one per XML file and are constained by an <a href="../wadl/SqlResource.xsd">XML schema</a>. Examples are found <a href="../examples/sqlresources">here</a>. These examples may also be explored with the <a href="../api-explorer">HTTP API Explorer</a>.</p>
+
+<h3>Structure</h3>
+<ul>
+	<li>Content
+		<ul>
+			<li>One query and one metadata element are required.</li>
+			<li>Within a metadata element, one database element and one table element with role Parent are required. Other tables may be required. See Tables section below.</li>
+		</ul>
+	</li>
+	<li>Queries
+		<ul>
+			<li>Group By queries are not supported (yet)</li>
+			<li>Views are not allowed. Metadata, e.g. column source tables and primary keys, for views is not easily discoverable.</li>
+			<li>Do not use table aliases in the query. Columns must be qualified using the full table name. Table aliases are defined in the metadata element. The alias is used in requests and responses.</li>
+		</ul>
+	</li>
+	<li>Columns
+		<ul>
+			<li>Columns must be declared explictly. Do not use SELECT * or SELECT {table}.* in a query.</li>
+			<li>Columns may not contain functions.</li>
+			<li>Columns may be aliased in a query. The alias is used in requests and responses.</li>
+		</ul>
+	</li>
+	<li>Tables
+		<ul>
+			<li>If tables are unqualified, restSQL uses the default database defined in the metadata. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</li>
+			<li>For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared.</li>			
+			<li>Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</li>
+			<li>Extensions must have a foreign key to the parent, and optionally a separate primary key.</li>
+		</ul>
+	</li>
+</ul>
+<h3>Behavior</h3>
+<ul>
+	<li>In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be used to create and delete them. Updates to the children are not supported in a many-to-many SQL Resource.</li>
+	<li>For hierarchical SQL Resources, parents are children are managed separately. Writes (INSERT, UPDATE, DELETE) are submitted separately. One exception is with one-to-many, if the child (and child extensions) is defined with an ON DELETE CASCADE, a delete of the parent will delete the children (and child extensions).</li>
+	<li>Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</li>
+</ul>
+			 
+</div>
+</body>
+</html>

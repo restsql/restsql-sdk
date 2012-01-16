@@ -53,14 +53,18 @@
 <h2>SQL Resource</h2>
 <div class="text">restSQL exposes a specific HTTP-based CRUD interface to the database via SQL Resources. SQL Resources are updatable views managed by the middle-tier (restSQL engine), rather than the database. </div>
 <p class="text">SQL Resources are accessed by name, using URIs in the pattern /restsql/res/{resName} with HTTP methods POST, GET, PUT and DELETE and often request bodies in XML and URL Encoded Form Parameters. The HTTP API offers flexibility in request forms; there are often multiple ways of submitting the same request. Path and query parameters qualify the rows for the operation. URL Encoded requests specify Insert or Update parameters. Or XML bodies specify write operation parameters, possibly for multiple rows.</p>
-<p class="text">SQL Resources are defined in XML files. The definition contains the core SELECT query to generate SQL. The framework builds an internal metadata construct by examining the query and interrogating the database. It appends WHERE and HAVING clauses to the definition query for for read (SELECT) operations. It generates SQL for write (INSERT, UPDATE, DELETE) operations.</p>
+<p class="text">SQL Resources are defined in XML files. The definition contains the core SELECT query to generate SQL. The framework builds an internal metadata construct by examining the query and interrogating the database. It appends WHERE clauses to the definition query for for read (SELECT) operations. It generates SQL for write (INSERT, UPDATE, DELETE) operations.</p>
+
+<p class="text">Group By queries are not supported (yet).</p>
 
 <h2>SQL Resource Structure</h2>
 <div class="text">SQL Resource definition queries may be composed of multiple tables. The joins are specified in the query. Write operations will be issued separately for each table in the query. The driving table in the query is called the parent, and the joined tables are called the parent extensions.</div>
-<p class="text">SQL Resources may be <b>flat</b> or <b>hierarchical</b>. A flat SQL Resource returns read responses with each row in a single element/object. A hierarchical SQL Resource returns read responses in a single-level nested element/object set. Only one level parent-child, not arbitrary depth hiearchies is supported. The definition indicates the parent, child and extension tables such that the engine can differentiate the data. Hierarchical SQL Resources may be one-to-many or many-to-many. For example, employees typically report to one department so department-employee is a one-to-many relationship. Multiple departments collaborate on multiple projects, so department-project is a many-to-many relationship. In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be used to create and delete them. Updates to the children are supported in many-to-many SQL Resource.</p>
+<p class="text">SQL Resources may be <b>flat</b> or <b>hierarchical</b>. A flat SQL Resource returns read responses with each row in a single element/object. A hierarchical SQL Resource returns read responses in a single-level nested element/object set. Only one level parent-child, not arbitrary depth hiearchies is supported. The definition indicates the parent, child and extension tables such that the engine can differentiate the data. Hierarchical SQL Resources may be one-to-many or many-to-many. For example, employees typically report to one department so department-employee is a one-to-many relationship. Multiple departments collaborate on multiple projects, so department-project is a many-to-many relationship. In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be used to create and delete them. Updates to the children are not supported in a many-to-many SQL Resource.</p>
+
+<p class="text">See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.</p>
 
 <h2>Table Role</h2>
-<div class="text">Each table in the defining query has a role that is declared in the attributes of the sqlResource element. The roles define the structure for restSQL such that data is differentiated in request processing.</div>
+<div class="text">Each table in the defining query has a role that is declared in the metadata element. The roles define the structure for restSQL such that data is differentiated in request processing.</div>
 <p class="text">A many-to-many hierarchical SQL Resource called ActorFilm is used to elaborate the concept. The following diagram depicts the physical data model for its tables:</p>
 <p class="centered"><img src="ActorFilmDataModel.png" alt="ActorFilm Phyisical Data Model" title="ActorFilm Phyisical Data Model"/></p>
 <p class="text">The roles are defined in the following table with examples from ActorFilm:</p>
@@ -105,20 +109,30 @@
 	</tbody>
 </table>
 
+<p class="text">For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared. Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</p>
+
+<p class="text">If tables are unqualified, restSQL uses the default database. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</p>
+
+<p class="text">See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.</p>
+
 <h2>SQL Resource Definition</h2>
 <div class="text">SQL Resources are defined in XML definition files in the <code>sqlresources.dir</code> restsql.properties property. Here is an example of a flat resource called FilmRating in a file named FilmRating.xml:</div>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   defaultDatabase="sakila" parent="film" parentExt="film_rating"&gt;
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
    &lt;query&gt;
-      select film.film_id, title, release_year "year",
-             language_id,rental_duration,rental_rate,replacement_cost, film_rating_id, stars
+      select film.film_id, title, release_year,language_id, 
+      		 rental_duration,rental_rate,replacement_cost, film_rating_id, stars
       from film, film_rating
       where film.film_id = film_rating.film_id
    &lt;/query&gt;
+   &lt;metadata&gt;
+      &lt;database default="sakila" /&gt;
+      &lt;table name="film" role="Parent" /&gt;
+      &lt;table name="film_rating" role="ParentExtension" /&gt;
+   &lt;/metadata&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
 <div class="text">Here is an example of a one-to-many hierarchical resource called LanguageFilm in a file named LanguageFilm.xml:</div>
@@ -126,13 +140,17 @@
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   defaultDatabase="sakila" parent="language" child="film"&gt;
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
    &lt;query&gt;
-      select language.language_id, language.name, film_id, title, release_year "year"
+      select language.language_id, language.name, film_id, title, release_year
       from language
       left outer join film on film.language_id = language.language_id
    &lt;/query&gt;
+   &lt;metadata&gt;
+      &lt;database default="sakila" /&gt;
+      &lt;table name="language" role="Parent" /&gt;
+      &lt;table name="film" role="Child" /&gt;
+   &lt;/metadata&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
 <div class="text">Many-to-many resources also require the parent-child join table to be declared, as in the following resource, ActorFilm:</div>
@@ -140,43 +158,54 @@
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   defaultDatabase="sakila" parent="actor" parentExt="actor_rating"
-   child="film" childExt="film_rating" join="film_actor"&gt;
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
    &lt;query&gt;
       select actor.actor_id, first_name, last_name, actor_rating.stars,
-             film.film_id, title, release_year "year", film_rating.stars
+             film.film_id, title, release_year, film_rating.stars
       from actor
       left outer join actor_rating on actor.actor_id = actor_film.actor_id
       left outer join film_actor on film_actor.actor_id = actor.actor_id
       left outer join film on film_actor.film_id = film.film_id
       left outer join film_rating on film.film_id = film_rating.film_id
    &lt;/query&gt;
+   &lt;metadata&gt;
+      &lt;database default="sakila" /&gt;
+      &lt;table name="actor" role="Parent" /&gt;
+      &lt;table name="actor_rating" role="ParentExtension" /&gt;
+      &lt;table name="film" role="Child" /&gt;
+      &lt;table name="film_rating" role="ChildExtension" /&gt;
+      &lt;table name="film_actor" role="Join" /&gt;
+   &lt;/metadata&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
-<p class="text">Group By queries are not supported (yet).</p>
-<p class="text">If tables are unqualified, restSQL uses the defaultDatabase. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions. The parentExt and childExt may contain multiple tables, delimited by commas.</p>
 
 <h2>SQL Resource Names</h2>
 <div class="text">The SQL resource name is inferred from the file name and its location if it is in a subdirectory below the resources root directory (<code>sqlresources.dir</code>). SQL resource namespaces may be organized into arbitrary-depth directories. The directory path is converted into dotted notation, following the Java package concept. For example, if ActorFilm.xml is placed in the subdirectory <code>actor/ext</code>, as in <code>{sqlresources.dir}/actor/ext/ActorFilm.xml</code>, then its name is <code>actor.ext.ActorFilm</code>. In the HTTP requests, it would be available at the URI <code>/restsql/res/actor.ext.ActorFilm</code>. If ActorFilm.xml is placed in the resources root, it would be available at the URI <code>/restsql/res/ActorFilm</code>.</div>
 
 <h2>Column and Table Aliases</h2>
-<div class="text">Column labels may be used to alias a column. In the ActorFilm example release_year will appear in requests/responses as year. Query columns may include functions as long as they are labeled. Do not use select * or select table.*; columns must be declared explictly.</div>
+<div class="text">Column labels may be used to alias a column. Column aliasing is done in the SQL query. In the FilmLanguage example below release_year will appear in requests/responses as year.</div>
 <p class="text">Warning: Aliasing primary keys in hierarchical resources is currently not supported.</p>
-<p class="text">The parent and child tables may also be aliased. These names will appear in the elements of the request or response XML. The LanguageFilm example below uses table aliases:</p>
+<p class="text">The parent and child tables may also be aliased in the metadata, <b>not</b> in the SQL query. These names will appear in the elements of the request or response XML. You must not alias tables in the SQL query. Columns must be disambiguated using the full table name. restSQL table aliasing is for request/response element naming only.</p> 
+<p class="text">The LanguageFilm example below uses table aliases:</p>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "
-   defaultDatabase="sakila" parent="language" parentAlias="lang" child="film" childAlias="movie"&gt;
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
    &lt;query&gt;
       select language.language_id, language.name, film_id, title, release_year "year"
       from language
       left outer join film on film.language_id = language.language_id
    &lt;/query&gt;
+   &lt;metadata&gt;
+      &lt;database default="sakila" /&gt;
+      &lt;table name="language" alias="lang" role="Parent" /&gt;
+      &lt;table name="film" alias="movie" role="Child" /&gt;
+   &lt;/metadata&gt;
 &lt;/rs:sqlResource&gt;
+
 </pre>
+
 <p class="text">Instead of using element names language and film, the names lang and movie are used, as in:</p>
 <pre>
     &lt;readResponse&gt;
@@ -190,6 +219,8 @@
         &lt;/lang&gt;
     &lt;/readResponse&gt;
 </pre>
+
+<p class="text">See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.</p>
 
 <h2>MetaData</h2>
 <div class="text">restSQL creates a construct containing the metadata for the SQL Resource on its first use (initial request for it). This metadata is used to generate SQL for requests. The metadata includes the defining query, the table roles and default database, as well as data derived by interrogating the database. That includes column type information, and primary and foreign keys. This is done by executing the defining query as well as querying the database's data dictionary (information schema).</div>

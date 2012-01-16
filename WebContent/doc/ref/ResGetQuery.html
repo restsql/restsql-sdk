@@ -73,6 +73,9 @@
 </table>
 <h2>Description</h2>
 <div class="text">Returns rows matching query parameters. A no-parameter request returns all rows. Empty <code>readResponse</code> document is returned if the no rows match criteria.</div>
+
+<p class="text">Results are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</p>
+
 <h2>Examples</h2>
 <pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1</pre>
 <pre>HTTP/1.1 200 OK

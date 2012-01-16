@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL Release Notes - 0.7.3</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="../doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Javadoc
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Java API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/impl/index.html">Implementation</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>Release Notes - 0.7.3</h1>
+<h3>Summary</h3>
+<div class="text">restSQL 0.7.3 release adds unlimited SQL Resource table extensions.</div>
+<p class="text">SQL Resources in previous releases were constrained to a maximum of one parent and one child extension. 0.7.3 enables an SQL Resource to join an abitrary number of tables to create a flat or hieararchical application-specific view.</p>
+
+<h3>Detail</h3>
+<div class="text">The SQL Resource definition format has changed. Metadata is now declared in an XML element <code>metadata</code> that is a peer to the <code>query</code> element. The <code>metadata</code> element contains a database element, with the default name, and one or more <code>table</code> elements. The default database and table roles are no longer defined in the document element.</div>
+<p class="text">Following is an example with three parent extensions:</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
+   &lt;query&gt;
+      select film.film_id, title, release_year "year", language_id, comment, genre, city, country
+      from film_origin, film_genre, film_comment, film
+      where film.film_id = film_comment.film_id
+      and film.film_id = film_genre.film_id
+      and film.film_id = film_origin.film_id
+   &lt;/query&gt;
+   &lt;metadata&gt;
+      &lt;database default="sakila" /&gt;
+      &lt;table name="film" role="Parent" /&gt;
+      &lt;table name="film_comment" role="ParentExtension" /&gt;
+      &lt;table name="film_genre" role="ParentExtension" /&gt;
+      &lt;table name="film_origin" role="ParentExtension" /&gt;
+   &lt;/metadata&gt;
+&lt;/rs:sqlResource&gt;
+</pre>
+
+<p class="text">The SQL Resources sections in the <a href="Concepts.html">Concepts</a> page have been updated. SQL Resource definitions are defined one per XML file and are constained by an <a href="../wadl/SqlResource.xsd">XML schema</a>. Examples are found <a href="../examples/sqlresources">here</a>. These examples may also be explored with the <a href="../api-explorer">HTTP API Explorer</a>.</p>
+
+<p class="text">restSQL will throw an SqlResourceException (or 500 via HTTP API) on access of a resource whose definition is invalid. See <a href="../SqlResourceRules.html">SQL Resource Rules</a> for all constraints.</p>
+
+<p class="text">0.7.3 additionally adds an ORDER BY clause to all SELECT (GET) operations. Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</p>
+
+<h3>Migration</h3>
+<div class="text">Pre-0.7.3 SQL Resource definitions must be changed to the new format. No changes to clients are necessary.</div>
+
+</div>
+</body>
+</html>

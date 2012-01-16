@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd " defaultDatabase="sakila" parent="actor"
-	child="film" join="film_actor">
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd ">
 	<query>
 		select actor.actor_id, first_name, last_name, film.film_id, title, release_year "year"
 		from
@@ -10,4 +9,10 @@
 		left join film on
 		film_actor.film_id = film.film_id
 	</query>
+	<metadata>
+		<database default="sakila" />
+		<table name="actor" role="Parent" />
+		<table name="actor_film" role="Join" />
+		<table name="film" role="Child" />
+	</metadata>
 </rs:sqlResource>
