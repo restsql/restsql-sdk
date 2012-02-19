@@ -2,10 +2,27 @@
 <project name="restsql-sdk" default="dist">
 	<property file="build.properties" />
 
-	<target name="dist" depends="defaults,database,javadoc,wadl,lib" />
+	<target name="dist" depends="defaults,database,javadoc,wadl,lib" description="generates distribution files" />
 
-	<target name="clean">
+	<target name="clean" description="deletes output dir">
 		<delete dir="obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
+	</target>
+
+	<target name="compile-examples">
+		<!-- Create output dir -->
+		<mkdir dir="obj/bin" />
+
+		<!-- Copy supporting files -->
+		<copy todir="obj/bin">
+			<fileset dir="WebContent/examples/java">
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+
+		<!-- Compile -->
+		<javac srcdir="WebContent/examples/java" destdir="obj/bin" classpath="${compile.classpath}" debug="true">
+			<compilerarg line="-Xlint:all" />
+		</javac>
 	</target>
 
 	<target name="database">
@@ -16,8 +33,18 @@
 
 	<target name="defaults">
 		<copy todir="WebContent/defaults/properties">
-			<fileset dir="../restsql/src/resources/properties/" includes="default-*.properties"/>
+			<fileset dir="../restsql/src/resources/properties/" includes="default-*.properties" />
 		</copy>
+	</target>
+
+	<target name="exec-examples" depends="compile-examples" description="executes example programs">
+		<echo message="Executing Select_FlatResource" />
+		<echo />
+		<java classpath="${exec.classpath}" classname="Select_FlatResource" fork="true" />
+		<echo />
+		<echo message="Executing InsertUpdateDelete_FlatResource" />
+		<echo />
+		<java classpath="${exec.classpath}" classname="InsertUpdateDelete_FlatResource" fork="true" />
 	</target>
 
 	<target name="lib">

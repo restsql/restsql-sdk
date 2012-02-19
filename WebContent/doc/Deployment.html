@@ -22,9 +22,10 @@
         <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
         <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
     </div>
-    <div class="nav-category">Javadoc
-        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
     </div>
     <div class="nav-category">Configuration
         <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
@@ -165,16 +166,18 @@
 <p class="text">Implementation classes configuration is optional. The defaults are:</p>
 <pre>
    # Implementation classes - use these to customize the framework
-   # org.restsql.core.SqlBuilder=full.qualified.class.name
+   # org.restsql.core.RequestLogger=fully.qualified.class.name
+   # org.restsql.core.SqlBuilder=fully.qualified.class.name
    # org.restsql.core.Factory.ConnectionFactory=fully.qualified.class.name
    # org.restsql.core.Factory.RequestFactory=fully.qualified.class.name
-   # org.restsql.core.Factory.RequestLoggerFactory=fully.qualified.class.name
    # org.restsql.core.Factory.SqlResourceFactory=fully.qualified.class.name
+   # org.restsql.security.Authorizer=fully.qualified.class.name
+   org.restsql.core.RequestLogger=org.restsql.core.impl.RequestLoggerImpl
    org.restsql.core.SqlBuilder=org.restsql.core.impl.SqlBuilderImpl
    org.restsql.core.Factory.ConnectionFactory=org.restsql.core.impl.ConnectionFactoryImpl
    org.restsql.core.Factory.RequestFactory=org.restsql.core.impl.RequestFactoryImpl
-   org.restsql.core.Factory.RequestLoggerFactory=org.restsql.core.impl.RequestLoggerFactoryImpl
    org.restsql.core.Factory.SqlResourceFactory=org.restsql.core.impl.SqlResourceFactoryImpl
+   org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
 </pre>
 
 <p class="text">See the SDK for more detail on Security, Logging and Trigger configuration.</p>

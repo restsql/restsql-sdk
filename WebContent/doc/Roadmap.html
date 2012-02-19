@@ -22,9 +22,10 @@
         <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
         <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
     </div>
-    <div class="nav-category">Javadoc
-        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Java API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/impl/index.html">Implementation</a></div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
     </div>
     <div class="nav-category">Configuration
         <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
@@ -44,6 +45,7 @@
 <div id="content"> 
 <h1>Roadmap</h1>
 <div class="text">The roadmap contains both features and defects. Priorities are given below as 1, 2 and 3. These map to near, medium and long-term.</div>
+<p class="text">If you would like a feature not present in the list below or would like to change the priority of a feature, contact the <a href="mailto:mark.sawers@restsql.org">Project Lead</a>. Or get involved and help us build it! Contribute using the <a href="http://github.com/restsql">GitHub-hosted restsql project</a>.</p>
 <h2>Features</h2>
 <table>
 	<tbody>
@@ -56,18 +58,18 @@
 			<th>Priority</th>
 		</tr>
 		<tr>
-			<td>SDK</td>
-			<td>Add demo app</td>
-			<td>Add AJAX-style demo app</td>
-			<td>No framework impact</td>
+			<td>Core Features</td>
+			<td>JSON Support</td>
+			<td>Add JSON in addition to XML</td>
+			<td>Additional methods to ResResource, new JsonRequestProcessor and JsonSeralizer</td>
 			<td>Medium</td>
 			<td align="center">1</td>
 		</tr>
 		<tr>
-			<td></td>
-			<td>Service Hardening</td>
-			<td>Input validation, e.g. SQL injection</td>
-			<td>Add parameter filter to security package</td>
+			<td>SDK</td>
+			<td>Add demo app</td>
+			<td>Add AJAX-style demo app</td>
+			<td>No framework impact</td>
 			<td>Medium</td>
 			<td align="center">1</td>
 		</tr>
@@ -80,23 +82,15 @@
 			<td align="center">1</td>
 		</tr>
 		<tr>
-			<td>Interop</td>
-			<td>Broader Database Support</td>
-			<td>Test with Oracle</td>
-			<td>Likely requires a new SqlResourceMetaData implementation (use Abstract as base) and extension to SqlBuilderImpl</td>
+			<td>Security</td>
+			<td>Service Hardening</td>
+			<td>Input validation, e.g. SQL injection</td>
+			<td>Add parameter filter to security package</td>
 			<td>Medium</td>
-			<td align="center">2</td>
+			<td align="center">1</td>
 		</tr>
 		<tr>
-			<td>Core Feature</td>
-			<td>JSON Support</td>
-			<td>Add JSON in addition to XML</td>
-			<td>Additional methods to ResResource, new JsonRequestProcessor and JsonSeralizer</td>
-			<td>Medium</td>
-			<td align="center">2</td>
-		</tr>
-		<tr>
-			<td></td>
+			<td>Core Features</td>
 			<td>Dynamic SQL Resource Definition Reloading</td>
 			<td>Reload definition if file changes. Avoids needing to restart container in development.</td>
 			<td></td>
@@ -221,7 +215,7 @@
 			<td>Implement structured text dump of SQL Resource metadata</td>
 			<td>SqlResourceMetaData. toString(), ResResource change</td>
 			<td>Small</td>
-			<td align="center">2</td>
+			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -256,12 +250,20 @@
 			<td align="center">3</td>
 		</tr>
 		<tr>
+			<td>Interop</td>
+			<td>Broader Database Support</td>
+			<td>Test with Oracle</td>
+			<td>Likely requires a new SqlResourceMetaData implementation (use Abstract as base) and extension to SqlBuilderImpl</td>
+			<td>Medium</td>
+			<td align="center">3</td>
+		</tr>
+		<tr>
 			<td>Performance</td>
 			<td>Connection Pooling</td>
 			<td>Use JEE container's connection pool</td>
 			<td></td>
 			<td>Medium</td>
-			<td align="center">2</td>
+			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
