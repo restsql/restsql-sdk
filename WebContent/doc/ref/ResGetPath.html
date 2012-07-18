@@ -56,7 +56,7 @@
 		</tr>
 		<tr>
 			<td><strong>Query Params</strong></td>
-			<td colspan="3">None</td>
+			<td colspan="3">None required<br/>(optionally use <code>_output=application/json</code> to specify JSON encoding)</td>
 		</tr>
 		<tr>
 			<td><strong>Request body</strong></td>
@@ -66,7 +66,7 @@
 			<td><strong>Response body</strong></td>
 			<td>Results as XML</td>
 			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
-			<td>Content-Type: application/xml</td>
+			<td>Content-Type: application/xml or application/json</td>
 		</tr>
 	</tbody>
 </table>
@@ -77,8 +77,9 @@ document is returned if no rows match criteria.</div>
 
 <p class="text">Results are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</p>
 
-<h2>Examples</h2>
-<pre>GET /restsql/res/Actor/123 HTTP/1.1</pre>
+<h2>XML Examples</h2>
+<pre>GET /restsql/res/Actor/123 HTTP/1.1
+Accept: applicaton/xml</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -88,7 +89,8 @@ Content-Type: application/xml
 </pre>
 
 <div class="text">a hierarchical SQL resource:</div>
-<pre>GET /restsql/res/ActorFilm/123 HTTP/1.1</pre>
+<pre>GET /restsql/res/ActorFilm/123 HTTP/1.1
+Accept: applicaton/xml</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -102,6 +104,44 @@ Content-Type: application/xml
    &lt;/actor&gt;
 &lt;/readResponse&gt;
 </pre>
+
+<h2>JSON Examples</h2>
+<pre>GET /restsql/res/Actor/123 HTTP/1.1
+Accept: applicaton/json</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "id": "123", "first_name": "JULIANNE", "surname": "DENCH" }
+   ]
+}
+</pre>
+
+<div class="text">a hierarchical SQL resource:</div>
+<pre>GET /restsql/res/ActorFilm/123 HTTP/1.1
+Accept: applicaton/json</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
+         "films": [
+            { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
+            { "year": "2006", "title": "ATLANTIS CAUSE", "film_id": "43" },
+            { "year": "2006", "title": "BERETS AGENT", "film_id": "67" },
+            { "year": "2006", "title": "BULL SHAWSHANK", "film_id": "105" },
+            { "year": "2006", "title": "CHOCOLATE DUCK", "film_id": "138" },
+         ]
+      }
+   ]
+}
+</pre>
+
+<p class="text">Without an Accept header, the output format defaults to application/xml. An alternative to the Accept header is using the <code>_output</code> query parameter with the mime type, as in:</p>
+<pre>GET /restsql/res/ActorFilm/123?_output=application/json HTTP/1.1
+</pre>
+<div class="text">will return JSON output. See <a href="ResMediaTypes.html">Media Types</a> for more discussion.</div>
+
 </div>
 </body>
 </html>

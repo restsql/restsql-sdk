@@ -4,30 +4,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update Request Details</title>
 <script type="text/javascript">
-	function submitRequest() {
-		var path = "";
-		var query = "";
-		var body = null;
-		var contentType = null;
+	function submitRequest(accept) {
+		var uri = "";
+		var body = "";
+		var contentType = accept;
 		if (document.requestForm.requestStyle[0].checked) {			//requestStyle=path
 			if (document.requestForm.paramStyle[0].checked) {		// pk
 				if (document.requestForm.pkValue1.value == "") {
-					alert("Primary Key Value 1 required");
+					alert("Primary key value required");
 					return;
 				} else {
-					path = "/" + escape(document.requestForm.pkValue1.value);
-					if (document.requestForm.pkValue2.value != "") {
-						path = path + "/" + escape(document.requestForm.pkValue2.value);
-					}
+					uri = "/" + escape(document.requestForm.pkValue1.value);
 				}
 			} else {												// query param
 				if (document.requestForm.queryName1.value == "" || document.requestForm.queryValue1.value == "") {
 					alert("At least one query name/value required");
 					return;
 				} else {
-					query = "?" + escape(document.requestForm.queryName1.value) + "=" + escape(document.requestForm.queryValue1.value);
+					uri = "?" + escape(document.requestForm.queryName1.value) + "=" + escape(document.requestForm.queryValue1.value);
 					if (document.requestForm.queryName2.value != "") {
-						query = query + "&" + escape(document.requestForm.queryName2.value)+ "=" + escape(document.requestForm.queryValue2.value);
+						uri = uri + "&" + escape(document.requestForm.queryName2.value)+ "=" + escape(document.requestForm.queryValue2.value);
 					}
 				}
 			}
@@ -40,7 +36,7 @@
 				alert("At least one body (update) name/value required");
 				return;
 			}
-			contentType = parent.CONTENT_TYPE_URLENCODED;
+			contentType = parent.MEDIA_TYPE_URLENCODED;
 		} else { 													//requestStyle=body
 			var attributes = [document.requestForm.bodyRow1Name1.value,
 				  				document.requestForm.bodyRow1Value1.value,
@@ -48,23 +44,22 @@
 								document.requestForm.bodyRow1Value2.value,
 								document.requestForm.bodyRow1Name3.value,
 								document.requestForm.bodyRow1Value3.value];
-			body = parent.buildXmlElement("parent", attributes);
+			body = parent.buildRequestBody(contentType, parent.LEVEL_PARENT, 1, false, body, attributes);
 			attributes = [document.requestForm.bodyRow2Name1.value,
 			  				document.requestForm.bodyRow2Value1.value,
 							document.requestForm.bodyRow2Name2.value,
 							document.requestForm.bodyRow2Value2.value,
 							document.requestForm.bodyRow2Name3.value,
 							document.requestForm.bodyRow2Value3.value];
-			body = body + parent.buildXmlElement("parent", attributes);
+			body = parent.buildRequestBody(contentType, parent.LEVEL_PARENT, 1, false, body, attributes);
 			if (body == "") {
-				alert("Name/values required");
+				alert("At least one body (update) name/value required");
 				return;
 			}
-			body = "<request>" + body + "\n</request>";
-			contentType = parent.CONTENT_TYPE_XML;
+			body = parent.finalizeRequestBody(contentType, parent.LEVEL_PARENT, 1, body);
 		}
-
-		parent.submitRequest("PUT", path + query, body, "response", contentType);
+	
+		parent.submitRequest("PUT", uri, body, "response", contentType, accept);
 	}
 
 	function requestStyleSelected() {
@@ -115,7 +110,7 @@
 </head>
 <body style="font-family:sans-serif">
 <span style='font-weight:bold'>Request Details</span><br/>
-<form name="requestForm" onsubmit="submitRequest(); return false">
+<form name="requestForm" onsubmit="submitRequest(parent.MEDIA_TYPE_XML); return false">
 	<table border="0">
 		<tr id="trPath" style="background-color: #EFEFEF">
 			<td><input type="radio" name="requestStyle" value="path" onclick="requestStyleSelected()" checked="checked">Use Path / URL Encoded Body</td>
@@ -124,8 +119,7 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td id="tdPkParams">PK Value 1: <input type="text" name="pkValue1" size="5" /><br/>
-			PK Value 2: <input type="text" name="pkValue2" size="5" /></td>
+			<td id="tdPkParams">PK Value: <input type="text" name="pkValue1" size="5" /></td>
 			<td id="tdQueryParams1" style="visibility:hidden">
 				Name: <input type="text" name="queryName1" size="8" /><br/>
 				Value: <input type="text" name="queryValue1" size="8" />
@@ -147,7 +141,7 @@
 			</td>
 		</tr>
 		<tr id="trBody">
-			<td colspan="1"><input type="radio" name="requestStyle" value="body" onclick="requestStyleSelected()"/>Use XML Body</td>
+			<td colspan="1"><input type="radio" name="requestStyle" value="body" onclick="requestStyleSelected()"/>Use XML or JSON Body</td>
 			<td></td>
 			<td></td>
 			<td></td>
@@ -185,7 +179,8 @@
 	</table>
 	<p>
 		<input type="button" value="Reset" onclick="resetForm()" /> 
-		&nbsp; <input type="submit" value="Submit" />
+		&nbsp; <input type="submit" name="submitXml" value="Submit (output XML)" />
+		&nbsp; <input type="button" name="submitJson" value="Submit (output JSON)" onclick="submitRequest(parent.MEDIA_TYPE_JSON)" />
 	</p>
 </form>
 </body>

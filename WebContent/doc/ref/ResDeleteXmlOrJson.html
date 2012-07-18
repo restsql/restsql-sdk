@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL: SQL Resource DELETE XML or JSON</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="../doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/full/index.html">Javadoc - Full</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>SQL Resource DELETE XML or JSON</h1>
+<table>
+	<tbody>
+		<tr>
+			<td><strong>Method</strong></td>
+			<td colspan="3">DELETE</td>
+		</tr>
+		<tr>
+			<td><strong>Path</strong></td>
+			<td colspan="3">/res/{resName}</td>
+		</tr>
+		<tr>
+			<td><strong>Query Params</strong></td>
+			<td colspan="3">None</td>
+		</tr>
+		<tr>
+			<td><strong>Request body</strong></td>
+			<td>One or more rows to delete.</td>
+			<td><a href="../../wadl/Request.xsd">Request.xsd</a></td>
+			<td>Content-Type: application/xml or application/json</td>
+		</tr>
+		<tr>
+			<td><strong>Response body</strong></td>
+			<td>Number of rows deleted.</td>
+			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+			<td>Content-Type: application/xml or application/json</td>
+		</tr>
+	</tbody>
+</table>
+<h2>Description</h2>
+<div class="text">Deletes one of the following:</div>
+<ul>
+	<li>one or more rows of a flat SQL Resource</li>
+	<li>parents and children of a one-to-many hierarchial SQL Resource</li>
+	<li>parents and associations to children of a many-to-many hierarchical SQL Resource</li>
+	<li>children of a hierarchical SQL Resource</li>
+</ul>
+<h2>XML Examples</h2>
+<div class="text">A flat SQL Resource:</div>
+<pre>DELETE /restsql/res/Actor HTTP/1.1
+Content-Type: application/xml
+Accept: application/xml
+
+&lt;request&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH" /&gt;
+   &lt;actor actor_id="124" first_name="SCARLETT" last_name="BENING" /&gt;
+   &lt;actor actor_id="125" first_name="ALBERT" last_name="NOLTE" /&gt;
+&lt;/request&gt;
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="3" /&gt;</pre>
+
+<div class="text">A delete to parents and children of a one-to-many hierarchical SQL Resource:</div>
+<pre>DELETE /restsql/res/LanguageFilm HTTP/1.1
+Content-Type: application/xml
+Accept: application/xml
+
+&lt;request&gt;
+   &lt;language language_id="2" &gt;
+   &lt;language language_id="3" /&gt;
+&lt;/request&gt;
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="26" /&gt;</pre>
+
+<div class="text">A delete to children of a one-to-many hierarchical SQL Resource:</div>
+<pre>DELETE /restsql/res/LanguageFilm HTTP/1.1
+Content-Type: application/xml
+Accept: application/xml
+
+&lt;request&gt;
+   &lt;language language_id="1" &gt;
+      &lt;film film_id="3" /&gt;
+      &lt;film film_id="43" /&gt;
+      &lt;film film_id="67" /&gt;
+   &lt;/language&gt;
+   &lt;language language_id="2" /&gt;
+      &lt;film film_id="3" /&gt;
+      &lt;film film_id="43" /&gt;
+   &lt;/language&gt;
+&lt;/request&gt;
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="5" /&gt;</pre>
+
+<div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
+<pre>DELETE /restsql/res/ActorFilm HTTP/1.1
+Content-Type: application/xml
+Accept: application/xml
+
+&lt;request&gt;
+   &lt;actor actor_id="123" /&gt;
+   &lt;actor actor_id="124" /&gt;
+&lt;/request&gt;
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="18" /&gt;</pre>
+
+<h2>JSON Examples</h2>
+<div class="text">A flat SQL Resource:</div>
+<pre>DELETE /restsql/res/Actor HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "actors": [
+      { "actor_id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
+      { "actor_id": "124", "first_name": "SCARLETT", "surname": "BENING" },
+      { "actor_id": "125", "first_name": "ALBERT", "surname": "NOLTE" }
+   [
+}
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "3" }</pre>
+
+<div class="text">A delete to parents and children of a one-to-many hierarchical SQL Resource:</div>
+<pre>DELETE /restsql/res/LanguageFilm HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "languages": [
+      { "language_id": "2" },
+      { "language_id": "3" }
+   [
+}
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "26" }</pre>
+
+<div class="text">A delete to children of a one-to-many hierarchical SQL Resource:</div>
+<pre>DELETE /restsql/res/LanguageFilm HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "languages": [
+      { "language_id": "1",
+         "films": [
+            { "film_id": "3" },
+            { "film_id": "43" },
+            { "film_id": "67" }
+         ]
+      },
+      { "language_id": "2" 
+         "films": [
+            { "film_id": "3" },
+            { "film_id": "43" }
+         ]
+      }
+   [
+}
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "5" }</pre>
+
+<div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
+<pre>DELETE /restsql/res/ActorFilm HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "actors": [
+      { "actor_id": "123" },
+      { "actor_id": "124" }
+   [
+}
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "18" }</pre>
+</div>
+</body>
+</html>

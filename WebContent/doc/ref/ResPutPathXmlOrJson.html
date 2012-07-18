@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>restSQL: SQL Resource PUT Path XML</title> 
+	<title>restSQL: SQL Resource PUT Path XML or JSON</title> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 	<link href="../doc.css" rel="stylesheet" type="text/css"/>
 </head> 
@@ -43,7 +43,7 @@
 </div>
 
 <div id="content"> 
-<h1>SQL Resource PUT Path XML</h1>
+<h1>SQL Resource PUT Path XML or JSON</h1>
 <table>
 	<tbody>
 		<tr>
@@ -62,21 +62,22 @@
 			<td><strong>Request body</strong></td>
 			<td>One or more child rows to update for parent identified in path</td>
 			<td><a href="../../wadl/Request.xsd">Request.xsd</a></td>
-			<td>Content-Type: application/xml</td>
+			<td>Content-Type: application/xml or application/json</td>
 		</tr>
 		<tr>
 			<td><strong>Response body</strong></td>
 			<td>Number of rows updated</td>
 			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
-			<td>Content-Type: application/xml</td>
+			<td>Content-Type: application/xml or application/json</td>
 		</tr>
 	</tbody>
 </table>
 <h2>Description</h2>
 <div class="text">Updates one or more children rows for parent matching path parameters.</div>
-<h2>Examples</h2>
+<h2>XML Example</h2>
 <pre>PUT /restsql/res/ActorFilm/123 HTTP/1.1
 Content-Type: application/xml
+Accept: application/xml
 
 &lt;request&gt;
    &lt;film film_id="3" year="2010" title="ADAPTATION HOLES 2" /&gt;
@@ -88,6 +89,23 @@ Content-Type: application/xml
 Content-Type: application/xml
 
 &lt;writeResponse rowsAffected="3" /&gt;</pre>
+
+<h2>JSON Example</h2>
+<pre>PUT /restsql/res/ActorFilm/123 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "films": [
+      { "film_id": "3", "year": "2010", "title": "ADAPTATION HOLES 2" },
+      { "film_id": "43", "year": "2007" },
+      { "film_id": "67", "title": "BERETS AGENT" }
+   ]
+}
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "3" }</pre>
 </div>
 </body>
 </html>

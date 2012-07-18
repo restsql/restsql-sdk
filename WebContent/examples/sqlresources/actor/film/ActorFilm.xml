@@ -12,7 +12,7 @@
 	<metadata>
 		<database default="sakila" />
 		<table name="actor" role="Parent" />
-		<table name="actor_film" role="Join" />
 		<table name="film" role="Child" />
+		<table name="film_actor" role="Join" />
 	</metadata>
 </rs:sqlResource>

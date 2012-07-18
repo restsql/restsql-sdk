@@ -4,8 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>restSQL HTTP API Explorer</title>
 <script type="text/javascript">
-	var CONTENT_TYPE_XML = "application/xml";
-	var CONTENT_TYPE_URLENCODED = "application/x-www-form-urlencoded";
+	var LEVEL_CHILD = "child";
+	var LEVEL_PARENT = "parent";
+	var MEDIA_TYPE_JSON = "application/json";
+	var MEDIA_TYPE_XML = "application/xml";
+	var MEDIA_TYPE_URLENCODED = "application/x-www-form-urlencoded";
 
 	var restsqlHost = "";
 	var restsqlBaseUri = "/restsql";
@@ -17,42 +20,87 @@
 	var resHierarchical = false;
 
 	function buildUrlEncodedBody(attributes) {
-		var xml = "";
+		var body = "";
 		var i = 0;
 		while (i < attributes.length) {
 			if (attributes[i] != "" && attributes[i+1] != "") {
-				if (xml.length > 0) {
-					xml = xml + "&";
+				if (body.length > 0) {
+					body = body + "&";
 				}
-				xml = xml + escape(attributes[i]) + "=" + escape(attributes[i+1]);
+				body = body + escape(attributes[i]) + "=" + escape(attributes[i+1]);
 			}
 			i = i + 2;
 		}
-		return xml;
+		return body;
 	} 
 
-	function buildXmlElement(element, attributes) {
-		var xml = "";
+	// Serializes object in xml or json format and appends to existing document
+	function buildRequestBody(contentType, currentLevel, levels, isFirstChildAndMultiLevel, content, attributes) {
+		var object = "";
 		var i = 0;
-		while (i < attributes.length) {
-			xml = xml + buildXmlAttribute(attributes[i], attributes[i+1]);
-			i = i + 2;
-		}
-		if (xml.length > 0) {
-			if (element == "parent") {
-				xml = "\n\t<" + resParentName + xml;
-				if (resHierarchical == true) {
-					xml = xml + ">";
-				} else {
-					xml = xml + " />";
+		if (contentType == MEDIA_TYPE_XML) {
+			while (i < attributes.length) {
+				object = object + buildXmlAttribute(attributes[i], attributes[i+1]);
+				i = i + 2;
+			}
+			if (object.length > 0) {
+				if (currentLevel == LEVEL_PARENT) {
+					object = "\n\t<" + resParentName + object;
+					if (levels == 2) {
+						object = object + ">";
+					} else {
+						object = object + " />";
+					}
+				} else {	// currentLevel == LEVEL_CHILD
+					if (levels == 1) {
+						object = "\n\t<" + resChildName + object + " />";
+					} else {
+						object = "\n\t\t<" + resChildName + object + " />";
+					}
 				}
-			} else {
-				xml = "\n\t\t<" + resChildName + xml + " />";
+				content = content + object;
+			}
+		} else {	// contentType == MEDIA_TYPE_JSON
+			while (i < attributes.length) {
+				object = object + buildJsonAttribute(object, attributes[i], attributes[i+1]);
+				i = i + 2;
+			}
+			if (object.length > 0) {
+				if (content.length > 0 && !isFirstChildAndMultiLevel) {
+					content = content + ",\n";
+				}
+				if (currentLevel == LEVEL_PARENT) {
+					content = content + "\t\t{ " + object;
+					if (levels == 1) {
+						content = content + " }";
+					} else {	// levels == 2
+						content = content + ',\n\t\t\t\"' + resChildName + 's\": [\n'
+					}
+				} else {	// currentLevel == LEVEL_CHILD
+					if (levels == 1) {
+						content = content + "\t\t{ ";
+					} else {	// levels == 2
+						content = content + "\t\t\t\t{ ";
+					}
+					content = content +  object + " }";
+				}
 			}
 		}
-		return xml;
+		return content;
 	} 
 
+	function buildJsonAttribute(object, name, value) {
+		if (name != "" && value != "") {
+			if (object.length > 0) {
+				return ', "' + name + '": "' + value + '"';
+			} else {
+				return '"' + name + '": "' + value + '"';
+			}
+		} else {
+			return "";
+		}
+	}
+	
 	function buildXmlAttribute(name, value) {
 		if (name != "" && value != "") {
 			return " " + name + '="' + value + '"';
@@ -61,18 +109,51 @@
 		}
 	}
 	
-	function convertXmlToHtml(xml) {
+	// Wraps objects in xml or json document
+	function finalizeRequestBody(contentType, currentLevel, levels, content) {
+		var doc;
+		if (contentType == MEDIA_TYPE_XML) {
+			if (currentLevel == LEVEL_PARENT && levels == 2) {
+				content = content + "\n\t</" + parent.resParentName + ">";
+			}
+			doc = "<request>" + content + "\n</request>";
+		} else {	// contentType == MEDIA_TYPE_JSON
+			var name;
+			if (currentLevel == LEVEL_PARENT) {
+				name = resParentName;
+			} else {	// currentLevel == LEVEL_CHILD)	
+				name = resChildName;
+			}
+			if (levels == 2) {
+				content = content + "\n\t\t\t]\n\t\t}"
+			}
+			doc = '{ "' + name + 's": [\n' + content + "\n\t]\n}"
+		}
+		return doc;
+	}
+	
+	function prepResponseBodyForDisplay(responseBody, accept) {
 		var html = "<pre style='margin-top:0'>";
-		for (i = 0; i < xml.length; i++) {
-			character = xml.charAt(i);
-			if (character == "<") {
-				html = html + "&lt;";
-			} else if (character == ">") {
-				html = html + "&gt;";
-			} else if (character == "\t") {
+		for (i = 0; i < responseBody.length; i++) {
+			character = responseBody.charAt(i);
+			if (character == "\t") {
 				html = html + "&nbsp;&nbsp;&nbsp;";
 			} else {
-				html = html + character;
+				if (accept == MEDIA_TYPE_XML) {
+					if (character == "<") {
+						html = html + "&lt;";
+					} else if (character == ">") {
+						html = html + "&gt;";
+					} else {
+						html = html + character;
+					}
+				} else {   // contentType == MEDIA_TYPE_JSON
+					if (character == "\t") {
+						html = html + "&nbsp;&nbsp;&nbsp;";
+					} else {
+						html = html + character;
+					}
+				}
 			}
 		}
 		return html + "</pre>";
@@ -109,7 +190,7 @@
 		window.frames[5].location = "response.html";
 	}
 
-	function submitRequest(method, uri, requestBody, targetFrame, contentType) {
+	function submitRequest(method, uri, requestBody, targetFrame, contentType, accept) {
 		var uri = getResUri() + uri;
 		var url = restsqlHost + uri;
 		var responseBody = "";
@@ -120,11 +201,15 @@
 		} else {
 			xmlhttp = new XMLHttpRequest();
 		}
+		
+		if (accept == null) {
+			accept = MEDIA_TYPE_XML;
+		}
 
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4) {
 				if (xmlhttp.status == 200) {
-					responseBody = convertXmlToHtml(xmlhttp.responseText);
+					responseBody = prepResponseBodyForDisplay(xmlhttp.responseText, accept);
 				} else {
 					responseBody = "<code>" + xmlhttp.responseText + "</code>";
 				}
@@ -139,12 +224,18 @@
 					for (i = 0; i < tables.length; i++) {
 						if (tables[i].getAttribute("role") == "Parent") {
 							resParentName = tables[i].getAttribute("name");
+							if (tables[i].getAttribute("alias") != null) {
+								resParentName = tables[i].getAttribute("alias")
+							}
 						} else if (tables[i].getAttribute("role") == "Child") {
 							resChildName = tables[i].getAttribute("name");
+							if (tables[i].getAttribute("alias") != null) {
+								resChildName = tables[i].getAttribute("alias")
+							}
 						}
 					}
 					
-					if (resChildName != null) {
+					if (resChildName != "?") {
 						resHierarchical = true;
 					} else {
 						resHierarchical = false;
@@ -155,24 +246,27 @@
 				} else {		// targetFrame == "response"
 					var requestDoc = window.frames[4].document;
 					requestDoc.getElementById("methodUriProtocol").innerHTML = method + " " + uri + " HTTP/1.1";
+					var headersHtml = "";
 					if (contentType != null) {
-						requestDoc.getElementById("headers").innerHTML = "<code>Content-Type: "
-							+ contentType + "</code><br/>";
+						headersHtml = "<code>Content-Type: " + contentType + "</code><br/>";
 					}
-					if (requestBody == null) {
+					requestDoc.getElementById("headers").innerHTML = headersHtml + "<code>Accept: " + accept + "</code><br/>";
+					if (requestBody == null || requestBody.length == 0) {
 						requestDoc.getElementById("body").innerHTML = "<pre>{empty body}</pre>";
 					} else {
-						requestDoc.getElementById("body").innerHTML = convertXmlToHtml(requestBody);
+						requestDoc.getElementById("body").innerHTML = prepResponseBodyForDisplay(requestBody, accept);
 					}					
 
 					window.frames[5].document.getElementById("status").innerHTML = responseStatus;
-					window.frames[5].document.getElementById("headers").innerHTML = "Content-Type: application/xml<br/>";
+					window.frames[5].document.getElementById("headers").innerHTML = "Content-Type: " +
+						xmlhttp.getResponseHeader("Content-Type") + "<br/>";
 					window.frames[5].document.getElementById("body").innerHTML = responseBody;
 				}
 			}
 		}
 
 		xmlhttp.open(method, url, true);
+		xmlhttp.setRequestHeader("Accept", accept);
 		if (contentType != null) {
 			xmlhttp.setRequestHeader("Content-Type", contentType);
 		}
@@ -180,8 +274,8 @@
 	}
 </script>
 </head>
-<frameset rows="60%, 40%"  onload="setResName('Country')">
-	<frameset cols="20%, 80%">
+<frameset rows="60%, 40%" onload="setResName('Country')">
+	<frameset cols="25%, 75%">
 		<frameset rows="50%, 50%">
 			<frame src="resources.html" name="resources">
 			<frame src="request-type.html" name="request-type">

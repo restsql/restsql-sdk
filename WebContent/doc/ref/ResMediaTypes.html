@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL: SQL Resource Media Types</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="../doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/full/index.html">Javadoc - Full</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>SQL Resource HTTP Media Types</h1>
+
+<h2>Media Type Overview</h2>
+<p class="text">restSQL supports XML and JSON media types for encoding data in request and response entities (bodies), with XML being the default.
+</p>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Mime Type</th>
+		<th>Default</th>
+	</tr>
+	<tr>
+		<td>XML document</td>
+		<td>application/xml</td>
+		<td>Yes</td>
+	</tr>
+	<tr>
+		<td>JSON object</td>
+		<td>application/json</td>
+		<td>No</td>
+	</tr>
+</table>
+<p class="text">Request bodies are used with write operations (POST, PUT, DELETE) but not always. POST and PUT also accepts URL-encoded parameters (Content-Type: application/x-www-form-urlencoded). DELETE request bodies are optional.</p>  
+<p class="text">Response bodies are always returned with successful execution, i.e. 200 OK. (See <a href="ResHttpStatus.html">HTTP Status Codes</a> for all status codes).
+A read operation (GET) response contains the data requested or empty set. A write operation (POST, PUT, DELETE) returns the <code>writeResponse</code> XML document or JSON object that contains the number of rows affected.</p>  
+
+<h2>Media Type Control</h2>
+<p class="text">Media types are specified in the restSQL HTTP API using <a href="http://tools.ietf.org/html/rfc2616#page-100">HTTP Standard Headers</a>: Content-Type and Accept.
+These are generally set to the same values unless URL encoded params are part of a POST or PUT, or if the application desires to submit in one encoding and receive another (unusual).
+If you do not explicitly set the Accept header, your framework or browser will most likely insert a default for you. For example Chrome might use something like <code>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</code>, which means your response will be in XML format even if your Content-Type is JSON. 
+<p>
+<p class="text">You may use the <code>_output</code> query parameter on GET requests, for example <code>http://host/restsql/MyResource/345?_output=application/json</code>. This overrides the Accept header value.
+</p>
+
+<h3>XML</h3>
+<p class="text">XML request documents must conform to <a href="../../wadl/Request.xsd">Request.xsd</a> and responses to <a href="../../wadl/Response.xsd">Response.xsd</a>.
+</p>
+
+<div class="text">A read response is a <code>readResponse</code> element enclosing the data requested, as in:</div>
+<pre>
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH" /&gt;
+   &lt;actor actor_id="124" first_name="SCARLETT" last_name="BENING" /&gt;
+   &lt;actor actor_id="125" first_name="ALBERT" last_name="NOLTE" /&gt;
+&lt;/readResponse&gt;
+</pre>
+<div class="text">Each top-level element is the SQL Resource parent table name (or alias) with the appropriate attributes.
+In a hiearchical SQL Resource, the document may contain two levels of elements, as in:
+</div>
+<pre>
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH"&gt;
+      &lt;film year="2006" title="ADAPTATION HOLES" film_id="3" /&gt;
+      &lt;film year="2006" title="ATLANTIS CAUSE" film_id="43" /&gt;
+   &lt;/actor&gt;
+   &lt;actor actor_id="123" first_name="SCARLETT" last_name="BENING"&gt;
+      &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
+      &lt;film year="2006" title="BULL SHAWSHANK" film_id="105" /&gt;
+      &lt;film year="2006" title="CHOCOLATE DUCK" film_id="148" /&gt;
+   &lt;/actor&gt;
+&lt;/readResponse&gt;
+</pre>
+<div class="text">The second level element is the child table's name (or alias) with the appropriate attributes.</div>
+<p class="text">If no data is found matching the query, the document will be emtpy, as in:</p>
+<pre>
+&lt;readResponse&gt;
+&lt;/readResponse&gt;
+</pre>
+
+<p class="text">A write request is a <code>request</code> element followed by the data to write, as in:</p>
+<pre>
+&lt;request&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH" /&gt;
+   &lt;actor actor_id="124" first_name="SCARLETT" last_name="BENING" /&gt;
+   &lt;actor actor_id="125" first_name="ALBERT" last_name="NOLTE" /&gt;
+&lt;/request&gt;
+</pre>
+<div class="text">A write response is a <code>writeResponse</code> element with the number of rows affected, as in:</div>
+<pre>
+&lt;writeResponse rowsAffected="4" /&gt;</pre>
+
+ 
+<h3>JSON</h3>
+<p class="text">JSON objects conform to a restSQL-specific format. A read response contains an object with a single attribute of type array. 
+The attribute is named after the parent table's plural name (or alias), as in:
+</p>
+<pre>
+{ "actors": [
+      { "id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
+      { "id": "124", "first_name": "SCARLETT", "surname": "BENING" },
+      { "id": "125, "first_name": "ALBERT", "surname": "NOLTE" }
+   ]
+}
+</pre>
+<div class="text">Each array object in the array contains the appropriate attributes.
+In a hiearchical SQL Resource, the object may contain two levels of elements, as in:
+</div>
+<pre>
+{ "actors": [
+      { "actor_id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
+         "films": [
+            { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
+            { "year": "2006", "title": "ATLANTIS CAUSE", "film_id": "43" }
+         ]
+      },
+      { "actor_id": "123", "first_name": "SCARLETT", "surname": "BENING" },
+         "films": [
+            { "year": "2006", "title": "BERETS AGENT", "film_id": "67" },
+            { "year": "2006", "title": "BULL SHAWSHANK", "film_id": "105" },
+            { "year": "2006", "title": "CHOCOLATE DUCK", "film_id": "138" },
+         ]
+      }      
+   ]
+}
+</pre>
+<div class="text">The top-level object has an attribute with the child table's plural name (or alias) whose type is array. The child array objects contain the appropriate attributes</div>
+<p class="text">If no data is found matching the query, the object array will be emtpy, as in:</p>
+<pre>
+{ "actors": [] }
+</pre>
+
+<p class="text">Unlike XML, the JSON write request object is encoded the same as a read response object.</p>
+<p class="text">A write response cotains an object with a single attribute with the rows affected, as in:</p>
+<pre>
+{ "rowsAffected": "4" }</pre>
+
+<h2>More References</h2>
+<div class="text">See the IETF RFC <a href="http://tools.ietf.org/html/rfc2616#page-100">HTTP Standard Headers</a>.</div>
+</div>
+</body>
+</html>

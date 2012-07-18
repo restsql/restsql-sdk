@@ -235,6 +235,9 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
 </pre>
 </p> 
 
+<p class="text">Note: If you receive a 500 response to any res query with the text "No suitable driver found", then the container cannot find your jdbc driver. This can usually be fixed by placing the database driver in some common server library location. This also occurs after deploying the restSQL.war to WebLogic using the console when the container is running. After a container restart, the driver is found.
+</p>
+
 <h2>Installing restSQL JAR mode</h2>
 <p class="text">Properties: Follow the instructions for Configuring restSQL.</p>
 <p class="text">Deploy: Copy jar to the classpath of your web app, e.g. WEB-INF/lib. The following third party dependencies also need to be in your classpath:</p>

@@ -4,19 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Select Request Details</title>
 <script type="text/javascript">
-	function submitRequest() {
+	function submitRequest(accept) {
 		var path = "";
 		var query = "";
 		if (document.requestForm.filter.checked) {
 			if (document.requestForm.paramStyle[0].checked) {		// pk path
 				if (document.requestForm.pkValue1.value == "") {
-					alert("Primary Key Value 1 required");
+					alert("Primary Key Value required");
 					return;
 				} else {
 					path = "/" + escape(document.requestForm.pkValue1.value);
-					if (document.requestForm.pkValue2.value != "") {
-						path = path + "/" + escape(document.requestForm.pkValue2.value);
-					}
 				}
 			} else {
 				if (document.requestForm.queryName1.value == "" || document.requestForm.queryValue1.value == "") {
@@ -40,7 +37,7 @@
 			query = query + "_limit=" + document.requestForm._limit.value + "&_offset=" + document.requestForm._offset.value;
 		}
 
-		parent.submitRequest("GET", path + query, null, "response", null);
+		parent.submitRequest("GET", path + query, null, "response", null, accept);
 	}
 
 	function limitStateChanged() {
@@ -88,7 +85,7 @@
 </head>
 <body style="font-family:sans-serif">
 <span style='font-weight:bold'>Request Details</span><br/>
-<form name="requestForm" onsubmit="submitRequest(); return false">
+<form name="requestForm" onsubmit="submitRequest(parent.MEDIA_TYPE_XML); return false">
 	<table border="0">
 		<tr>
 			<td><input type="checkbox" name="limit" onclick="limitStateChanged()" />Limit Results</td>
@@ -112,10 +109,7 @@
 			<td>
 				<table id="tablePkParams" style="visibility:hidden">
 					<tr>
-						<td>PK Value 1: <input type="text" name="pkValue1" size="5" /></td>
-					</tr>
-					<tr>
-						<td>PK Value 2: <input type="text" name="pkValue2" size="5" /></td>
+						<td>PK Value: <input type="text" name="pkValue1" size="5" /></td>
 					</tr>
 				</table>
 			</td>
@@ -137,7 +131,8 @@
 	</table>
 	<p>
 		<input type="button" value="Reset" onclick="resetForm()" /> 
-		&nbsp; <input type="submit" value="Submit" />
+		&nbsp; <input type="submit" value="Submit (XML)" />
+		&nbsp; <input type="button" value="Submit (JSON)" onclick="submitRequest(parent.MEDIA_TYPE_JSON)" />
 	</p>
 </form>
 </body>

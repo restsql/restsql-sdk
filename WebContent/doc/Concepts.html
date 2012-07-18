@@ -287,14 +287,16 @@ Content-Type: application/xml
 </pre>
 
 <h2>HTTP Response</h2>
-<div class="text">Responses use W3C standard HTTP status codes, generally 200 for success, 400 for an invalid request and 500 for an SQL error. The content type is XML (or JSON coming soon).</div>
+<div class="text">Responses use W3C standard HTTP status codes, generally 200 for success, 400 for an invalid request and 500 for an SQL error. The content type is XML or JSON.</div>
 
 <p class="text">Following is an example of a Create request for a flat SQL Resource:</p>
 <pre>POST /restsql/res/Actor HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
+Accept: application/xml
 
 actor_id=201&amp;first_name=JULIANNE&amp;last_name=DENCH
 </pre>
+<p class="text">and the response:</p>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -302,25 +304,33 @@ Content-Type: application/xml
 </pre>
 
 <p class="text">Following is an example of a Read request with query parameters on a many-to-many hierarchical SQL Resource:</p>
-<pre>GET /restsql/res/actor.ext.ActorFilm?last_name=SMITH HTTP/1.1</pre>
+<pre>GET /restsql/res/actor.ext.ActorFilm?last_name=SMITH HTTP/1.1
+Accept: application/json
+</pre>
+<p class="text">and the response:</p>
 <pre>HTTP/1.1 200 OK
-Content-Type: application/xml
+Content-Type: application/json
 
-&lt;readResponse&gt;
-   &lt;actor actor_id="201" first_name="JULIANNE" last_name="SMITH"&gt;
-      &lt;film year="2006" title="ADAPTATION HOLES" film_id="3" /&gt;
-      &lt;film year="2006" title="ATLANTIS CAUSE" film_id="43" /&gt;
-      &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
-   &lt;/actor&gt;
-   &lt;actor actor_id="211" first_name="PATRICK" last_name="SMITH"&gt;
-      &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
-      &lt;film year="2006" title="BULL SHAWSHANK" film_id="105" /&gt;
-      &lt;film year="2006" title="CHOCOLATE DUCK" film_id="148" /&gt;
-   &lt;/actor&gt;
-&lt;/readResponse&gt;
+{ "actors": [
+   { "last_name": "SMITH", "first_name": "JULIANNE", "actor_id": "201",
+      "films": [
+         { "year": "2006", "title": "ACADEMY DINOSAUR", "film_id": "1" },
+         { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
+         { "year": "2006", "title": "ANACONDA CONFESSIONS", "film_id": "23" }
+      ]
+   },
+   { "last_name": "SMITH", "first_name": "PATRICK", "actor_id": "205",
+      "films": [
+         { "year": "2006", "title": "APACHE DIVINE", "film_id": "31" },
+         { "year": "2006", "title": "BABY HALL", "film_id": "47" },
+         { "year": "2006", "title": "BULL SHAWSHANK", "film_id": "105" },
+         { "year": "2006", "title": "CHAINSAW UPTOWN", "film_id": "132" }
+      ]
+   }   
+}
 </pre>
 
-<div class="text">Following is an example of an invalid query:</div>
+<div class="text">Following is an example of an invalid Read request:</div>
 <pre>DELETE /restsql/res/Film?blah=blah HTTP/1.1</pre>
 <pre>HTTP/1.1 400 Bad Request
 

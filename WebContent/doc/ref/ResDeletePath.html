@@ -66,7 +66,7 @@
 			<td><strong>Response body</strong></td>
 			<td>Number of rows deleted.</td>
 			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
-			<td>Content-Type: application/xml</td>
+			<td>Content-Type: application/xml or application/json</td>
 		</tr>
 	</tbody>
 </table>
@@ -77,9 +77,10 @@
 	<li>parents and children of a one-to-many hierarchial SQL Resource</li>
 	<li>parents and associations to children of a many-to-many hierarchical SQL Resource</li>
 </ul>
-<h2>Examples</h2>
+<h2>XML Examples</h2>
 <div class="text">A flat SQL Resource:</div>
 <pre>DELETE /restsql/res/Actor/123 HTTP/1.1
+Accept: application/xml
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
@@ -88,6 +89,7 @@ Content-Type: application/xml
 
 <div class="text">A delete to parents and children of a one-to-many hierarchical SQL Resource:</div>
 <pre>DELETE /restsql/res/LanguageFilm/3 HTTP/1.1
+Accept: application/xml
 </pre>
 
 <pre>HTTP/1.1 200 OK
@@ -97,12 +99,43 @@ Content-Type: application/xml
 
 <div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
 <pre>DELETE /restsql/res/ActorFilm/123 HTTP/1.1
+Accept: application/xml
 </pre>
 
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
 &lt;writeResponse rowsAffected="9" /&gt;</pre>
+
+<h2>JSON Examples</h2>
+<div class="text">A flat SQL Resource:</div>
+<pre>DELETE /restsql/res/Actor/123 HTTP/1.1
+Accept: application/json
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "1" }</pre>
+
+<div class="text">A delete to parents and children of a one-to-many hierarchical SQL Resource:</div>
+<pre>DELETE /restsql/res/LanguageFilm/3 HTTP/1.1
+Accept: application/json
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "13" }</pre>
+
+<div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
+<pre>DELETE /restsql/res/ActorFilm/123 HTTP/1.1
+Accept: application/json
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "9" }</pre>
 </div>
 </body>
 </html>

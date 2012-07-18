@@ -46,7 +46,7 @@
 <h1>SQL Resource HTTP Status Codes</h1>
 
 <h2>200 - OK</h2>
-<div class="text">Request completed successfully. Response body is XML (Content-Type: application/xml). Read (GET) requests return content in a <code>readResponse</code> document element. Empty <code>readResponse</code> document is returned if the no rows match criteria. Write (POST, PUT, DELETE) requests return results in a <code>writeResponse</code> document element. The <code>writeResponse</code> indicates the number of rows affected.</div>
+<div class="text">Request completed successfully. Response body is XML (Content-Type: application/xml) or JSON (Content-type: application/json). Read (GET) requests return content in a <code>readResponse</code> document XML element or JSON object. Empty <code>readResponse</code> document or JSON object is returned if the no rows match criteria. Write (POST, PUT, DELETE) requests return results in a <code>writeResponse</code> document element or JSON object. The response indicates the number of rows affected by the write operation.</div>
 
 <h2>4xx - Invalid Requests</h2>
 <div style="margin-left: 1em">

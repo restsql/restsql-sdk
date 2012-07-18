@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.restsql.core.Config;
 import org.restsql.core.Factory;
+import org.restsql.core.HttpRequestAttributes;
 import org.restsql.core.NameValuePair;
 import org.restsql.core.Request;
 import org.restsql.core.RequestLogger;
@@ -49,7 +50,7 @@ public class Select_FlatResource {
 				childrenParams, requestLogger);
 
 		// Execute the request
-		final List<Map<String, Object>> results = sqlResource.readAsCollection(request);
+		final List<Map<String, Object>> results = sqlResource.read(request);
 
 		printResults("Select using PK", results, requestLogger);
 	}
@@ -69,7 +70,7 @@ public class Select_FlatResource {
 				childrenParams, requestLogger);
 
 		// Execute the request
-		final List<Map<String, Object>> results = sqlResource.readAsCollection(request);
+		final List<Map<String, Object>> results = sqlResource.read(request);
 
 		printResults("Select with Wildcard", results, requestLogger);
 	}
@@ -90,7 +91,7 @@ public class Select_FlatResource {
 				childrenParams, requestLogger);
 
 		// Execute the request
-		final List<Map<String, Object>> results = sqlResource.readAsCollection(request);
+		final List<Map<String, Object>> results = sqlResource.read(request);
 
 		printResults("Select with Limit", results, requestLogger);
 	}
@@ -112,7 +113,7 @@ public class Select_FlatResource {
 				childrenParams, requestLogger);
 		
 		// Execute the request
-		final String results = sqlResource.readAsXml(request);
+		final String results = sqlResource.read(request, HttpRequestAttributes.DEFAULT_MEDIA_TYPE);
 
 		System.out.println("Select return XML");
 		System.out.println(results);

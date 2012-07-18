@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>restSQL: SQL Resource POST Path XML</title> 
+	<title>restSQL: SQL Resource PUT XML or JSON</title> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 	<link href="../doc.css" rel="stylesheet" type="text/css"/>
 </head> 
@@ -43,16 +43,16 @@
 </div>
 
 <div id="content"> 
-<h1>SQL Resource POST Path XML</h1>
+<h1>SQL Resource PUT XML or JSON</h1>
 <table>
 	<tbody>
 		<tr>
 			<td><strong>Method</strong></td>
-			<td colspan="3">POST</td>
+			<td colspan="3">PUT</td>
 		</tr>
 		<tr>
 			<td><strong>Path</strong></td>
-			<td colspan="3">/res/{resName}/{resId}</td>
+			<td colspan="3">/res/{resName}</td>
 		</tr>
 		<tr>
 			<td><strong>Query Params</strong></td>
@@ -60,50 +60,101 @@
 		</tr>
 		<tr>
 			<td><strong>Request body</strong></td>
-			<td>One or more child rows to insert for parent identified in path</td>
+			<td>One or more rows to update.</td>
 			<td><a href="../../wadl/Request.xsd">Request.xsd</a></td>
-			<td>Content-Type: application/xml</td>
+			<td>Content-Type: application/xml or application/json</td>
 		</tr>
 		<tr>
 			<td><strong>Response body</strong></td>
-			<td>Number of rows inserted</td>
+			<td>Number of rows updated.</td>
 			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
-			<td>Content-Type: application/xml</td>
+			<td>Content-Type: application/xml or application/json</td>
 		</tr>
 	</tbody>
 </table>
 <h2>Description</h2>
-<div class="text">Creates one or more children rows for parent matching path parameters for a one-to-many hierarchical SQL Resource. Associates one or more children rows to parent matching path parameters for a many-to-many hierarchical SQL Resource.</div>
-<h2>Examples</h2>
-<div class="text">A one-to-many hierarchical SQL resource (child rows are created):</div>
-<pre>POST /restsql/res/LanguageFilm/1 HTTP/1.1
+<div class="text">Updates one or more rows of a flat SQL Resource or the parents or the children of a hierarchial SQL Resource. Updates to both parent and children in the same request for the same parent are disallowed, even if non-pk parent attributes are provided.</div>
+<h2>XML Examples</h2>
+
+<div class="text">A flat SQL Resource:</div>
+<pre>PUT /restsql/res/Actor HTTP/1.1
 Content-Type: application/xml
+Accept: application/xml
 
 &lt;request&gt;
-   &lt;film year="2006" title="ADAPTATION HOLES" film_id="3" /&gt;
-   &lt;film year="2006" title="ATLANTIS CAUSE" film_id="43" /&gt;
-   &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
+   &lt;actor actor_id="123" first_name="JULIANNER "/&gt;
+   &lt;actor actor_id="124" last_name="BENINGS" /&gt;
+   &lt;actor actor_id="125" last_name="NOLTER" /&gt;
 &lt;/request&gt;
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
 &lt;writeResponse rowsAffected="3" /&gt;</pre>
+<p class="text">An update to parents of a hierarchical SQL Resource would look identical to the proceeding.</p>
 
-<div class="text">A many-to-many hierarchical SQL resource (child rows are only associated to parent):</div>
-<pre>POST /restsql/res/ActorFilm/123 HTTP/1.1
+<div class="text">An update to children of one parent and another parent for a hierarchical SQL Resource:</div>
+<pre>PUT /restsql/res/ActorFilm HTTP/1.1
 Content-Type: application/xml
+Accept: application/xml
 
 &lt;request&gt;
-   &lt;film film_id="3" /&gt;
-   &lt;film film_id="43" /&gt;
-   &lt;film film_id="67" /&gt;
+   &lt;actor actor_id="123"&gt;
+      &lt;film year="2007" title="ADAPTATION HOLES 2" film_id="3" /&gt;
+      &lt;film year="2006" film_id="43" /&gt;
+      &lt;title="BERETS AGENT" film_id="67" /&gt;
+   &lt;/actor&gt;
+   &lt;actor actor_id="124" last_name="BENINGS" /&gt;
 &lt;/request&gt;
 </pre>
+
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
-&lt;writeResponse rowsAffected="3" /&gt;</pre>
+&lt;writeResponse rowsAffected="4" /&gt;</pre>
+
+<h2>JSON Examples</h2>
+
+<div class="text">A flat SQL Resource:</div>
+<pre>PUT /restsql/res/Actor HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "actors": [
+      { "actor_id": "123", "first_name": "JULIANNER" },
+      { "actor_id": "124", "first_name": "BENINGS" },
+      { "actor_id": "124", "first_name": "NOLTER" }
+   ]
+}
+</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "3" }</pre>
+<p class="text">An update to parents of a hierarchical SQL Resource would look identical to the proceeding.</p>
+
+<div class="text">An update to children of one parent and another parent for a hierarchical SQL Resource:</div>
+<pre>PUT /restsql/res/ActorFilm HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "actors": [
+      { "actor_id": "123",
+         "films": [
+            { "film_id": "3", "year": "2007", "title": "ADAPTATION HOLES 2" },
+            { "film_id": "43", "year": "2006" },
+            { "film_id": "67", "title": "BETETS AGENT" }
+         ]
+      },
+      { "actor_id": "124", "last_name": "BENINGS" }
+   ]
+}
+</pre>
+
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": "4" }</pre>
 </div>
 </body>
 </html>

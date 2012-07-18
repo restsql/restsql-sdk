@@ -44,7 +44,7 @@
 
 <div id="content"> 
 <h1>SQL Resource Rules</h1>
-<p class="text">This page elaborates on the constraints referenced in the SQL Resources sections in the <a href="Concepts.html">Concepts</a> page. SQL Resource definitions are defined one per XML file and are constained by an <a href="../wadl/SqlResource.xsd">XML schema</a>. Examples are found <a href="../examples/sqlresources">here</a>. These examples may also be explored with the <a href="../api-explorer">HTTP API Explorer</a>.</p>
+<p class="text">This page elaborates on the constraints referenced in the SQL Resources sections in the <a href="Concepts.html">Concepts</a> page. SQL Resource definitions are defined one per XML file and are constrained by an <a href="../wadl/SqlResource.xsd">XML schema</a>. Examples are found <a href="../examples/sqlresources">here</a>. These examples may also be explored with the <a href="../api-explorer">HTTP API Explorer</a>.</p>
 
 <h3>Structure</h3>
 <ul>
@@ -64,7 +64,7 @@
 	<li>Columns
 		<ul>
 			<li>Columns must be declared explictly. Do not use SELECT * or SELECT {table}.* in a query.</li>
-			<li>Columns may not contain functions.</li>
+			<li>Columns may contain functions for MySQL (but not for PostgreSQL yet) however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any records in the body in a write operation.</li>
 			<li>Columns may be aliased in a query. The alias is used in requests and responses.</li>
 		</ul>
 	</li>

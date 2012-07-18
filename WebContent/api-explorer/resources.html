@@ -3,16 +3,54 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SQL Resources</title>
+<style type="text/css">
+	td.resourceType { font-size: 10pt }
+</style>
 </head>
 <body style="font-family:sans-serif">
 <form name="resources">
 	<span style="font-weight:bold">SQL Resources</span><br/>
+	<table>
+		<!-- 
+		<tr>
+			<th align="left">Name</th>
+			<th align="left">Type</th>
+		</tr>
+		 -->
+		<tr>
+			<td><input type="radio" checked="checked" name="resName" value="Country" onclick="parent.setResName(this.value)"/>Country</td>
+			<td class="resourceType">&nbsp - flat</td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="resName" value="actor.Actor"  onclick="parent.setResName(this.value)"/>actor.Actor</td>
+			<td class="resourceType">&nbsp - flat</td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="resName" value="actor.film.ActorFilm"  onclick="parent.setResName(this.value)"/>actor.film.ActorFilm</td>
+			<td class="resourceType">&nbsp - many-to-many</td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="resName" value="film.Film"  onclick="parent.setResName(this.value)"/>film.Film</td>
+			<td class="resourceType">&nbsp - flat</td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="resName" value="film.FilmLang"  onclick="parent.setResName(this.value)"/>film.FilmLang</td>
+			<td class="resourceType">&nbsp - flat/extension</td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="resName" value="lang.LangFilm"  onclick="parent.setResName(this.value)"/>lang.LangFilm</td>
+			<td class="resourceType">&nbsp - one-to-many</td>
+		</tr>
+	</table>
+<!-- 
 	<input type="radio" checked="checked" name="resName" value="Country" onclick="parent.setResName(this.value)"/>Country<br />
 	<input type="radio" name="resName" value="actor.Actor"  onclick="parent.setResName(this.value)"/>actor.Actor<br />
-	<input type="radio" name="resName" value="actor.ext.ActorFilm"  onclick="parent.setResName(this.value)"/>actor.ext.ActorFilm<br />
+	<input type="radio" name="resName" value="actor.film.ActorFilm"  onclick="parent.setResName(this.value)"/>actor.film.ActorFilm<br />
 	<input type="radio" name="resName" value="film.Film"  onclick="parent.setResName(this.value)"/>film.Film<br />
-	<input type="radio" name="resName" value="film.FilmLanguage"  onclick="parent.setResName(this.value)"/>film.FilmLanguage<br />
-	<input type="radio" name="resName" value="language.LanguageFilm"  onclick="parent.setResName(this.value)"/>language.LanguageFilm<br />
+	<input type="radio" name="resName" value="film.FilmLang"  onclick="parent.setResName(this.value)"/>film.FilmLang<br />
+	<input type="radio" name="resName" value="lang.LangFilm"  onclick="parent.setResName(this.value)"/>lang.LangFilm<br />
+ -->
+
 </form>
 </body>
 </html>

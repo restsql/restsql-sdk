@@ -47,8 +47,8 @@
 <h2>SQL Resource Methods</h2>
 <ul>
 	<li>The HTTP verison is 1.1</li>
-	<li>Some methods accept XML (Content-Type: application/xml) or URL Encoded Params (Content-Type: application/x-www-form-urlencoded)</li>
-	<li>All methods return XML (Content-Type: application/xml) with a no-cache directive (Cache-Control: no-cache)</li>
+	<li>Some methods accept XML (Content-Type: application/xml), JSON (Content-Type: application/json) or URL Encoded Params (Content-Type: application/x-www-form-urlencoded)</li>
+	<li>All methods return XML (use Accept: application/xml) or JSON (use Accept: application/json) with a no-cache directive (Cache-Control: no-cache). Alternatively the <code>_output</code> query parameter may be used to specify the media type. See <a href="ResMediaTypes.html">Media Types</a> for more discussion.</li>
 	<li>Normal responses are 200 OK, invalid requests are 4xx and SQL errors are 500 - See <a href="ResHttpStatus.html">HTTP Status Codes</a> for more detail</li>
 </ul>
 <table>
@@ -84,23 +84,23 @@
 		<tr>
 			<td>POST</td>
 			<td style="white-space: nowrap">/res/{resName}</td>
-			<td>XML</td>
+			<td>XML or JSON</td>
 			<td>Inserts rows</td>
-			<td><a href="ResPostXml.html">ResPostXml</a></td>
+			<td><a href="ResPostXmlOrJson.html">ResPostXmlOrJson</a></td>
 		</tr>
 		<tr>
 			<td>POST</td>
 			<td style="white-space: nowrap">/res/{resName}/{resId}</td>
-			<td>XML</td>
+			<td>XML or JSON</td>
 			<td>Inserts children rows for parent matching path parameters</td>
-			<td><a href="ResPostPathXml.html">ResPostPathXml</a></td>
+			<td><a href="ResPostPathXmlOrJson.html">ResPostPathXmlOrJson</a></td>
 		</tr>
 		<tr>
 			<td>PUT</td>
 			<td style="white-space: nowrap">/res/{resName}</td>
-			<td>XML</td>
+			<td>XML or JSON</td>
 			<td>Updates rows</td>
-			<td><a href="ResPutXml.html">ResPutXml</a></td>
+			<td><a href="ResPutXmlOrJson.html">ResPutXmlOrJson</a></td>
 		</tr>
 		<tr>
 			<td>PUT</td>
@@ -112,9 +112,9 @@
 		<tr>
 			<td>PUT</td>
 			<td style="white-space: nowrap">/res/{resName}/{resId}</td>
-			<td>XML</td>
+			<td>XML or JSON</td>
 			<td>Updates children rows for parent matching path parameters</td>
-			<td><a href="ResPutPathXml.html">ResPutPathXml</a></td>
+			<td><a href="ResPutPathXmlOrJson.html">ResPutPathXmlOrJson</a></td>
 		</tr>
 		<tr>
 			<td>PUT</td>
@@ -126,9 +126,9 @@
 		<tr>
 			<td>DELETE</td>
 			<td style="white-space: nowrap">/res/{resName}</td>
-			<td>XML</td>
+			<td>XML or JSON</td>
 			<td>Deletes rows</td>
-			<td><a href="ResDeleteXml.html">ResDeleteXml</a></td>
+			<td><a href="ResDeleteXmlOrJson.html">ResDeleteXmlOrJson</a></td>
 		</tr>
 		<tr>
 			<td>DELETE</td>
@@ -140,9 +140,9 @@
 		<tr>
 			<td>DELETE</td>
 			<td style="white-space: nowrap">/res/{resName}/{resId}</td>
-			<td>XML</td>
+			<td>XML or JSON</td>
 			<td>Deletes children rows for parent matching path parameters</td>
-			<td><a href="ResDeletePathXml.html">ResDeletePathXml</a></td>
+			<td><a href="ResDeletePathXmlOrJson.html">ResDeletePathXmlOrJson</a></td>
 		</tr>
 		<tr>
 			<td>DELETE</td>
@@ -236,7 +236,7 @@
 		</tr>
 	</tbody>
 </table>
-<p class="text">The complete interface is also provided in the form of <a href="../../wadl/restsql.wadl">WADL</a> (Web Application Description Language), a <a href="http://www.w3.org/Submission/wadl">W3C Submission</a>.</p>
+<p class="text">The complete interface is also provided in the form of <a href="../../wadl/restsql-wadl.xml">WADL</a> (Web Application Description Language), a <a href="http://www.w3.org/Submission/wadl">W3C Submission</a>.</p>
 </div>
 </body>
 </html>

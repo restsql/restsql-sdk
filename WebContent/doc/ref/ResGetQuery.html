@@ -58,6 +58,7 @@
 			<td><strong>Query Params</strong></td>
 			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query. Use '%' for wildcard, which is URL encoded as <code>%25</code>.<br/>
 			Special parameters: _limit={integer}, _offset={integer}.
+			<br/>(optionally use <code>_output=application/json</code> to specify JSON encoding)
 			</td>
 		</tr>
 		<tr>
@@ -68,7 +69,7 @@
 			<td><strong>Response body</strong></td>
 			<td>Results as XML</td>
 			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
-			<td>Content-Type: application/xml</td>
+			<td>Content-Type: application/xml or application/json</td>
 		</tr>
 	</tbody>
 </table>
@@ -77,8 +78,9 @@
 
 <p class="text">Results are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</p>
 
-<h2>Examples</h2>
-<pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1</pre>
+<h2>XML Examples</h2>
+<pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/xml</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -87,8 +89,9 @@ Content-Type: application/xml
 &lt;/readResponse&gt;
 </pre>
 
-<div class="text">A wildcarded query:</div>
-<pre>GET /restsql/res/Actor?first_name=S%25 HTTP/1.1</pre>
+<div class="text">A wildcarded query uses a <code>%</code> symbol, as in SQL, which matches any number of characters. It must be URL-encoded to <code>%25</code> in a URL.</div>
+<pre>GET /restsql/res/Actor?last_name=S%25 HTTP/1.1
+Accept: application/xml</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -106,7 +109,8 @@ Content-Type: application/xml
 </pre>
 
 <div class="text">A limited query:</div>
-<pre>GET /restsql/res/Actor?_limit=10&amp;_offset=0 HTTP/1.1</pre>
+<pre>GET /restsql/res/Actor?_limit=10&amp;_offset=0 HTTP/1.1
+Accept: application/xml</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -125,7 +129,8 @@ Content-Type: application/xml
 </pre>
 
 <div class="text">A hierarchical SQL resource:</div>
-<pre>GET /restsql/res/ActorFilm?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1</pre>
+<pre>GET /restsql/res/ActorFilm?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/xml</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
@@ -139,6 +144,85 @@ Content-Type: application/xml
    &lt;/actor&gt;
 &lt;/readResponse&gt;
 </pre>
+
+<h2>JSON Examples</h2>
+<pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/json</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": "123", "first_name": "JULIANNE", "surname": "DENCH" }
+   ]
+}
+</pre>
+
+<div class="text">A wildcarded query uses a <code>%</code> symbol, as in SQL, which matches any number of characters. It must be URL-encoded to <code>%25</code> in a URL.</div>
+<pre>GET /restsql/res/Actor?last_name=S%25 HTTP/1.1
+Accept: application/json</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": "180", "first_name": "JEFF", "surname": "SILVERSTONE" },
+      { "actor_id": "195", "first_name": "JAYNE", "surname": "SILVERSTONE" }
+      { "actor_id": "78", "first_name": "GROUCHO", "surname": "SINATRA" },
+      { "actor_id": "31", "first_name": "SISSY", "surname": "SOBIESKI" },
+      { "actor_id": "44", "first_name": "NICK", "surname": "STALLONE" },
+      { "actor_id": "24", "first_name": "CAMERON", "surname": "STREEP" },
+      { "actor_id": "116", "first_name": "DAN", "surname": "STREEP" },
+      { "actor_id": "192", "first_name": "JOHN", "surname": "SUVARI" },
+      { "actor_id": "9", "first_name": "JOE", "surname": "SWANK" },
+   ]
+}
+</pre>
+
+<div class="text">A limited query:</div>
+<pre>GET /restsql/res/Actor?_limit=10&amp;_offset=0 HTTP/1.1
+Accept: application/json</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": "1", "first_name": "PENELOPE", "surname": "GUINESS" },
+      { "actor_id": "2", "first_name": "NICK", "surname": "WAHLBERG" },
+      { "actor_id": "3", "first_name": "ED", "surname": "CHASE" },
+      { "actor_id": "4", "first_name": "JENNIFER", "surname": "DAVIS" },
+      { "actor_id": "5", "first_name": "JOHNNY", "surname": "LOLLOBRIGIDA" },
+      { "actor_id": "6", "first_name": "BETTE", "surname": "NICHOLSON" },
+      { "actor_id": "7", "first_name": "GRACE", "surname": "MOSTEL" },
+      { "actor_id": "8", "first_name": "MATTHEW", "surname": "JOHANSSON" },
+      { "actor_id": "9", "first_name": "JOE", "surname": "SWANK" },
+      { "actor_id": "10", "first_name": "CHRISTIAN", "surname": "GABLE" }
+   ]
+}
+</pre>
+
+<div class="text">A hierarchical SQL resource:</div>
+<pre>GET /restsql/res/ActorFilm?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/json</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
+         "films": [
+            { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
+            { "year": "2006", "title": "ATLANTIS CAUSE", "film_id": "43" },
+            { "year": "2006", "title": "BERETS AGENT", "film_id": "67" },
+            { "year": "2006", "title": "BULL SHAWSHANK", "film_id": "105" },
+            { "year": "2006", "title": "CHOCOLATE DUCK", "film_id": "138" },
+         ]
+      }
+   ]
+}
+</pre>
+
+<p class="text">Without an Accept header, the output format defaults to application/xml. An alternative to the Accept header is using the <code>_output</code> query parameter with the mime type, as in:</p>
+<pre>GET /restsql/res/ActorFilm/123?_output=application/json HTTP/1.1
+</pre>
+<div class="text">will return JSON output. See <a href="ResMediaTypes.html">Media Types</a> for more discussion.</div>
+
 </div>
 </body>
 </html>
