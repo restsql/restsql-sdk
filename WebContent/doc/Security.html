@@ -56,7 +56,7 @@
    &lt;/login-config&gt;
 </pre>
 <p class="text">The UserDatabase realm is configured using the $TOMCAT_HOME/conf/tomcat-users.xml file. The file defines the roles, user names, passwords and role assignments. File-, RDBMS- and LDAP-backed implementations are also available in most JEE containers. See your container's documentation for instructions.</p>
-<p class="text">The &lt;security-role&gt; element defines the roles. For example:</p>
+<p class="text">The Deployment Descriptor's &lt;security-role&gt; element defines the roles. For example:</p>
 <pre>
    &lt;security-role&gt;
        &lt;role-name&gt;all&lt;/role-name&gt;
@@ -130,6 +130,23 @@
 <p class="text">Disabling Authorization: If <code>security.privileges</code> is missing from the restsql.properties, authorization is disabled and all operations are permitted regardless of user role.</p>
 <p class="text">Access http://yourhost:port/restsql for links to the effective runtime configuration.</p>
 <p class="text">In restSQL WAR mode, authorization is implicit in HTTP requests. In restSQL Jar mode, authorization is explicit. Neither Request nor SQL Resource methods are protected. The app must create a <code>SecurityContext</code> implementation and pass it as well as the <code>Request</code> to the <code>Authorizer</code>, as in <code>Authorizer.isAuthorized(securityContext, request)</code>.</p>
+
+<h2>Realm Configuration</h2>
+<p class="text">Following is an example of the UserDatabase realm configuration in $TOMCAT_HOME/conf/tomcat-users.xml file:</p>
+<pre>
+   &lt;tomcat-users&gt;
+      &lt;role rolename="all"/&gt;
+      &lt;role rolename="limited"/&gt;
+      &lt;role rolename="readonly"/&gt;
+      &lt;role rolename="admin"/&gt;
+      &lt;user username="all" password="all" roles="all"/&gt;
+      &lt;user username="limited" password="limited" roles="limited"/&gt;
+      &lt;user username="readonly" password="readonly" roles="readonly"/&gt;
+      &lt;user username="admin" password="admin" roles="admin"/&gt;
+   &lt;/tomcat-users&gt;
+</pre>
+<p class="text">File-, RDBMS- and LDAP-backed implementations are also available in most JEE containers. See your container's documentation for instructions.
+</p>
 
 <h2>Validation</h2>
 <p class="text">Server-side input validation (data types, values, etc.) may be provided by application-provided, Java-based <a href="Triggers.html">Triggers</a>.</p>
