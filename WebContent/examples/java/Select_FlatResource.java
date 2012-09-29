@@ -12,6 +12,7 @@ import org.restsql.core.Request;
 import org.restsql.core.RequestLogger;
 import org.restsql.core.SqlResource;
 import org.restsql.core.SqlResourceException;
+import org.restsql.core.NameValuePair.Operator;
 
 /**
  * Contains read examples using the Java API using Country, a flat SQL Resource.
@@ -42,7 +43,7 @@ public class Select_FlatResource {
 
 		// Create the request
 		List<NameValuePair> resIds = new ArrayList<NameValuePair>(1);
-		resIds.add(new NameValuePair("country_id", "1"));
+		resIds.add(new NameValuePair("country_id", "1", Operator.Equals));
 		List<NameValuePair> params = null;
 		List<List<NameValuePair>> childrenParams = null;
 		RequestLogger requestLogger = Factory.getRequestLogger();
@@ -83,8 +84,8 @@ public class Select_FlatResource {
 		// Create the request
 		List<NameValuePair> resIds = null;
 		List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-		params.add(new NameValuePair(Request.PARAM_NAME_LIMIT, "10"));
-		params.add(new NameValuePair(Request.PARAM_NAME_OFFSET, "10"));
+		params.add(new NameValuePair(Request.PARAM_NAME_LIMIT, "10", Operator.Equals));
+		params.add(new NameValuePair(Request.PARAM_NAME_OFFSET, "10", Operator.Equals));
 		List<List<NameValuePair>> childrenParams = null;
 		RequestLogger requestLogger = Factory.getRequestLogger();
 		Request request = Factory.getRequest(Request.Type.SELECT, sqlResource.getName(), resIds, params,
@@ -104,9 +105,9 @@ public class Select_FlatResource {
 		// Create the request
 		List<NameValuePair> resIds = null;
 		List<NameValuePair> params = new ArrayList<NameValuePair>(0);
-		params.add(new NameValuePair("last_update", "2006-02-15 04:44:00"));
-		params.add(new NameValuePair(Request.PARAM_NAME_LIMIT, "5"));
-		params.add(new NameValuePair(Request.PARAM_NAME_OFFSET, "0"));
+		params.add(new NameValuePair("last_update", "2006-02-15 04:44:00", Operator.Equals));
+		params.add(new NameValuePair(Request.PARAM_NAME_LIMIT, "5", Operator.Equals));
+		params.add(new NameValuePair(Request.PARAM_NAME_OFFSET, "0", Operator.Equals));
 		List<List<NameValuePair>> childrenParams = null;
 		RequestLogger requestLogger = Factory.getRequestLogger();
 		Request request = Factory.getRequest(Request.Type.SELECT, sqlResource.getName(), resIds, params,

@@ -56,9 +56,13 @@
 		</tr>
 		<tr>
 			<td><strong>Query Params</strong></td>
-			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query. Use '%' for wildcard, which is URL encoded as <code>%25</code>.<br/>
-			Special parameters: _limit={integer}, _offset={integer}.
-			<br/>(optionally use <code>_output=application/json</code> to specify JSON encoding)
+			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query.<br/><br/>
+			Options:
+			<ul>
+				<li>Prefix one of four url encoded comparison operators at the beginning of the value. See <a href="ComparisonOperators.html">Comparison Operators</a> for more detail.</li> 
+				<li>Include '%' in value for wildcard, which is URL encoded as <code>%25</code>. This will use the a SQL LIKE instead of equals.</li>
+				<li>Special parameters: <code>_limit</code>={integer}, <code>_offset</code>={integer}, <code>_output</code>={media-type}</li>
+			</ul>
 			</td>
 		</tr>
 		<tr>
@@ -145,6 +149,22 @@ Content-Type: application/xml
 &lt;/readResponse&gt;
 </pre>
 
+<div class="text">A query with <a href="ComparisonOperators.html">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.</div>
+<pre>GET /restsql/res/Actor?surname=%3EWILLIAMS HTTP/1.1
+Accept: application/xml</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+	&lt;actor id="147" first_name="FAY" surname="WINSLET" /&gt;
+	&lt;actor id="156" first_name="FAY" surname="WOOD" /&gt;
+	&lt;actor id="164" first_name="HUMPHREY" surname="WILLIS" /&gt;
+	&lt;actor id="168" first_name="WILL" surname="WILSON" /&gt;
+	&lt;actor id="186" first_name="JULIA" surname="ZELLWEGER" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+
 <h2>JSON Examples</h2>
 <pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
 Accept: application/json</pre>
@@ -217,6 +237,23 @@ Content-Type: application/json
    ]
 }
 </pre>
+
+<div class="text">A query with <a href="ComparisonOperators.html">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.</div>
+<pre>GET /restsql/res/Actor?surname=%3EWILLIAMS HTTP/1.1
+Accept: application/json</pre>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": "147", "first_name": "FAY", "surname": "WINSLET" },
+      { "actor_id": "156", "first_name": "FAY", "surname": "WOOD" },
+      { "actor_id": "164", "first_name": "HUMPHREY", "surname": "WILLIS" },
+      { "actor_id": "168", "first_name": "WILL", "surname": "WILSON" },
+      { "actor_id": "186", "first_name": "JULIA", "surname": "ZELLWEGER" }
+   ]
+}
+</pre>
+
 
 <p class="text">Without an Accept header, the output format defaults to application/xml. An alternative to the Accept header is using the <code>_output</code> query parameter with the mime type, as in:</p>
 <pre>GET /restsql/res/ActorFilm/123?_output=application/json HTTP/1.1

@@ -10,6 +10,7 @@ import org.restsql.core.Request;
 import org.restsql.core.RequestLogger;
 import org.restsql.core.SqlResource;
 import org.restsql.core.SqlResourceException;
+import org.restsql.core.NameValuePair.Operator;
 
 /**
  * Contains insert and delete examples using the Java API using Country, a flat SQL Resource.
@@ -72,7 +73,7 @@ public class InsertUpdateDelete_FlatResource {
 		final List<NameValuePair> resIds = new ArrayList<NameValuePair>(1);
 		
 		final List<NameValuePair> params = null;
-		resIds.add(new NameValuePair("country_id", "1000"));
+		resIds.add(new NameValuePair("country_id", "1000", Operator.Equals));
 		final List<List<NameValuePair>> childrenParams = null;
 		final RequestLogger requestLogger = Factory.getRequestLogger();
 		final Request request = Factory.getRequest(Request.Type.DELETE, sqlResource.getName(), resIds,

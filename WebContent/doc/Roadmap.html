@@ -38,14 +38,15 @@
     <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
     <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
     <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="sponsors/Sponsors.html">Sponsors</a></div>
     <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
     <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
 </div>
 
 <div id="content"> 
 <h1>Roadmap</h1>
-<div class="text">The roadmap contains both features and defects. Priorities are given below as 1, 2 and 3. These map to near, medium and long-term.</div>
-<p class="text">If you would like a feature not present in the list below or would like to change the priority of a feature, contact the <a href="mailto:mark.sawers@restsql.org">Project Lead</a>. Or get involved and help us build it! Contribute using the <a href="http://github.com/restsql">GitHub-hosted restsql project</a>.</p>
+<div class="text">Following is a listing of possible features and known bugs listed in no particular order. There are also features and bugs on the <a href="http://github.com/restsql/restsql/issues">GitHub issues</a> website.</div>
+<p class="text">We are actively looking for help in growing the framework. The <a href="README-FRAMEWORK_DEVELOPERS.txt">Framework Developer Guide</a> will help you kickstart. Contact the <a href="mailto:mark.sawers@restsql.org">Project Lead</a> for more assistance. Contribute using the <a href="http://github.com/restsql">GitHub-hosted restsql project</a>.</p>
 <h2>Features</h2>
 <table>
 	<tbody>
@@ -55,7 +56,6 @@
 			<th>Description</th>
 			<th>Impact</th>
 			<th>Effort</th>
-			<th>Priority</th>
 		</tr>
 		<tr>
 			<td>SDK</td>
@@ -63,7 +63,6 @@
 			<td>Add AJAX-style demo app</td>
 			<td>No framework impact</td>
 			<td>Medium</td>
-			<td align="center">1</td>
 		</tr>
 		<tr>
 			<td>Core Features</td>
@@ -71,7 +70,6 @@
 			<td>Return auto created pks</td>
 			<td>Likely database-specific implementation, e.g. MySQL is last_insert_id()</td>
 			<td>Medium</td>
-			<td align="center">1</td>
 		</tr>
 		<tr>
 			<td>Security</td>
@@ -79,7 +77,6 @@
 			<td>Input validation, e.g. SQL injection</td>
 			<td>Add parameter filter to security package</td>
 			<td>Medium</td>
-			<td align="center">1</td>
 		</tr>
 		<tr>
 			<td>Core Features</td>
@@ -87,7 +84,6 @@
 			<td>Reload definition if file changes. Avoids needing to restart container in development.</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">2</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -95,15 +91,6 @@
 			<td>Add support for order by on GETs</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">2</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>Numeric Queries</td>
-			<td>Add support for number comparisons (less than, greater than) and ranges (between)</td>
-			<td></td>
-			<td>Medium</td>
-			<td align="center">2</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -111,7 +98,6 @@
 			<td>Add support for SQL Resource queries containing group by (use having instead of where)</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">2</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -119,7 +105,6 @@
 			<td>Add support for SQL Resource queries UNION, UNION ALL, INTERSECT and MINUS</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -127,7 +112,6 @@
 			<td>Add search case sensitivity param per request. Also make this a global setting.</td>
 			<td>Likely database-specific implementation</td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -135,7 +119,6 @@
 			<td>Standard and custom attribute validation on inserts and updates. Declared in SQL Resource definition, e.g. number range, string length or format.</td>
 			<td></td>
 			<td>Large</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -143,7 +126,6 @@
 			<td>Configurable transaction boundaries for multi-object requests</td>
 			<td></td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -151,7 +133,6 @@
 			<td>Lock optimistically on timestamps or sequence number, i.e. select for update where last_modified = 'xxx'</td>
 			<td></td>
 			<td>Large</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -159,7 +140,6 @@
 			<td>Implement statistics like number current open requests, historical requests, errors, etc. Expose through HTTP and JMX.</td>
 			<td></td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -167,7 +147,6 @@
 			<td>Configurable to return columns as attributes or as elements</td>
 			<td>Change Serializer, add restsql.properties property</td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -175,7 +154,6 @@
 			<td>Validate request document if configured</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -183,7 +161,6 @@
 			<td>Reload configuration on properties file change (general, database and logging)</td>
 			<td>Config class</td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -191,7 +168,6 @@
 			<td>TriggerManager expects single file/dir in triggers.classpath</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -199,7 +175,6 @@
 			<td>Add configurable option to show hostnames instead of IPs in access, error and trace logs</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -207,7 +182,6 @@
 			<td>Implement structured text dump of SQL Resource metadata</td>
 			<td>SqlResourceMetaData. toString(), ResResource change</td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -215,7 +189,6 @@
 			<td>Child or extension rows are currently deleted explicitly. Make this a configurable option to suppress deletion, per SQL Resource.</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -223,7 +196,6 @@
 			<td>Delete by query (non-pk column) will fail with hierarchical in many-to-many or one-to-many if there is no cascasde delete FK instruction in schema. Issue delete from child where fk in (select pk from parent where column = value).</td>
 			<td></td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -231,7 +203,6 @@
 			<td>Updates/Deletes by query to extension rows only works if a column in the extension is queried. Use correlated subselect of values to affect extensions.</td>
 			<td></td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -239,7 +210,6 @@
 			<td>If extension doesn't exist, updates will fail silently to the extension. If rows affected = 0, convert to insert statement.</td>
 			<td></td>
 			<td>Small</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td>Interop</td>
@@ -247,7 +217,6 @@
 			<td>Test with Oracle</td>
 			<td>Likely requires a new SqlResourceMetaData implementation (use Abstract as base) and extension to SqlBuilderImpl</td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td>Performance</td>
@@ -255,7 +224,6 @@
 			<td>Use JEE container's connection pool</td>
 			<td></td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -263,7 +231,6 @@
 			<td>Build XML natively instead of using objects</td>
 			<td>Change to SqlResourceImpl</td>
 			<td>Medium</td>
-			<td align="center">3</td>
 		</tr>
 	</tbody>
 </table>
