@@ -132,9 +132,9 @@ The attribute is named after the parent table's plural name (or alias), as in:
 </p>
 <pre>
 { "actors": [
-      { "id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
-      { "id": "124", "first_name": "SCARLETT", "surname": "BENING" },
-      { "id": "125, "first_name": "ALBERT", "surname": "NOLTE" }
+      { "id": 123, "first_name": "JULIANNE", "surname": "DENCH" },
+      { "id": 124, "first_name": "SCARLETT", "surname": "BENING" },
+      { "id": 125, "first_name": "ALBERT", "surname": "NOLTE" }
    ]
 }
 </pre>
@@ -143,17 +143,17 @@ In a hiearchical SQL Resource, the object may contain two levels of elements, as
 </div>
 <pre>
 { "actors": [
-      { "actor_id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
+      { "actor_id": 123, "first_name": "JULIANNE", "surname": "DENCH" },
          "films": [
-            { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
-            { "year": "2006", "title": "ATLANTIS CAUSE", "film_id": "43" }
+            { "year": 2006, "title": "ADAPTATION HOLES", "film_id": 3 },
+            { "year": 2006, "title": "ATLANTIS CAUSE", "film_id": 43 }
          ]
       },
-      { "actor_id": "123", "first_name": "SCARLETT", "surname": "BENING" },
+      { "actor_id": 124, "first_name": "SCARLETT", "surname": "BENING" },
          "films": [
-            { "year": "2006", "title": "BERETS AGENT", "film_id": "67" },
-            { "year": "2006", "title": "BULL SHAWSHANK", "film_id": "105" },
-            { "year": "2006", "title": "CHOCOLATE DUCK", "film_id": "138" },
+            { "year": 2006, "title": "BERETS AGENT", "film_id": 67 },
+            { "year": 2006, "title": "BULL SHAWSHANK", "film_id": 105 },
+            { "year": 2006, "title": "CHOCOLATE DUCK", "film_id": 138 },
          ]
       }      
    ]
@@ -168,7 +168,8 @@ In a hiearchical SQL Resource, the object may contain two levels of elements, as
 <p class="text">Unlike XML, the JSON write request object is encoded the same as a read response object.</p>
 <p class="text">A write response cotains an object with a single attribute with the rows affected, as in:</p>
 <pre>
-{ "rowsAffected": "4" }</pre>
+{ "rowsAffected": 4 }</pre>
+<p class="text">Also unlike XML, the JSON responses support numeric types as well as string types.  Write requests will accept strings or numbers for numeric columns.</p>
 
 <h2>More References</h2>
 <div class="text">See the IETF RFC <a href="http://tools.ietf.org/html/rfc2616#page-100">HTTP Standard Headers</a>.</div>
