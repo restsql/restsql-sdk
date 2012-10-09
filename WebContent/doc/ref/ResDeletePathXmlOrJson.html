@@ -117,9 +117,9 @@ Content-Type: application/json
 Accept: application/json
 
 { "films": [
-      { "film_id": "3" },
-      { "film_id": "43" },
-      { "film_id": "67" },
+      { "film_id": 3 },
+      { "film_id": 43 },
+      { "film_id": 67 },
    ]
 }
 </pre>
@@ -127,7 +127,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 
 <div class="text">A many-to-many hierarchical SQL Resource (child rows are disassociated):</div>
 <pre>DELETE /restsql/res/ActorFilm/123 HTTP/1.1
@@ -135,9 +135,9 @@ Content-Type: application/json
 Accept: application/json
 
 { "films": [
-      { "film_id": "3" },
-      { "film_id": "43" },
-      { "film_id": "233" },
+      { "film_id": 3 },
+      { "film_id": 43 },
+      { "film_id": 233 },
    ]
 }
 </pre>
@@ -145,7 +145,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 </div>
 </body>
 </html>

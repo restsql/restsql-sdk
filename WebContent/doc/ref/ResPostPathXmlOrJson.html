@@ -113,16 +113,16 @@ Content-Type: application/json
 Accept: application/json
 
 { "films": [
-      { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
-      { "year": "2006", "title": "ATLANTIS CAUSE", "film_id": "43" },
-      { "year": "2006", "title": "BERETS AGENT", "film_id": "67" }
+      { "year": 2006, "title": "ADAPTATION HOLES", "film_id": 3 },
+      { "year": 2006, "title": "ATLANTIS CAUSE", "film_id": 43 },
+      { "year": 2006, "title": "BERETS AGENT", "film_id": 67 }
    ]
 }
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 
 <div class="text">A many-to-many hierarchical SQL resource (child rows are only associated to parent):</div>
 <pre>POST /restsql/res/ActorFilm/123 HTTP/1.1
@@ -130,16 +130,16 @@ Content-Type: application/json
 Accept: application/json
 
 { "films": [
-      { "film_id": "3" },
-      { "film_id": "43" },
-      { "film_id": "67" },
+      { "film_id": 3 },
+      { "film_id": 43 },
+      { "film_id": 67 },
    ]
 }
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 </div>
 </body>
 </html>

@@ -141,16 +141,16 @@ Content-Type: application/json
 Accept: application/json
 
 { "actors": [
-      { "id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
-      { "id": "124", "first_name": "SCARLETT", "surname": "BENING" },
-      { "id": "125", "first_name": "ALBERT", "surname": "NOLTE" }
+      { "id": 123, "first_name": "JULIANNE", "surname": "DENCH" },
+      { "id": 124, "first_name": "SCARLETT", "surname": "BENING" },
+      { "id": 125, "first_name": "ALBERT", "surname": "NOLTE" }
    ]
 }
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 
 <p class="text">An insert to parents of a hierarchical SQL Resource would look identical to the proceeding.</p>
 
@@ -160,14 +160,14 @@ Content-Type: application/json
 Accept: application/json
 
 { "languages": [
-      { "language_id": "1",
+      { "language_id": 1,
          "films": [
-            { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
-            { "year": "2006", "title": "ATLANTIS CAUSE", "film_id": "43" },
-            { "year": "2006", "title": "BERETS AGENT", "film_id": "67" }
+            { "year": 2006, "title": "ADAPTATION HOLES", "film_id": 3 },
+            { "year": 2006, "title": "ATLANTIS CAUSE", "film_id": 43 },
+            { "year": 2006, "title": "BERETS AGENT", "film_id": 67 }
          ]
       },
-      { "language_id": "4", "langName": "Quechua" }
+      { "language_id": 4, "langName": "Quechua" }
    ]   
 }
 </pre>
@@ -183,14 +183,14 @@ Content-Type: application/json
 Accept: application/json
 
 { "actors": [
-      { "actor_id": "123",
+      { "actor_id": 123,
          "films": [
-            { "film_id": "3" },
-            { "film_id": "43" },
-            { "film_id": "67" },
+            { "film_id": 3 },
+            { "film_id": 43 },
+            { "film_id": 67 },
          ]
       },
-      { "actor_id": "124", "first_name": "BENITO", last_name="BENINGS" }
+      { "actor_id": 124, "first_name": "BENITO", last_name="BENINGS" }
    ]   
 }
 </pre>
@@ -198,7 +198,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "4" }</pre>
+{ "rowsAffected": 4 }</pre>
 
 </div>
 </body>

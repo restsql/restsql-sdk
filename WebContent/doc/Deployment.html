@@ -93,6 +93,7 @@
     <li>Security - optional</li>
     <li>Triggers - optional</li>
     <li>XML - optional</li>
+    <li>HTTP - optional</li>
     <li>Database - required</li>
     <li>Implementation classes - optional</li>
 </ol>
@@ -129,7 +130,7 @@
    triggers.definition=/etc/opt/business/restsql/triggers.properties
 </pre>
 
-<div class="text">The XML configuration is optional. The defaults are:</div>
+<p class="text">The XML configuration is optional. The defaults are:</p>
 <pre>
    # request.useXmlSchema=[true, false]
    # response.useXmlDirective=[true, false]
@@ -140,6 +141,12 @@
 </pre>
 
 <div class="text">The default settings indicate that request documents may be sent without schema references. Likewise response documents are sent without the xml directive (&lt;?xml version="1.0" encoding="UTF-8"?&gt;) and without schema references.</div> 
+
+<p class="text">The HTTP configuration is optional. See <a href="HttpConfig.html">HTTP Configuration</a> for more detail. The defaults are:</p>
+<pre>
+   # http.response.cacheControl={cache-directive}, {cache-directive}, ...
+   http.response.cacheControl=no-cache, no-transform
+</pre>
 
 <p class="text">The Database configuration is required. for a database with built-in support:</p>
 <pre>

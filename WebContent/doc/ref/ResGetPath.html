@@ -97,11 +97,11 @@ Content-Type: application/xml
 
 &lt;readResponse&gt;
    &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH"&gt;
-      &lt;film year="2006" title="ADAPTATION HOLES" film_id="3" /&gt;
-      &lt;film year="2006" title="ATLANTIS CAUSE" film_id="43" /&gt;
-      &lt;film year="2006" title="BERETS AGENT" film_id="67" /&gt;
-      &lt;film year="2006" title="BULL SHAWSHANK" film_id="105" /&gt;
-      &lt;film year="2006" title="CHOCOLATE DUCK" film_id="148" /&gt;
+      &lt;film year="2600" title="ADAPTATION HOLES" film_id="3" /&gt;
+      &lt;film year="2600" title="ATLANTIS CAUSE" film_id="43" /&gt;
+      &lt;film year="2600" title="BERETS AGENT" film_id="67" /&gt;
+      &lt;film year="2600" title="BULL SHAWSHANK" film_id="105" /&gt;
+      &lt;film year="2600" title="CHOCOLATE DUCK" film_id="148" /&gt;
    &lt;/actor&gt;
 &lt;/readResponse&gt;
 </pre>
@@ -113,7 +113,7 @@ Accept: applicaton/json</pre>
 Content-Type: application/json
 
 { "actors": [
-      { "id": "123", "first_name": "JULIANNE", "surname": "DENCH" }
+      { "id": 123, "first_name": "JULIANNE", "surname": "DENCH" }
    ]
 }
 </pre>
@@ -125,13 +125,13 @@ Accept: applicaton/json</pre>
 Content-Type: application/json
 
 { "actors": [
-      { "id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
+      { "id": 123, "first_name": "JULIANNE", "surname": "DENCH" },
          "films": [
-            { "year": "2006", "title": "ADAPTATION HOLES", "film_id": "3" },
-            { "year": "2006", "title": "ATLANTIS CAUSE", "film_id": "43" },
-            { "year": "2006", "title": "BERETS AGENT", "film_id": "67" },
-            { "year": "2006", "title": "BULL SHAWSHANK", "film_id": "105" },
-            { "year": "2006", "title": "CHOCOLATE DUCK", "film_id": "138" },
+            { "year": 2006, "title": "ADAPTATION HOLES", "film_id": 3 },
+            { "year": 2006, "title": "ATLANTIS CAUSE", "film_id": 43 },
+            { "year": 2006, "title": "BERETS AGENT", "film_id": 67 },
+            { "year": 2006, "title": "BULL SHAWSHANK", "film_id": 105 },
+            { "year": 2006, "title": "CHOCOLATE DUCK", "film_id": 138 },
          ]
       }
    ]

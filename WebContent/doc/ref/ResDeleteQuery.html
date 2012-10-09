@@ -117,7 +117,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 
 <div class="text">A delete to parents of a one-to-many hierarchical SQL Resource (child rows are also deleted):</div>
 <pre>DELETE /restsql/res/LanguageFilm/3 HTTP/1.1
@@ -127,7 +127,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "18" }</pre>
+{ "rowsAffected": 18 }</pre>
 
 <div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
 <pre>DELETE /restsql/res/ActorFilm?last_name=DENCH HTTP/1.1
@@ -137,7 +137,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "9" }</pre>
+{ "rowsAffected": 9 }</pre>
 </div>
 </body>
 </html>

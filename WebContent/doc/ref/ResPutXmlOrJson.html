@@ -122,16 +122,16 @@ Content-Type: application/json
 Accept: application/json
 
 { "actors": [
-      { "actor_id": "123", "first_name": "JULIANNER" },
-      { "actor_id": "124", "first_name": "BENINGS" },
-      { "actor_id": "124", "first_name": "NOLTER" }
+      { "actor_id": 123, "first_name": "JULIANNER" },
+      { "actor_id": 124, "first_name": "BENINGS" },
+      { "actor_id": 125, "first_name": "NOLTER" }
    ]
 }
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 <p class="text">An update to parents of a hierarchical SQL Resource would look identical to the proceeding.</p>
 
 <div class="text">An update to children of one parent and another parent for a hierarchical SQL Resource:</div>
@@ -140,14 +140,14 @@ Content-Type: application/json
 Accept: application/json
 
 { "actors": [
-      { "actor_id": "123",
+      { "actor_id": 123,
          "films": [
-            { "film_id": "3", "year": "2007", "title": "ADAPTATION HOLES 2" },
-            { "film_id": "43", "year": "2006" },
-            { "film_id": "67", "title": "BETETS AGENT" }
+            { "film_id": 3, "year": 2007, "title": "ADAPTATION HOLES 2" },
+            { "film_id": 43, "year": 2006 },
+            { "film_id": 67, "title": "BETETS AGENT" }
          ]
       },
-      { "actor_id": "124", "last_name": "BENINGS" }
+      { "actor_id": 124, "last_name": "BENINGS" }
    ]
 }
 </pre>
@@ -155,7 +155,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "4" }</pre>
+{ "rowsAffected": 4 }</pre>
 </div>
 </body>
 </html>

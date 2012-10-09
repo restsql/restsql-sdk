@@ -184,6 +184,7 @@ public class InsertUpdateDelete_FlatResource {
 		// Create the delete request
 		final List<NameValuePair> resIds = new ArrayList<NameValuePair>(1);
 		resIds.add(new NameValuePair("country_id", "1000"));
+		params.clear();
 		params.add(new NameValuePair("country", "Test2"));
 		params.add(new NameValuePair("last_update", "2012-02-18 10:00:10"));
 		final List<List<NameValuePair>> childrenParams = null;

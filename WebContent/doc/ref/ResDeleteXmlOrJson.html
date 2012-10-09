@@ -160,16 +160,16 @@ Content-Type: application/json
 Accept: application/json
 
 { "actors": [
-      { "actor_id": "123", "first_name": "JULIANNE", "surname": "DENCH" },
-      { "actor_id": "124", "first_name": "SCARLETT", "surname": "BENING" },
-      { "actor_id": "125", "first_name": "ALBERT", "surname": "NOLTE" }
+      { "actor_id": 123, "first_name": "JULIANNE", "surname": "DENCH" },
+      { "actor_id": 124, "first_name": "SCARLETT", "surname": "BENING" },
+      { "actor_id": 125, "first_name": "ALBERT", "surname": "NOLTE" }
    [
 }
 </pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "3" }</pre>
+{ "rowsAffected": 3 }</pre>
 
 <div class="text">A delete to parents and children of a one-to-many hierarchical SQL Resource:</div>
 <pre>DELETE /restsql/res/LanguageFilm HTTP/1.1
@@ -177,8 +177,8 @@ Content-Type: application/json
 Accept: application/json
 
 { "languages": [
-      { "language_id": "2" },
-      { "language_id": "3" }
+      { "language_id": 2 },
+      { "language_id": 3 }
    [
 }
 </pre>
@@ -186,7 +186,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "26" }</pre>
+{ "rowsAffected": 26 }</pre>
 
 <div class="text">A delete to children of a one-to-many hierarchical SQL Resource:</div>
 <pre>DELETE /restsql/res/LanguageFilm HTTP/1.1
@@ -194,17 +194,17 @@ Content-Type: application/json
 Accept: application/json
 
 { "languages": [
-      { "language_id": "1",
+      { "language_id": 1,
          "films": [
-            { "film_id": "3" },
-            { "film_id": "43" },
-            { "film_id": "67" }
+            { "film_id": 3 },
+            { "film_id": 43 },
+            { "film_id": 67 }
          ]
       },
-      { "language_id": "2" 
+      { "language_id": 2 
          "films": [
-            { "film_id": "3" },
-            { "film_id": "43" }
+            { "film_id": 3 },
+            { "film_id": 43 }
          ]
       }
    [
@@ -214,7 +214,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "5" }</pre>
+{ "rowsAffected": 5 }</pre>
 
 <div class="text">A delete to parents of a many-to-many hierarchical SQL Resource (parent rows are deleted, and child rows are disassociated):</div>
 <pre>DELETE /restsql/res/ActorFilm HTTP/1.1
@@ -222,8 +222,8 @@ Content-Type: application/json
 Accept: application/json
 
 { "actors": [
-      { "actor_id": "123" },
-      { "actor_id": "124" }
+      { "actor_id": 123 },
+      { "actor_id": 124 }
    [
 }
 </pre>
@@ -231,7 +231,7 @@ Accept: application/json
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
-{ "rowsAffected": "18" }</pre>
+{ "rowsAffected": 18 }</pre>
 </div>
 </body>
 </html>

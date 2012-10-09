@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL: HTTP Configuration</title> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="sponsors/Sponsors.html">Sponsors</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>HTTP Configuration</h1>
+<h2>Cache Control</h2>
+<p class="text">A no-cache directive (Cache-Control: no-cache, no-transform) is returned in responses by default, precluding proxies and caches from caching or transforming responses. This may be customized in the following manner:</p>
+<ol>
+	<li>System default property in the general restsql properties file</br><br/>
+	The following example sets the maximum age to 60 seconds and precludes proxy transformation:</br>
+	<pre>
+   # http.response.cacheControl={cache-directive}, {cache-directive}, ...
+   http.response.cacheControl=max-age=60, no-transform
+	</pre>
+	</li>
+	<li>Override on a per SQL Resource basis in the definition's metadata element<br/><br/>
+	The following example allows the UCI community to use an otherwise private response in their shared cache(s):<br/>
+	<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
+   &lt;query&gt;
+      ...
+   &lt;/query&gt;
+   &lt;metadata&gt;
+      ...
+   &lt;/metadata&gt;
+   &lt;http&gt;
+      &lt;response cacheControl='private, community="UCI"' /&gt;
+   &lt;/http&gt;
+	</pre>
+	</li>
+</ol>
+
+<p class="text">Note: Cache control directives on requests are <strong>ignored</strong>.</p>
+
+<p class="text">See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">Section 14.9 of RFC 2616</a> for more detail on cache control.</p>
+
+</div>
+</body>
+</html>

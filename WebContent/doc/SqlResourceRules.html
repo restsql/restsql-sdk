@@ -74,6 +74,7 @@
 			<li>If tables are unqualified, restSQL uses the default database defined in the metadata. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</li>
 			<li>For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared.</li>			
 			<li>Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</li>
+			<li>Parents in a flat or hierarchical resource and children in a many-to-many hierarchical resource must have a primary key for updates and ordering on selects to operate successfully.</li>
 			<li>Extensions must have a foreign key to the parent, and optionally a separate primary key.</li>
 		</ul>
 	</li>
