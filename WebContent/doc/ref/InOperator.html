@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>restSQL: restSQL Comparison Operators</title> 
+	<title>restSQL: restSQL In Operator</title> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 	<link href="../doc.css" rel="stylesheet" type="text/css"/>
 </head> 
@@ -44,49 +44,18 @@
 </div>
 
 <div id="content"> 
-<h1>Comparison Operators</h1>
-<p class="text">Comparison operators are supported in read requests on numeric, date and string parameters by prefixing the mathematical symbol in the value. This is used in the <a href="ResGetQuery.html">GET by Query</a> method.</p>
+<h1>In Operator</h1>
+<p class="text">The SQL IN operator is supported in read requests on numeric, date and string parameters by enclosing a comma-separated list in parenthesis. This is used in the <a href="ResGetQuery.html">GET by Query</a> method.</p>
 
-<p class="text">The following operators are supported:</p>
-<table>
-	<tbody>
-		<tr>
-			<th>Operator</th><th>Symbol</th><th>URL Encoded Symbol</th><th>Example</th><th>URL Encoded Example</th>
-		</tr>
-		<tr>
-			<td>Greater than</td><td>&gt;</td><td>%3E</td><td>price &gt; 100</td><td>price=%3E100</td>
-		</tr>
-		<tr>
-			<td>Greater than or equal to</td><td>&gt;=</td><td>%3E%3D</td><td>price &gt;= 100</td><td>price=%3E%3D100</td>
-		</tr>
-		<tr>
-			<td>Less than</td><td>&lt;</td><td>%3C</td><td>price &lt; 200</td><td>price=%3C200</td>
-		</tr>
-		<tr>
-			<td>Less than or equal to</td><td>&lt;=</td><td>%3C%3D</td><td>price &lt;= 200</td><td>price=%3C%3D200</td>
-		</tr>
-	</tbody>
-</table>
-</p>
-
-<p class="text">Ranges will be supported by specifying the parameter twice, as in:</p>
+<p class="text">Examples</p>
 <ul>
-	<li>price between 100 and 200: price=%3E100&price=%3C200</li>
-	<li>price between 100 and 200, inclusive: price=%3E%3D100&price=%3C%3D200</li>
+	<li>price in 100, 200 or 300: price=(100,200,300)</li>
+	<li>rating in G or R: rating=(G,R)</li>
 </ul>
 
-<p class="text">To use a literal &lt; or &gt; as the first character in a parameter value, you must escape it with a URL encoded backslash (%5C). For example, the <code>title=%5C%3Chello</code> find records with title matching '&lt;hello' (encode as '\&lt;hello').</p>
+<p class="text">To use a literal ( as the first character in a parameter value, you must escape it with a URL encoded backslash (%5C). For example, the <code>title=%5C(hello</code> find records with title matching '(hello' (encode as '\(hello').</p>
 		
-<p class="text">HTTP Status Code 400 (InvalidRequestException) will returned to the requestor if a parameter is supplied:</p>
-<ul>
-	<li>more than once if no comparison operators are present</li> 
-	<li>more than twice if comparison operators are present</li>
-</ul>
-
-<p class="text">Multiple parameters will be ANDed in the SQL. No ORing will be supported.</p>
-
 <p class="text">For Java API usage, prefix the value in a <a href="../../javadoc/api/org/restsql/core/NameValuePair.html">NameValuePair</a> object with the unencoded operator. Zero or more of these are passed in a <code>List</code> of parameters when creating a <a href="../../javadoc/api/org/restsql/core/Request.html">Request</a> object with the <a href="../../javadoc/api/org/restsql/core/Factory.html">Factory</a>.</p>
-
 
 </div>
 </body>
