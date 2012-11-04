@@ -221,6 +221,8 @@
 						sqlResource = xmlhttp.responseXML.getElementsByTagName("sqlResource")[0];
 					}
 					tables = xmlhttp.responseXML.getElementsByTagName("table");
+					resChildName = "?";
+					resParentName = "?";
 					for (i = 0; i < tables.length; i++) {
 						if (tables[i].getAttribute("role") == "Parent") {
 							resParentName = tables[i].getAttribute("name");

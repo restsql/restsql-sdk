@@ -2,7 +2,7 @@
 <rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd " defaultDatabase="sakila">
 	<query>
-		select film_id "id", title, release_year "year"
+		select film_id "id", title, release_year "year", language_id
 		from film
 	</query>
 	<metadata>
