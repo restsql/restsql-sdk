@@ -166,16 +166,6 @@
 		</tr>
 		<tr>
 			<td>GET</td>
-			<td style="white-space: nowrap">/res/{resName}?_definition</td>
-			<td>Returns SQL Resource definition as XML</td>
-		</tr>
-		<tr>
-			<td>GET</td>
-			<td style="white-space: nowrap">/res/{resName}?_metadata</td>
-			<td>Returns SQL Resource metadata as structured text</td>
-		</tr>
-		<tr>
-			<td>GET</td>
 			<td>/wadl</td>
 			<td>Returns restSQL WADL as XML with XSLT style sheet</td>
 		</tr>
@@ -187,7 +177,7 @@
 	<tbody>
 		<tr>
 			<td>GET</td>
-			<td>/conf</td>
+			<td>/conf/system</td>
 			<td>Returns general framework configuration in structured text</td>
 		</tr>
 		<tr>
@@ -199,6 +189,21 @@
 			<td>GET</td>
 			<td>/conf/security</td>
 			<td>Returns security configuration, currently the privileges for authorization, in structured text</td>
+		</tr>
+		<tr>
+			<td>GET</td>
+			<td>/conf/definition/{resName}</td>
+			<td>Returns SQL Resource definition (from user-provided XML file)</td>
+		</tr>
+		<tr>
+			<td>GET</td>
+			<td>/conf/metadata/{resName}</td>
+			<td>Returns SQL Resource metadata as understood by restSQL</td>
+		</tr>
+		<tr>
+			<td>GET</td>
+			<td>/conf/reload/{resName}</td>
+			<td>Reloads SQL Resource definition (from user-provided XML file)</td>
 		</tr>
 	</tbody>
 </table>

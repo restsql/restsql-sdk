@@ -48,6 +48,10 @@
 
 <p class="text">Email notification of new releases (both feature and bug fixes): <a href="mailto:mark.sawers@restsql.org?subject=subscribe%20restSQL%20release%20notifications">Subscribe</a></p>
 
+<h3>0.8.5 - Dec 16, 2012</h3>
+<div class="text">restSQL 0.8.5 improves developer productivity.</div>
+<p class="text">The release adds the ability to reload a SQL Resource definition on demand (/restsql/conf/reload/{resName}) without a webapp restart. It also adds a mechanism to retrieve the SQL Resource's definition (/restsql/conf/definition/{resName}) as well as the framework's understanding of it's metadata (/restsql/conf/metadata/{resName}). See the <a href="ref/index.html">HTTP API Reference</a>.</p>
+
 <h3>0.8.4 - Nov 4, 2012</h3>
 <div class="text">restSQL 0.8.4 restores Firefox compatibility.</div>
 <p class="text">The release restores support for Firefox, which was broken in release 0.8 with the JSON encoding enhancement. Firefox appends <code>;charset=UTF-8</code> to the Content-Type header when using XMLHttpRequest.setContentType() (GitHub <a href="https://github.com/restsql/restsql/issues/27">issue 27</a>).</p>
