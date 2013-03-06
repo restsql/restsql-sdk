@@ -62,7 +62,7 @@
 			<ul>
 				<li>Surround a commad-separated list in parenthesis. See <a href="InOperator.html">In Operator</a> for more detail.</li> 
 				<li>Prefix one of four url encoded comparison operators at the beginning of the value. See <a href="ComparisonOperators.html">Comparison Operators</a> for more detail.</li> 
-				<li>Include '%' in value for wildcard, which is URL encoded as <code>%25</code>. This will use the a SQL LIKE instead of equals.</li>
+				<li>Include '%' in value for wildcard, which is URL encoded as <code>%25</code>. This will use the a SQL LIKE instead of equals. For example to find all actors with first names that start with 'Ja', use <code>first_name=Ja%25</code>. If the selector value has an actual percent, then it must be escaped with a backslash, and both must be URL encoded. For example, to select the actor with the description of 'modified%', use<code>description=modified%5C%25</code></li>.
 				<li>Special parameters: <code>_limit</code>={integer}, <code>_offset</code>={integer}, <code>_output</code>={media-type}</li>
 			</ul>
 			</td>
