@@ -301,7 +301,25 @@ actor_id=201&amp;first_name=JULIANNE&amp;last_name=DENCH
 <pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
-&lt;writeResponse rowsAffected="1" /&gt;
+&lt;writeResponse rowsAffected="1"&gt;
+   &lt;actor actor_id="201" first_name="JULIANNE" last_name="DENCH" /&gt;
+&lt;writeResponse/&gt;
+</pre>
+
+<p class="text">Following is a variation of the previous example without the primary key, actor_id, relying on the default value's auto-increment in MySQL or sequence in PostgreSQL:</p>
+<pre>POST /restsql/res/Actor HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Accept: application/xml
+
+first_name=JULIANNE&amp;last_name=DENCH
+</pre>
+<p class="text">and the response:</p>
+<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="1"&gt;
+   &lt;actor actor_id="202" first_name="JULIANNE" last_name="DENCH" /&gt;
+&lt;writeResponse/&gt;
 </pre>
 
 <p class="text">Following is an example of a Read request with query parameters on a many-to-many hierarchical SQL Resource:</p>

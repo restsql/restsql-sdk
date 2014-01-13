@@ -163,28 +163,38 @@
    database.user=restsql
    database.password=Rest00sql#
 	
-   # MetaData implemenation class - match the implementation to your database
+   # DB-specific implementation classes - match the implementation to your database
    # For MySQL:
-   #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.SqlResourceMetaDataMySql
+   #	org.restsql.core.SequenceManager=org.restsql.core.impl.mysql.MySqlSequenceManager
+   #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.mysql.MySqlSqlResourceMetaData
    # For PostgreSQL:
-   #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.SqlResourceMetaDataPostgreSql
-   org.restsql.core.SqlResourceMetaData=com.business.restsql.SqlResourceMetaDataMySql
+   #	org.restsql.core.SequenceManager=org.restsql.core.impl.postgresql.PostgreSqlSequenceManager
+   #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.postgresql.PostgreSqlSqlResourceMetaData
+   org.restsql.core.SequenceManager=org.restsql.core.impl.mysql.MySqlSequenceManager
+   org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.mysql.MySqlSqlResourceMetaData
 </pre>
 
 <p class="text">Implementation classes configuration is optional. The defaults are:</p>
 <pre>
    # Implementation classes - use these to customize the framework
-   # org.restsql.core.RequestLogger=fully.qualified.class.name
-   # org.restsql.core.SqlBuilder=fully.qualified.class.name
    # org.restsql.core.Factory.ConnectionFactory=fully.qualified.class.name
    # org.restsql.core.Factory.RequestFactory=fully.qualified.class.name
+   # org.restsql.core.Factory.RequestDeserializerFactory=fully.qualified.class.name
+   # org.restsql.core.Factory.ResponseSerializerFactory=fully.qualified.class.name
    # org.restsql.core.Factory.SqlResourceFactory=fully.qualified.class.name
+   # org.restsql.core.HttpRequestAttributes=fully.qualified.class.name
+   # org.restsql.core.RequestLogger=fully.qualified.class.name
+   # org.restsql.core.SeqeunceManager=fully.qualified.class.name
+   # org.restsql.core.SqlBuilder=fully.qualified.class.name
    # org.restsql.security.Authorizer=fully.qualified.class.name
-   org.restsql.core.RequestLogger=org.restsql.core.impl.RequestLoggerImpl
-   org.restsql.core.SqlBuilder=org.restsql.core.impl.SqlBuilderImpl
    org.restsql.core.Factory.ConnectionFactory=org.restsql.core.impl.ConnectionFactoryImpl
    org.restsql.core.Factory.RequestFactory=org.restsql.core.impl.RequestFactoryImpl
+   org.restsql.core.Factory.RequestDeserializerFactory=org.restsql.core.impl.serial.RequestDeserializerFactoryImpl
+   org.restsql.core.Factory.ResponseSerializerFactory=org.restsql.core.impl.serial.ResponseSerializerFactoryImpl
    org.restsql.core.Factory.SqlResourceFactory=org.restsql.core.impl.SqlResourceFactoryImpl
+   org.restsql.core.HttpRequestAttributes=org.restsql.core.impl.HttpRequestAttributesImpl
+   org.restsql.core.RequestLogger=org.restsql.core.impl.RequestLoggerImpl
+   org.restsql.core.SqlBuilder=org.restsql.core.impl.SqlBuilderImpl
    org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
 </pre>
 
@@ -302,7 +312,7 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
 </p>
 <pre>
     var restsqlHost = "http://somehost:8080";
-    var restsqlBaseUri = "/restsql-0.7";
+    var restsqlBaseUri = "/restsql-0.8.7";
 </pre>
 
 <h2>Installing restSQL Test</h2>
@@ -311,7 +321,7 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
 <p class="text">Database: If you have not deployed the SDK yet, you will need to deploy the extended sakila database. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and PostgreSQL. The bash script is restsql-test/database/&lt;database&gt;/create-sakila.sh and the Windows batch script is restsql-test/database/&lt;database&gt;/create-sakila.bat, where database is mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.</p>
 <p class="text">Execution: The tests are executed using the Ant build file (restsql-test/build.xml). Executing the default target, all, will run everything, but you can also run test-api (Java API) or test-service (HTTP API) to run one or either half. If the service is not running in the default location, http://localhost:8080/restsql/, then the System Property, org.restsql.baseUri, must be set. For example:</p>
 <pre>
-    ant -Dorg.restsql.baseUri=http://somehost:8080/restsql-0.7/ test-service-http
+    ant -Dorg.restsql.baseUri=http://somehost:8080/restsql-0.8.7/ test-service-http
 </pre>
 <p class="text">Test results will appear on the console. Test detail is available in restsql-test/obj/test.</p>
 </div>

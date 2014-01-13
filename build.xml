@@ -20,7 +20,7 @@
 		</copy>
 
 		<!-- Compile -->
-		<javac srcdir="WebContent/examples/java" destdir="obj/bin" classpath="${compile.classpath}" debug="true">
+		<javac srcdir="WebContent/examples/java" destdir="obj/bin" classpath="${compile.classpath}" includeantruntime="false" debug="true">
 			<compilerarg line="-Xlint:all" />
 		</javac>
 	</target>

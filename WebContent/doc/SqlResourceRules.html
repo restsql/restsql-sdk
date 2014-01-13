@@ -57,16 +57,18 @@
 	</li>
 	<li>Queries
 		<ul>
-			<li>Group By queries are not supported (yet)</li>
+			<li>GROUP BY and ORDER BY in queries are not supported. Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</li>
 			<li>Views are not allowed. Metadata, e.g. column source tables and primary keys, for views is not easily discoverable.</li>
-			<li>Do not use table aliases in the query. Columns must be qualified using the full table name. Table aliases are defined in the metadata element. The alias is used in requests and responses.</li>
+			<li>Do not use table aliases in the query. Qualify columns with the full table name. Table aliases are defined in the metadata element. The alias is used in requests and responses.</li>
 		</ul>
 	</li>
 	<li>Columns
 		<ul>
 			<li>Columns must be declared explictly. Do not use SELECT * or SELECT {table}.* in a query.</li>
-			<li>Columns may contain functions for MySQL (but not for PostgreSQL yet) however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any records in the body in a write operation.</li>
+			<li>Columns may contain functions however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any records in the body in a write operation.</li>
 			<li>Columns may be aliased in a query. The alias is used in requests and responses.</li>
+			<li>Parents in a flat or hierarchical resource and children in a many-to-many hierarchical resource must have a primary key for to operate successfully.</li>
+			<li>A hierarchical resource query must include the parent and child primary keys.</li>
 		</ul>
 	</li>
 	<li>Tables
@@ -74,7 +76,6 @@
 			<li>If tables are unqualified, restSQL uses the default database defined in the metadata. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</li>
 			<li>For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared.</li>			
 			<li>Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</li>
-			<li>Parents in a flat or hierarchical resource and children in a many-to-many hierarchical resource must have a primary key for updates and ordering on selects to operate successfully.</li>
 			<li>Extensions must have a foreign key to the parent, and optionally a separate primary key.</li>
 		</ul>
 	</li>
@@ -82,7 +83,7 @@
 <h3>Behavior</h3>
 <ul>
 	<li>In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be used to create and delete them. Updates to the children are not supported in a many-to-many SQL Resource.</li>
-	<li>For hierarchical SQL Resources, parents are children are managed separately. Writes (INSERT, UPDATE, DELETE) are submitted separately. One exception is with one-to-many, if the child (and child extensions) is defined with an ON DELETE CASCADE, a delete of the parent will delete the children (and child extensions).</li>
+	<li>For hierarchical SQL Resources, parents and children are managed separately. Writes (INSERT, UPDATE, DELETE) are submitted separately. One exception is with one-to-many, if the child (and child extensions) is defined with an ON DELETE CASCADE, a delete of the parent will delete the children (and child extensions).</li>
 	<li>Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</li>
 </ul>
 			 

@@ -7,12 +7,12 @@ import java.util.Map;
 import org.restsql.core.Config;
 import org.restsql.core.Factory;
 import org.restsql.core.HttpRequestAttributes;
-import org.restsql.core.NameValuePair;
+import org.restsql.core.RequestValue;
 import org.restsql.core.Request;
 import org.restsql.core.RequestLogger;
 import org.restsql.core.SqlResource;
 import org.restsql.core.SqlResourceException;
-import org.restsql.core.NameValuePair.Operator;
+import org.restsql.core.RequestValue.Operator;
 
 /**
  * Contains read examples using the Java API using Country, a flat SQL Resource.
@@ -42,10 +42,10 @@ public class Select_FlatResource {
 		SqlResource sqlResource = Factory.getSqlResource("Country");
 
 		// Create the request
-		List<NameValuePair> resIds = new ArrayList<NameValuePair>(1);
-		resIds.add(new NameValuePair("country_id", "1", Operator.Equals));
-		List<NameValuePair> params = null;
-		List<List<NameValuePair>> childrenParams = null;
+		List<RequestValue> resIds = new ArrayList<RequestValue>(1);
+		resIds.add(new RequestValue("country_id", "1", Operator.Equals));
+		List<RequestValue> params = null;
+		List<List<RequestValue>> childrenParams = null;
 		RequestLogger requestLogger = Factory.getRequestLogger();
 		Request request = Factory.getRequest(Request.Type.SELECT, sqlResource.getName(), resIds, params,
 				childrenParams, requestLogger);
@@ -62,10 +62,10 @@ public class Select_FlatResource {
 		SqlResource sqlResource = Factory.getSqlResource("Country");
 
 		// Create the request
-		List<NameValuePair> resIds = null;
-		List<NameValuePair> params = new ArrayList<NameValuePair>(1);
-		params.add(new NameValuePair("country", "A%"));
-		List<List<NameValuePair>> childrenParams = null;
+		List<RequestValue> resIds = null;
+		List<RequestValue> params = new ArrayList<RequestValue>(1);
+		params.add(new RequestValue("country", "A%"));
+		List<List<RequestValue>> childrenParams = null;
 		RequestLogger requestLogger = Factory.getRequestLogger();
 		Request request = Factory.getRequest(Request.Type.SELECT, sqlResource.getName(), resIds, params,
 				childrenParams, requestLogger);
@@ -82,11 +82,11 @@ public class Select_FlatResource {
 		SqlResource sqlResource = Factory.getSqlResource("Country");
 
 		// Create the request
-		List<NameValuePair> resIds = null;
-		List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-		params.add(new NameValuePair(Request.PARAM_NAME_LIMIT, "10", Operator.Equals));
-		params.add(new NameValuePair(Request.PARAM_NAME_OFFSET, "10", Operator.Equals));
-		List<List<NameValuePair>> childrenParams = null;
+		List<RequestValue> resIds = null;
+		List<RequestValue> params = new ArrayList<RequestValue>(2);
+		params.add(new RequestValue(Request.PARAM_NAME_LIMIT, "10", Operator.Equals));
+		params.add(new RequestValue(Request.PARAM_NAME_OFFSET, "10", Operator.Equals));
+		List<List<RequestValue>> childrenParams = null;
 		RequestLogger requestLogger = Factory.getRequestLogger();
 		Request request = Factory.getRequest(Request.Type.SELECT, sqlResource.getName(), resIds, params,
 				childrenParams, requestLogger);
@@ -103,12 +103,12 @@ public class Select_FlatResource {
 		SqlResource sqlResource = Factory.getSqlResource("Country");
 
 		// Create the request
-		List<NameValuePair> resIds = null;
-		List<NameValuePair> params = new ArrayList<NameValuePair>(0);
-		params.add(new NameValuePair("last_update", "2006-02-15 04:44:00", Operator.Equals));
-		params.add(new NameValuePair(Request.PARAM_NAME_LIMIT, "5", Operator.Equals));
-		params.add(new NameValuePair(Request.PARAM_NAME_OFFSET, "0", Operator.Equals));
-		List<List<NameValuePair>> childrenParams = null;
+		List<RequestValue> resIds = null;
+		List<RequestValue> params = new ArrayList<RequestValue>(0);
+		params.add(new RequestValue("last_update", "2006-02-15 04:44:00", Operator.Equals));
+		params.add(new RequestValue(Request.PARAM_NAME_LIMIT, "5", Operator.Equals));
+		params.add(new RequestValue(Request.PARAM_NAME_OFFSET, "0", Operator.Equals));
+		List<List<RequestValue>> childrenParams = null;
 		RequestLogger requestLogger = Factory.getRequestLogger();
 		Request request = Factory.getRequest(Request.Type.SELECT, sqlResource.getName(), resIds, params,
 				childrenParams, requestLogger);
