@@ -174,7 +174,7 @@
 
 	function setResName(newResName) {
 		resName = newResName;
-		submitRequest("GET", "?_definition", null, "definition", null);
+		submitRequest("GET", restsqlBaseUri + "/conf/definition/" + resName, null, "definition", null);
 		window.frames[3].location = "build-select.html";
 		window.frames[5].location = "response.html";
 	}
@@ -191,7 +191,10 @@
 	}
 
 	function submitRequest(method, uri, requestBody, targetFrame, contentType, accept) {
-		var uri = getResUri() + uri;
+		if (uri.indexOf(restsqlBaseUri) == -1) {
+			// called from builder
+			uri = getResUri() + uri;
+		}
 		var url = restsqlHost + uri;
 		var responseBody = "";
 		var xmlhttp;

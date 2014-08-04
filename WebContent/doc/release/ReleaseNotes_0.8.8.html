@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL Release Notes - 0.8.8</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="../doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="../ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="../ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/full/index.html">Javadoc - Full</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../sponsors/Sponsors.html">Sponsors</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>Release Notes - 0.8.8</h1>
+<h3>Summary</h3>
+<div class="text">restSQL 0.8.8 adds an automatic resource definition generation tool.</div>
+<ol>
+	<li>Get started with the framework faster by generating resource definitions for all tables in a database schema.</li>
+	<li>Framework refactoring necessitates changes to restsql.properties files.</li>
+	<li>The release also addresses <a href="https://github.com/restsql/restsql/issues/51">Issue #51</a> and restores operation of the definition viewer in the SDK API Explorer.</li>
+</ol>
+
+<h3>Automatic Resource Definition Generation Tool</h3>
+<p class="text">The tool creates resource definition templates for all columns for each table in a database schema. The definitions are created in the user-provided subfolder. These resources can be immediately used, or modified and reloaded and moved as necessary.</p>
+
+<p class="text">The tool is accessed after deploying restsql from the Tools link on the home page, or from <code>http://host:port/restsql/tools</code>. Enter the subfolder name (default is 'auto') and the database name. The definitions are created in the configured SQL Resources directory (in the restsql.properties file). These are viewable from the SQL Resources browser, i.e. <code>http://host:port/restsql/res</code>.
+
+<h3>restsql.properties changes</h3>
+<p class="text">Db-specific implementations of SqlBuilder were added.</p>
+<p class="text">A new tool, ResourceDefinitionGenerator was added, with db-specific implmentations.</p>
+<p class="text">Framework now binds to ColumnMetaData and TableMetaData interfaces, so custom implementations can be provided.</p>
+<p class="text">Following are the excerpts with the additional properties</p>
+<pre>
+# DB-specific implementation classes - match the implementation to your database
+...
+org.restsql.core.SqlBuilder=org.restsql.core.impl.mysql.MySqlSqlBuilder
+org.restsql.tools.ResourceDefinitionGenerator=org.restsql.tools.impl.mysql.MySqlResourceDefinitionGenerator
+
+# Implementation classes - use these to customize the framework
+...
+org.restsql.core.ColumnMetaData=org.restsql.core.impl.ColumnMetaDataImpl
+org.restsql.core.TableMetaData=org.restsql.core.impl.TableMetaDataImpl
+
+</pre>
+<p class="text">If you are using MySQL with the built-in implementation classes, none of the preceeding properties are required. Please refer to the following examples:</p>
+<ul>
+	<li><a href="../../defaults/properties/default-restsql.properties">Complete</a></li>
+	<li><a href="../../examples/properties/restsql-mysql.properties">Minimal MySQL</a></li>
+	<li><a href="../../examples/properties/restsql-postgresql.properties">Minimal PostgreSQL</a></li>
+</ul>
+
+<h3>Migration</h3>
+<p class="text">Possibly change restsql.properties per above.</p>
+</div>
+</body>
+</html>
