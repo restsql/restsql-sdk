@@ -53,6 +53,7 @@
 	<li>All methods return XML (use Accept: application/xml) or JSON (use Accept: application/json). Alternatively the <code>_output</code> query parameter may be used to specify the media type. See <a href="ResMediaTypes.html">Media Types</a> for more discussion.</li>
 	<li>A no-cache directive (Cache-Control: no-cache, no-transform) is returned in responses by default. See <a href="../HttpConfig.html">HTTP Configuration</a> for more detail.</li>
 	<li>Normal responses are 200 OK, invalid requests are 4xx and SQL errors are 500 - See <a href="ResHttpStatus.html">HTTP Status Codes</a> for more detail</li>
+	<li>Binary objects (a.k.a BLOBs) are represented as Base 64 encoded strings in both XML and JSON.</li>
 </ul>
 <table>
 	<tbody>

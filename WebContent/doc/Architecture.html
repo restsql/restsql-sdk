@@ -84,6 +84,9 @@
 
 <p class="text">Server-side input validation (data types, values, etc.) may be provided by application-provided, Java-based Triggers.</p>
 
+<p class="text">restSQL protects against SQL Injection with input parameter type checking and prepared statements for database access. The value portion of an SQL expression is set as a question mark (and with PostgreSQL a type case, e.g. <code>?::integer</code>) and a JDBC method setXxx() is called with the value. The database will process column values as values. Harmful execution statements cannot be injected into restSQL parameter values. Addtionally the framework now converts all String input parameter values for numeric and boolean column type to Inter, Long, Float, Double or Boolean. An exception is thrown if the value cannot be converted.</p>
+
+<p class="text">See <a href="Security.html">Security</a> for more detail.</p>
 </div>
 </body>
 </html>

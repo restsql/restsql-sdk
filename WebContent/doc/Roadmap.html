@@ -65,7 +65,7 @@
 			<td>Medium</td>
 		</tr>
 		<tr>
-			<td></td>
+			<td>Functional</td>
 			<td>Order By</td>
 			<td>Add support for order by on GETs</td>
 			<td></td>
@@ -185,13 +185,6 @@
 		</tr>
 		<tr>
 			<td></td>
-			<td>Auto-create SQL Resource definition templates</td>
-			<td>See <a href="https://github.com/restsql/restsql/issues/1">GitHub Issue #1</a></td>
-			<td></td>
-			<td>Small</td>
-		</tr>
-		<tr>
-			<td></td>
 			<td>Relative path support</td>
 			<td>Support relative paths to restsql.properties, e.g. embedded in the restSQL webapp <a href="https://github.com/restsql/restsql/issues/8">GitHub Issue #8</a>, and in the properties file itself (<a href="https://github.com/restsql/restsql/issues/14">GitHub Issue #14</a> ).</td>
 			<td></td>
@@ -215,8 +208,8 @@
 			<td>Interop</td>
 			<td>Broader Database Support</td>
 			<td>Test with Oracle</td>
-			<td>Likely requires a new SqlResourceMetaData implementation (use Abstract as base) and extension to SqlBuilderImpl</td>
-			<td>Medium</td>
+			<td>Oracle's JDBC driver does provide in the meta data the table for each column in a select. Need to create column descriptors in the definition to capture full restSQL functionality, e.g. views.</td>
+			<td>Large</td>
 		</tr>
 		<tr>
 			<td>Performance</td>

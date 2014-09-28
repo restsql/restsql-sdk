@@ -45,7 +45,7 @@
 
 <div id="content"> 
 <h1>Security</h1>
-<div class="text">restSQL access may be encrypted, authenticated, authorized and validated. The JEE Container provides encryption and authentication. restSQL provides resource authorization capability, ensuring users only access the SQL Resources and methods appropriate to their assigned role(s). Applications provide Java-based Triggers to perform input validation.</div>
+<div class="text">restSQL access may be encrypted, authenticated, authorized and validated. The JEE Container provides encryption and authentication. restSQL provides resource authorization capability, ensuring users only access the SQL Resources and methods appropriate to their assigned role(s). Applications provide Java-based Triggers to perform input validation. The framework protects against SQL Injection with input parameter type checking and prepared statements for database access.</div>
 
 <h2>Encryption and Authentication</h2>
 <p class="text">The JEE Web Application Deployment Descriptor, web.xml, provides declarative mechanisms to enable encryption and authentication. restSQL's web.xml may be configured to match application needs. See the <a href="../defaults/xml/web.xml">default web.xml</a>. For a complete tutorial, see <a href="http://java.sun.com/javaee/6/docs/tutorial/doc/bncbe.html">Web Application Security using Deployment Descriptors</a>.</p>
@@ -149,9 +149,10 @@
 <p class="text">File-, RDBMS- and LDAP-backed implementations are also available in most JEE containers. See your container's documentation for instructions.
 </p>
 
-<h2>Validation</h2>
+<h2>Input Validation</h2>
 <p class="text">Server-side input validation (data types, values, etc.) may be provided by application-provided, Java-based <a href="Triggers.html">Triggers</a>.</p>
 
+<p class="text">restSQL protects against SQL Injection with input parameter type checking and prepared statements for database access. The value portion of an SQL expression is set as a question mark (and with PostgreSQL a type case, e.g. <code>?::integer</code>) and a JDBC method setXxx() is called with the value. The database will process column values as values. Harmful execution statements cannot be injected into restSQL parameter values. Addtionally the framework now converts all String input parameter values for numeric and boolean column type to Inter, Long, Float, Double or Boolean. An exception is thrown if the value cannot be converted.</p>
 </div>
 </body>
 </html>
