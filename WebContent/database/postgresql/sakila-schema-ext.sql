@@ -4,4 +4,5 @@ CREATE TABLE film_rating ( film_rating_id SMALLINT NOT NULL, film_id SMALLINT NO
 CREATE TABLE film_comment ( film_id SMALLINT NOT NULL, comment VARCHAR(128), foreign key (film_id) references film (film_id) on delete cascade);
 CREATE TABLE film_genre ( film_id SMALLINT NOT NULL, genre VARCHAR(128), foreign key (film_id) references film (film_id) on delete cascade);
 CREATE TABLE film_origin ( film_id SMALLINT NOT NULL, city VARCHAR(128), country VARCHAR(128), foreign key (film_id) references film (film_id) on delete cascade);
+CREATE TABLE film_image ( film_id SMALLINT NOT NULL, image bytea, foreign key (film_id) references film (film_id) on delete cascade);
 CREATE TABLE datetime ( id SMALLINT NOT NULL, time time, timestamp timestamp, date date, datetime timestamp);

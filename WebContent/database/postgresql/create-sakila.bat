@@ -7,3 +7,4 @@ psql --username=%user% < ../common/create-sakila-db.sql
 psql --username=%user% sakila < sakila-schema.sql
 psql --username=%user% sakila < sakila-schema-ext.sql
 psql --username=%user% sakila < sakila-data.sql
+psql --username=%user% sakila < sakila-data-ext.sql

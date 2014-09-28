@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL Release Notes - 0.8.9</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="../doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="../ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="../ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../javadoc/full/index.html">Javadoc - Full</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../sponsors/Sponsors.html">Sponsors</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
+</div>
+
+<div id="content"> 
+<h1>Release Notes - 0.8.9</h1>
+<h3>Summary</h3>
+<div class="text">restSQL 0.8.9 adds binary object support and improves security.</div>
+
+<h3>Binary Object Support</h3>
+<p class="text">Binary object reads and writes are now supported in both Java and HTTP APIs. The tested column types are BLOB in MySQL and bytea in PostgreSQL.</p>
+
+<p class="text">In the Java API, use the framework-provided, <a href="../../javadoc/api/org/restsql/core/BinaryObject.html">BinaryObject</a>, to wrap a byte array or translate from/to base 64 encoded string. The HTTP API (both XML and JSON forms) use base 64 encoded strings as well. For browser applications, the Javascript functions btoa() and atob() encode and decode base64 respectively.</p>
+
+<h3>Security Hardening</h3>
+<p class="text">SQL generation was converted from standard name-value concatenation to prepared statements. The value portion of an SQL expression is set as a question mark (and with PostgreSQL a type case, e.g. <code>?::integer</code>) and a JDBC method setXxx() is called with the value. The database will process column values as values. Harmful execution statements cannot be injected into restSQL parameter values. Addtionally the framework now converts all String input parameter values for numeric and boolean column type to Inter, Long, Float, Double or Boolean. An exception is thrown if the value cannot be converted.</p>
+
+<p class="text">Example 1: the request <code>restsql/res/Actor?id=47%20or%201%3d1</code> (decoded this is <code>id=47 or 1=1</code>) previously would return all rows, since the SQL generated would be <code>select * from actor where id = 47; or 1=1</code>. restSQL will now return HTTP status 400 with the message <code>Could not convert id value 47 or 1=1 to number</code>.</p>
+
+<p class="text">Example 2: the request <code>restsql/res/film?year=2000%3B%20DELETE%20FROM%20actor_genre</code> (decoded this is <code>year=2000;DELETE FROM actor_genre</code>) previously would return all films from 2000 <b>and</b> delete all rows from actor_genre since the SQL generated would be <code>select * from film where year=2000; DELETE FROM actor_genre</code>. restSQL will now return HTTP status 400 with the message <code>Could not convert id value 1000; DELETE FROM actor_genre to number</code>.</p>
+
+<h3>restsql.properties changes</h3>
+<p class="text">MySQL-specific implementation of ColumnMetaData was added.</p>
+<p class="text">Following are the excerpts with the additional properties</p>
+<pre>
+# DB-specific implementation classes - match the implementation to your database
+# For MySQL:
+# 	org.restsql.core.ColumnMetaData=org.restsql.core.impl.mysql.MySqlColumnMetaData
+# For PostgreSQL:
+# 	org.restsql.core.ColumnMetaData=org.restsql.core.impl.ColumnMetaDataImpl
+
+org.restsql.core.ColumnMetaData=org.restsql.core.impl.mysql.MySqlColumnMetaData
+
+</pre>
+<p class="text">If you are using MySQL with the built-in implementation classes, none of the preceeding properties are required. Please refer to the following examples:</p>
+<ul>
+	<li><a href="../../defaults/properties/default-restsql.properties">Complete</a></li>
+	<li><a href="../../examples/properties/restsql-mysql.properties">Minimal MySQL</a></li>
+	<li><a href="../../examples/properties/restsql-postgresql.properties">Minimal PostgreSQL</a></li>
+</ul>
+
+<h3>Migration</h3>
+<p class="text">Possibly change restsql.properties per above.</p>
+</div>
+</body>
+</html>

@@ -165,25 +165,27 @@
 	
 # DB-specific implementation classes - match the implementation to your database
 # For MySQL:
+# 	org.restsql.core.ColumnMetaData=org.restsql.core.impl.mysql.MySqlColumnMetaData
 #	org.restsql.core.SequenceManager=org.restsql.core.impl.mysql.MySqlSequenceManager
 #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.mysql.MySqlSqlResourceMetaData
 #	org.restsql.core.SqlBuilder=org.restsql.core.impl.mysql.MySqlSqlBuilder
 #	org.restsql.tools.ResourceDefinitionGenerator=org.restsql.tools.impl.mysql.MySqlResourceDefinitionGenerator
 # For PostgreSQL:
+# 	org.restsql.core.ColumnMetaData=org.restsql.core.impl.ColumnMetaDataImpl
 #	org.restsql.core.SequenceManager=org.restsql.core.impl.postgresql.PostgreSqlSequenceManager
 #	org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.postgresql.PostgreSqlSqlResourceMetaData
 #	org.restsql.core.SqlBuilder=org.restsql.core.impl.postgresql.PostgreSqlSqlBuilder
 #	org.restsql.tools.ResourceDefinitionGenerator=org.restsql.tools.impl.postgresql.PostgreSqlResourceDefinitionGenerator
+org.restsql.core.ColumnMetaData=org.restsql.core.impl.mysql.MySqlColumnMetaData
 org.restsql.core.SequenceManager=org.restsql.core.impl.mysql.MySqlSequenceManager
 org.restsql.core.SqlResourceMetaData=org.restsql.core.impl.mysql.MySqlSqlResourceMetaData
-org.restsql.core.SqlBuilder=org.restsql.core.impl.myesql.MySqlSqlBuilder
+org.restsql.core.SqlBuilder=org.restsql.core.impl.mysql.MySqlSqlBuilder
 org.restsql.tools.ResourceDefinitionGenerator=org.restsql.tools.impl.mysql.MySqlResourceDefinitionGenerator
 </pre>
 
 <p class="text">Implementation classes configuration is optional. The defaults are:</p>
 <pre>
 # Implementation classes - use these to customize the framework
-# org.restsql.core.ColumnMetaData=fully.qualified.class.name
 # org.restsql.core.Factory.ConnectionFactory=fully.qualified.class.name
 # org.restsql.core.Factory.RequestFactory=fully.qualified.class.name
 # org.restsql.core.Factory.RequestDeserializerFactory=fully.qualified.class.name
@@ -193,7 +195,6 @@ org.restsql.tools.ResourceDefinitionGenerator=org.restsql.tools.impl.mysql.MySql
 # org.restsql.core.RequestLogger=fully.qualified.class.name
 # org.restsql.core.TableMetaData=fully.qualified.class.name
 # org.restsql.security.Authorizer=fully.qualified.class.name
-org.restsql.core.ColumnMetaData=org.restsql.core.impl.ColumnMetaDataImpl
 org.restsql.core.Factory.ConnectionFactory=org.restsql.core.impl.ConnectionFactoryImpl
 org.restsql.core.Factory.RequestFactory=org.restsql.core.impl.RequestFactoryImpl
 org.restsql.core.Factory.RequestDeserializerFactory=org.restsql.core.impl.serial.RequestDeserializerFactoryImpl
@@ -221,10 +222,22 @@ org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
    &lt;Parameter name="org.restsql.properties" value="/etc/opt/business/restsql/restsql.properties" override="false" /&gt;
 </pre>
 <div class="text">That will override the default properties location in the web.xml of the WAR.</div>	
-<p class="text">Place the unmodified WAR in the $TOMCAT/webapps directory and bounce the server, or deploy the webapp using your favorite method.</p>
-</p>
+<p class="text">Place the unmodified WARs (but rename them restsql.war and restsql-sdk.war) in the $TOMCAT/webapps directory and bounce the server, or deploy the webapp using your favorite method.</p>
 
-<h3>Complete Deployment</h3>
+<h3>Deployment Option 2</h3>
+<p class="text">This option avoids messing with the JAR tool (similar to the tar Unix/Linux tool) as in option 3. Drop the restsql-{version}.war in your $JEE_SERVER/webapps directory, but rename it to restsql.war so that the version number is not needed in URLs. Place restsql-sdk.war there as well, dropping the version number from the file name. Start/stop your JEE server. Most servers will expand be expand the WAR file into an exploded directory. Remove the WAR files just to play it safe.</p>
+
+<p class="text">Create the SDK database using the scripts (see the Installing the SDK section)</p> 
+
+<p class="text">Edit the restsql/WEB-INF/web.xml pointing the <code>org.restsql.properties</code> parameter to the restsql-sdk/examples/properties/restsql-mysql.properties, assuming you are using MySQL. Edit the restsql-mysql.properties file, setting the <code>sqlresources.dir</code> property to restsql-sdk/examples/sqlresources.</p>
+
+<p class="text">Let's say the JEE server is Tomcat and is deployed in /opt/tomcat. The web.xml is found in /opt/tomcat/webapps/restsql/WEB-INF/web.xml. Set the <code>org.restsql.properties</code> parameter to /opt/tomcat/restsql-sdk/examples/properties/restsql-mysql.properties. Set the <code>sqlresources.dir</code> property to /opt/tomcat/restsql-sdk/examples/sqlresources.</p>
+
+<p class="text">Bounce your JEE server. See Getting Started section.</p>
+
+<p class="text">The following deployment option 3 discusses some other details you might want to consider for security and logging after you get it initially working.</p>
+
+<h3>Deployment Option 3</h3>
 <p class="text">The restsql-{version}.war contains the service and framework classes as well as dependencies. Extract it's contents to some temp area, e.g. /tmp/restsql. Use the standard jar tool that comes with your JRE/JDK. The command is jar -xf war-file-name. It extracts all contents in the current directory. The contents looks like:</p>
 <pre>
     restsql/
@@ -270,6 +283,8 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
     };
 </pre>
 </p> 
+
+<p class="text">Open <code>http://host:port/restsql</code> in your browser.</p>
 
 <p class="text">Note: If you receive a 500 response to any res query with the text "No suitable driver found", then the container cannot find your jdbc driver. This can usually be fixed by placing the database driver in some common server library location. This also occurs after deploying the restSQL.war to WebLogic using the console when the container is running. After a container restart, the driver is found.
 </p>
@@ -336,6 +351,14 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
     ant -Dorg.restsql.baseUri=http://somehost:8080/restsql-0.8.7/ test-service-http
 </pre>
 <p class="text">Test results will appear on the console. Test detail is available in restsql-test/obj/test.</p>
+
+<h2>Getting Started</h2>
+
+<p class="text">Open <code>http://host:port/restsql</code> in your browser to see all your resources.</p>
+<p class="text">Open <code>http://host:port/restsql-sdk/api-explorer</code> to interactively experiment with the HTTP API.</p>
+<p class="text">Open <code>http://host:port/restsql-sdk/doc/ref</code> to explore the HTTP API.</p>
+<p class="text">Open <code>http://host:port/restsql-sdk/javadoc</code> to explore the Java API.</p>
+
 </div>
 </body>
 </html>

@@ -4,4 +4,5 @@ CREATE TABLE IF NOT EXISTS film_rating ( film_rating_id SMALLINT UNSIGNED NOT NU
 CREATE TABLE IF NOT EXISTS film_comment ( film_id SMALLINT UNSIGNED NOT NULL, comment VARCHAR(128), foreign key (film_id) references film (film_id) on delete cascade);
 CREATE TABLE IF NOT EXISTS film_genre ( film_id SMALLINT UNSIGNED NOT NULL, genre VARCHAR(128), foreign key (film_id) references film (film_id) on delete cascade);
 CREATE TABLE IF NOT EXISTS film_origin ( film_id SMALLINT UNSIGNED NOT NULL, city VARCHAR(128), country VARCHAR(128), foreign key (film_id) references film (film_id) on delete cascade);
+CREATE TABLE IF NOT EXISTS film_image ( film_id SMALLINT UNSIGNED NOT NULL, image BLOB, foreign key (film_id) references film (film_id) on delete cascade);
 CREATE TABLE IF NOT EXISTS datetime ( id SMALLINT NOT NULL, time time default 0, timestamp timestamp default 0, date date default 0, datetime datetime default 0);
