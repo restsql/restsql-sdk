@@ -44,7 +44,16 @@
 </div>
 
 <div id="content"> 
-<h1>Deployment</h1>
+<h1>Deployment</h1>try {
+			final JAXBContext context = JAXBContext.newInstance(AbstractSqlResourceMetaData.class);
+			final Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			final StringWriter writer = new StringWriter();
+			marshaller.marshal(this, writer);
+			return writer.toString();
+		} catch (final JAXBException exception) {
+			return exception.toString();
+		}
 
 <h2><a name="StructureAndDistributions">Structure and Distributions</a></h2>
 <div class="text">restSQL source code is contained in three eclipse projects:</div>
@@ -217,7 +226,7 @@ org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
 <p class="text">Properties Files: Create your two required properties files (restsql.properties and log4j.properties (or logging.properties), as above. Create your two optional privileges and triggers definitions if required. The restsql.properties can exist outside the restSQL webapp, however the log4j.properties/logging.properties must exist within the classpath in WEB-INF/classes. Note that it will not load properly if you put the logging properties in WEB-INF/lib. You do not have to create the logging directory or directories, e.g. /var/log/restsql. The logging frameworks will do this automatically.</p>
 
 <h3>Abbreviated Deployment for Tomcat</h3>
-<p class="text">You can use this shortcut if you are using Tomcat, do not want restSQL Authentication or Authorization and Java Security Manager is disabled (the default for Tomcat). Add a Parameter entry that indicates your absolute path to your restsql.properties in your $TOMCAT_HOME/conf/context.xml, as in:
+<p class="text">You can use this shortcut if you are using Tomcat, do not want restSQL Authentication or Authorization and Java Security Manager is disabled (the default for Tomcat). Add a Parameter entry that indicates your absolute path to your restsql.properties in your $TOMCAT_HOME/conf/context.xml, as in:</p>
 <pre>
    &lt;Parameter name="org.restsql.properties" value="/etc/opt/business/restsql/restsql.properties" override="false" /&gt;
 </pre>
