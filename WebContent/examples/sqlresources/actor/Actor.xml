@@ -5,6 +5,23 @@
 		select actor_id "id", first_name, last_name "surname"
 		from actor
 	</query>
+	<documentation>
+		<resource>
+			<description>Actor information as resource</description>
+		</resource>
+		<columns>
+			<column name="id" >
+				<description>unique id</description>
+			</column>
+			<column name="first_name">
+				<description>First name of the actor</description>
+			</column>
+			<column name="surname">
+				<description>Last name of the actor</description>
+			</column>
+		</columns>
+		
+	</documentation>
 	<metadata>
 		<database default="sakila" />
 		<table name="actor" role="Parent" />
