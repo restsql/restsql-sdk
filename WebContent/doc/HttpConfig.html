@@ -47,8 +47,8 @@
 <h2>Cache Control</h2>
 <p class="text">A no-cache directive (Cache-Control: no-cache, no-transform) is returned in responses by default, precluding proxies and caches from caching or transforming responses. This may be customized in the following manner:</p>
 <ol>
-	<li>System default property in the general restsql properties file</br><br/>
-	The following example sets the maximum age to 60 seconds and precludes proxy transformation:</br>
+	<li>System default property in the general restsql properties file<br/>
+	The following example sets the maximum age to 60 seconds and precludes proxy transformation:<br/>
 	<pre>
    # http.response.cacheControl={cache-directive}, {cache-directive}, ...
    http.response.cacheControl=max-age=60, no-transform
