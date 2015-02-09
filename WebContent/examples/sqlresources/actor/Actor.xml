@@ -25,19 +25,32 @@
 				<request method="GET" uri="res/actor.Actor" />
 				<response><body>
 				<![CDATA[
-				<readResponse>
-					<actor id="1" first_name="PENELOPE" surname="GUINESS" />
-					<actor id="2" first_name="NICK" surname="WAHLBERG" />
-					<actor id="3" first_name="ED" surname="CHASE" />
-					<actor id="4" first_name="JENNIFER" surname="DAVIS" />
-					<actor id="5" first_name="JOHNNY" surname="LOLLOBRIGIDA" />
-					<actor id="6" first_name="BETTE" surname="NICHOLSON" />
-					<actor id="7" first_name="GRACE" surname="MOSTEL" />
-					<actor id="8" first_name="MATTHEW" surname="JOHANSSON" />
-					<actor id="9" first_name="JOE" surname="SWANK" />
-					<actor id="10" first_name="CHRISTIAN" surname="GABLE" />
-				</readResponse>
+<readResponse>
+	<actor id="1" first_name="PENELOPE" surname="GUINESS" />
+	<actor id="2" first_name="NICK" surname="WAHLBERG" />
+	<actor id="3" first_name="ED" surname="CHASE" />
+	<actor id="4" first_name="JENNIFER" surname="DAVIS" />
+	<actor id="5" first_name="JOHNNY" surname="LOLLOBRIGIDA" />
+	<actor id="6" first_name="BETTE" surname="NICHOLSON" />
+	<actor id="7" first_name="GRACE" surname="MOSTEL" />
+	<actor id="8" first_name="MATTHEW" surname="JOHANSSON" />
+	<actor id="9" first_name="JOE" surname="SWANK" />
+	<actor id="10" first_name="CHRISTIAN" surname="GABLE" />
+</readResponse>
 				]]></body>
+				</response>
+			</example>
+			<example>
+				<request method="GET" uri="res/actor.Actor" />
+				<response>
+				<body><![CDATA[
+<readResponse>
+	<actor id="72" first_name="SEAN" surname="WILLIAMS" />
+	<actor id="90" first_name="SEAN" surname="GUINESS" />
+</readResponse>
+				
+				]]>
+				</body>
 				</response>
 			</example>
 		</examples>
