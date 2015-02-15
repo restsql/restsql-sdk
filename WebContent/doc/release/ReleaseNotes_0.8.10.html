@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>restSQL: SQL Resource PUT Path XML or JSON</title> 
+	<title>restSQL Release Notes - 0.8.10</title> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 	<link href="../doc.css" rel="stylesheet" type="text/css"/>
 </head> 
@@ -46,69 +46,24 @@
 </div>
 
 <div id="content"> 
-<h1>SQL Resource PUT Path XML or JSON</h1>
-<table>
-	<tbody>
-		<tr>
-			<td><strong>Method</strong></td>
-			<td colspan="3">PUT</td>
-		</tr>
-		<tr>
-			<td><strong>Path</strong></td>
-			<td colspan="3">/res/{resName}/{resId}</td>
-		</tr>
-		<tr>
-			<td><strong>Query Params</strong></td>
-			<td colspan="3">None</td>
-		</tr>
-		<tr>
-			<td><strong>Request body</strong></td>
-			<td>One or more child rows to update for parent identified in path</td>
-			<td><a href="../../wadl/Request.xsd">Request.xsd</a></td>
-			<td>Content-Type: application/xml or application/json</td>
-		</tr>
-		<tr>
-			<td><strong>Response body</strong></td>
-			<td>Number of rows updated</td>
-			<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
-			<td>Content-Type: application/xml or application/json</td>
-		</tr>
-	</tbody>
-</table>
-<h2>Description</h2>
-<div class="text">Updates one or more children rows for parent matching path parameters.</div>
-<h2>XML Example</h2>
-<pre>PUT /restsql/res/ActorFilm/123 HTTP/1.1
-Content-Type: application/xml
-Accept: application/xml
+<h1>Release Notes - 0.8.10</h1>
+<h3>Summary</h3>
+<div class="text">restSQL 0.8.10 adds performance monitoring.</div>
 
-&lt;request&gt;
-   &lt;film film_id="3" year="2010" title="ADAPTATION HOLES 2" /&gt;
-   &lt;film film_id="43" year="2007" /&gt;
-   &lt;film film_id="67" title="BERETS AGENTS" /&gt;
-&lt;/request&gt;
+<h3>Performance Monitoring</h3>
+<p class="text"><a href="dropwizard.github.io/metrics/">Codahale Metrics</a> has been integrated into the framework. See the <a href="../Monitoring.html">Monitoring</a> for more info on capabilities and configuration.</p>
+
+<h3>Logging Improvements</h3>
+<p class="text">On startup, restSQL now prints the logging conf location and number of properties loaded from the restsql.properties to the console:
+<pre>
+INFO: restSQL using logging conf from $WEBAPPS/restsql/resources/properties/default-log4j.properties
+INFO: restSQL loaded 5 properties from /etc/opt/restsql/restsql-mysql.properties
 </pre>
-<pre>HTTP/1.1 200 OK
-Content-Type: application/xml
+The same messages as well the customized properties are also written to the internal.log. An error is printed to the console if any problems are encountered, for example the restsql.properties or logging conf file are not found. The full configuration is still available at <code>http://host:port/restsql/conf.</code>
+</p>
 
-&lt;writeResponse rowsAffected="3" /&gt;</pre>
-
-<h2>JSON Example</h2>
-<pre>PUT /restsql/res/ActorFilm/123 HTTP/1.1
-Content-Type: application/json
-Accept: application/json
-
-{ "films": [
-      { "film_id": 3, "year": 2010, "title": "ADAPTATION HOLES 2" },
-      { "film_id": 43, "year": 2007 },
-      { "film_id": 67, "title": "BERETS AGENT" }
-   ]
-}
-</pre>
-<pre>HTTP/1.1 200 OK
-Content-Type: application/json
-
-{ "rowsAffected": 3 }</pre>
+<h3>Migration</h3>
+<p class="text">None</p>
 </div>
 </body>
 </html>

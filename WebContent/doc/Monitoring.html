@@ -3,7 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>restSQL: HTTP Configuration</title> 
+	<title>restSQL Monitoring</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 	<link href="doc.css" rel="stylesheet" type="text/css"/>
 </head> 
 <body>
@@ -44,41 +45,56 @@
     <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
 </div>
 
+
 <div id="content"> 
-<h1>HTTP Configuration</h1>
-<h2>Cache Control</h2>
-<p class="text">A no-cache directive (Cache-Control: no-cache, no-transform) is returned in responses by default, precluding proxies and caches from caching or transforming responses. This may be customized in the following manner:</p>
-<ol>
-	<li>System default property in the general restsql properties file<br/>
-	The following example sets the maximum age to 60 seconds and precludes proxy transformation:<br/>
-	<pre>
-   # http.response.cacheControl={cache-directive}, {cache-directive}, ...
-   http.response.cacheControl=max-age=60, no-transform
-	</pre>
-	</li>
-	<li>Override on a per SQL Resource basis in the definition's metadata element<br/><br/>
-	The following example allows the UCI community to use an otherwise private response in their shared cache(s):<br/>
-	<pre>
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
-   &lt;query&gt;
-      ...
-   &lt;/query&gt;
-   &lt;metadata&gt;
-      ...
-   &lt;/metadata&gt;
-   &lt;http&gt;
-      &lt;response cacheControl='private, community="UCI"' /&gt;
-   &lt;/http&gt;
-	</pre>
-	</li>
-</ol>
+<h1>Monitoring</h1>
 
-<p class="text">Note: Cache control directives on requests are <strong>ignored</strong>.</p>
+<h3>Performance Monitoring</h3>
+<p class="text"><a href="http://dropwizard.github.io/metrics/">Codahale Metrics</a> is integrated into the framework.
+	<ul>
+		<li>Counters are provided on service admin methods and meters on resource access (CRUD) methods.</li>
+		<li>Monitoring page at <code>http://host:port/restsql/monitoring</code></li>
+		<li>Database health check as a simple ping ("SELECT 1") available at <code>http://host:port/restsql/monitoring/healthcheck</code></li>
+		<li>Thread dump at <code>http://host:port/restsql/monitoring/threads</code></li>
+		<li>restSQL availability tool - suitable for external ping at <code>http://host:port/restsql/monitoring/ping</code></li>
+	</ul>
+</p>
 
-<p class="text">See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">Section 14.9 of RFC 2616</a> for more detail on cache control.</p>
+<p class="text">The following interfaces are available to access the metrics:
+	<ul>
+		<li>HTTP/JSON at <code>http://host:port/restsql/monitoring/metrics</code></li>
+		<li>JMX - JRMC, VisualVM, JConsole. Metrics names start with <code>org.restsql.service</code>.</li>
+		<li>Ganglia - see restsql.properties configuration in next section</li>
+		<li>Graphite- see restsql.properties configuration in next section</li>
+	</ul>
+</p>
+
+<h3>Configuration</h3>
+<p class="text">Out of the box the metrics are available to the HTTP/JSON and JMX interfaces.</p>
+
+<p class="text">Reporting to Ganglia is configured in the restsql.properties as follows:</p>
+<pre>
+# Ganglia monitoring configuration
+monitoring.ganglia.host=hostName or ipAddress
+monitoring.ganglia.port=portNumber
+monitoring.ganglia.ttl=numberOfRouterHops
+monitoring.ganglia.udpMode=[unicast,multicast]
+monitoring.ganglia.frequency=seconds
+</pre>
+<p class="text">Reporting to Graphite is configured in the restsql.properties as follows:</p>
+<pre>
+# Graphite monitoring configuration
+monitoring.graphite.host=hostName or ipAddress
+monitoring.graphite.port=portNumber
+monitoring.graphite.frequency=seconds
+</pre>
+
+<p class="text">Customization if availble via the MonitoringManager interface. The framework will use the default implementation if your restsql.properties file excludes the definition. The default in the restsql.properties is as follows:</p>
+<pre>
+# Implementation classes - use these to customize the framework
+...
+org.restsql.service.monitoring.MonitoringManager=org.restsql.service.monitoring.MonitoringManagerImpl
+</pre>
 
 </div>
 </body>

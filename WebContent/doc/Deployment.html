@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,6 +33,7 @@
         <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
         <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
         <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Monitoring.html">Monitoring</a></div>
         <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
         <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
     </div>
@@ -42,6 +44,7 @@
     <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
     <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
 </div>
+
 
 <div id="content"> 
 <h1>Deployment</h1>
@@ -96,6 +99,7 @@
     <li>HTTP - optional</li>
     <li>Database - required</li>
     <li>Implementation classes - optional</li>
+    <li>Monitoring - optional</li>
 </ol>
 <p class="text">Logging configuration example:</p>
 <pre>
@@ -204,6 +208,22 @@ org.restsql.core.HttpRequestAttributes=org.restsql.core.impl.HttpRequestAttribut
 org.restsql.core.RequestLogger=org.restsql.core.impl.RequestLoggerImpl
 org.restsql.core.TableMetaData=org.restsql.core.impl.TableMetaDataImpl
 org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
+org.restsql.service.monitoring.MonitoringManager=org.restsql.service.monitoring.MonitoringManagerImpl
+</pre>
+
+<p class="text">Monitoring configuration is optional:</p>
+<pre>
+# Ganglia monitoring configuration
+monitoring.ganglia.host=hostName or ipAddress
+monitoring.ganglia.port=portNumber
+monitoring.ganglia.ttl=numberOfRouterHops
+monitoring.ganglia.udpMode=[unicast,multicast]
+monitoring.ganglia.frequency=seconds
+
+# Graphite monitoring configuration
+monitoring.graphite.host=hostName or ipAddress
+monitoring.graphite.port=portNumber
+monitoring.graphite.frequency=seconds
 </pre>
 
 <p class="text">See the SDK for more detail on Security, Logging and Trigger configuration.</p>
@@ -214,10 +234,10 @@ org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
 
 <p class="text">Requirements: JEE Container, RDBMS, JAR tool</p>
 
-<p class="text">Properties Files: Create your two required properties files (restsql.properties and log4j.properties (or logging.properties), as above. Create your two optional privileges and triggers definitions if required. The restsql.properties can exist outside the restSQL webapp, however the log4j.properties/logging.properties must exist within the classpath in WEB-INF/classes. Note that it will not load properly if you put the logging properties in WEB-INF/lib. You do not have to create the logging directory or directories, e.g. /var/log/restsql. The logging frameworks will do this automatically.</p>
+<p class="text">Properties Files: Create your two required properties files (restsql.properties and log4j.properties (or logging.properties), as above. Create your two optional privileges and triggers definitions if required. The restsql.properties can exist outside the restSQL webapp, however the log4j.properties/logging.properties must exist within the classpath in WEB-INF/classes. Note that it will not load properly if you put the logging properties in WEB-INF/lib. You do not have to create the logging directory or directories, e.g. /var/log/restsql. The logging frameworks will do this automatically, assuming the user running the java container can create the folder. In the previous case that would be write privilege on /var/log. Better to create it by hand and ensure it's writable to the user running the java container.</p>
 
 <h3>Abbreviated Deployment for Tomcat</h3>
-<p class="text">You can use this shortcut if you are using Tomcat, do not want restSQL Authentication or Authorization and Java Security Manager is disabled (the default for Tomcat). Add a Parameter entry that indicates your absolute path to your restsql.properties in your $TOMCAT_HOME/conf/context.xml, as in:
+<p class="text">You can use this shortcut if you are using Tomcat, do not want restSQL Authentication or Authorization and Java Security Manager is disabled (the default for Tomcat). Add a Parameter entry that indicates your absolute path to your restsql.properties in your $TOMCAT_HOME/conf/context.xml, as in:</p>
 <pre>
    &lt;Parameter name="org.restsql.properties" value="/etc/opt/business/restsql/restsql.properties" override="false" /&gt;
 </pre>
@@ -265,7 +285,7 @@ org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
 
 <p class="text">Deploy: Copy your exploded war or war to your container's webapps dir and restart the container, or deploy the webapp in your preferred style. All third party dependencies are included in the war distribution in the WEB-INF/lib.</p>
 
-<p class="text">Java Security Manager: If Java Security is enabled in your container, permissions must be added to your container's policy file. restSQL requires:
+<p class="text">Java Security Manager: If Java Security is enabled in your container, permissions must be added to your container's policy file. restSQL requires:</p>
 <ul>
 	<li>read/write access (java.util.PropertyPermission) to the following system properties:
 		<ul>
@@ -276,13 +296,12 @@ org.restsql.security.Authorizer=org.restsql.security.impl.AuthorizerImpl
 	</li>
 	<li>read access (java.io.FilePermission) to the various properties files, and SQL Resources and triggers directories</li>
 </ul>
-However, restsql uses other libraries (jersey, jdbc, logging) which need some unknown combination of access permissions. The only configuration that has been demonstrated to work is to grant all permissions to restsql. For example for Tomcat, add this to the end of the ${TOMCAT_HOME}/conf/catalina.policy file:
+<p>However, restsql uses other libraries (jersey, jdbc, logging) which need some unknown combination of access permissions. The only configuration that has been demonstrated to work is to grant all permissions to restsql. For example for Tomcat, add this to the end of the ${TOMCAT_HOME}/conf/catalina.policy file:</p>
 <pre>
     grant codeBase "file:${catalina.base}/webapps/restsql/-" {
         permission java.security.AllPermission;
     };
 </pre>
-</p> 
 
 <p class="text">Open <code>http://host:port/restsql</code> in your browser.</p>
 
@@ -339,7 +358,7 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
 </p>
 <pre>
     var restsqlHost = "http://somehost:8080";
-    var restsqlBaseUri = "/restsql-0.8.7";
+    var restsqlBaseUri = "/restsql-0.8.10";
 </pre>
 
 <h2>Installing restSQL Test</h2>
@@ -348,7 +367,7 @@ However, restsql uses other libraries (jersey, jdbc, logging) which need some un
 <p class="text">Database: If you have not deployed the SDK yet, you will need to deploy the extended sakila database. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and PostgreSQL. The bash script is restsql-test/database/&lt;database&gt;/create-sakila.sh and the Windows batch script is restsql-test/database/&lt;database&gt;/create-sakila.bat, where database is mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.</p>
 <p class="text">Execution: The tests are executed using the Ant build file (restsql-test/build.xml). Executing the default target, all, will run everything, but you can also run test-api (Java API) or test-service (HTTP API) to run one or either half. If the service is not running in the default location, http://localhost:8080/restsql/, then the System Property, org.restsql.baseUri, must be set. For example:</p>
 <pre>
-    ant -Dorg.restsql.baseUri=http://somehost:8080/restsql-0.8.7/ test-service-http
+    ant -Dorg.restsql.baseUri=http://somehost:8080/restsql-0.8.10/ test-service-http
 </pre>
 <p class="text">Test results will appear on the console. Test detail is available in restsql-test/obj/test.</p>
 
