@@ -1,0 +1,111 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>restSQL SQL Resource Documentation</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+	<link href="doc.css" rel="stylesheet" type="text/css"/>
+</head> 
+<body>
+
+<div id="top">
+    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
+</div>
+
+<div id="nav">
+    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
+    <div class="nav-category">HTTP API
+        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
+        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
+        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
+    </div>
+    <div class="nav-category">Java API
+        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
+        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
+    </div>
+    <div class="nav-category">Configuration
+        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
+        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
+        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
+        <div class="nav-item"><a class="nav-link" href="Monitoring.html">Monitoring</a></div>
+        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
+        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
+    </div>
+    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="sponsors/Sponsors.html">Sponsors</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
+    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
+</div>
+
+
+<div id="content"> 
+<h1>SQL Resource Documentation</h1>
+
+<div class="text">A resource definition may contain a &lt;documentation&gt; element with a resource description, column description and example request/response pairs. The documentation element follows the query, metadata and optional http element.</div>
+
+<p class="text">Following is an example:</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
+   &lt;query&gt;
+      select actor_id, first_name, last_name "surname"
+      from actor
+   &lt;/query&gt;
+   &lt;metadata&gt;
+      &lt;database default="sakila" /&gt;
+      &lt;table name="actor" role="Parent" /&gt;
+   &lt;/metadata&gt;
+   &lt;documentation&gt;
+      &lt;resource&gt;
+         &lt;description&gt;Actor information as resource&lt;/description&gt;
+      &lt;/resource&gt;
+      &lt;columns&gt;
+         &lt;column label="id" &gt;
+            &lt;description&gt;unique id&lt;/description&gt;
+         &lt;/column&gt;
+         &lt;column label="first_name"&gt;
+            &lt;description&gt;First name of the actor&lt;/description&gt;
+         &lt;/column&gt;
+         &lt;column label="surname"&gt;
+            &lt;description&gt;Last name of the actor&lt;/description&gt;
+         &lt;/column&gt;
+        &lt;/columns&gt;
+        &lt;examples&gt;
+           &lt;example&gt;
+              &lt;request method="GET" uri="res/actor.Actor?_limit=10&amp;_offset=0" /&gt;
+              &lt;response&gt;&lt;body&gt;
+              &lt;![CDATA[
+&lt;readResponse&gt;
+	&lt;actor id="1" first_name="PENELOPE" surname="GUINESS" /&gt;
+	&lt;actor id="2" first_name="NICK" surname="WAHLBERG" /&gt;
+	&lt;actor id="3" first_name="ED" surname="CHASE" /&gt;
+	&lt;actor id="4" first_name="JENNIFER" surname="DAVIS" /&gt;
+	&lt;actor id="5" first_name="JOHNNY" surname="LOLLOBRIGIDA" /&gt;
+	&lt;actor id="6" first_name="BETTE" surname="NICHOLSON" /&gt;
+	&lt;actor id="7" first_name="GRACE" surname="MOSTEL" /&gt;
+	&lt;actor id="8" first_name="MATTHEW" surname="JOHANSSON" /&gt;
+	&lt;actor id="9" first_name="JOE" surname="SWANK" /&gt;
+	&lt;actor id="10" first_name="CHRISTIAN" surname="GABLE" /&gt;
+&lt;/readResponse&gt;
+               ]]&gt;&lt;/body&gt;
+            &lt;/response&gt;
+         &lt;/example&gt;
+      &lt;/examples&gt;
+   &lt;/documentation&gt;
+&lt;/rs:sqlResource&gt;
+</pre>
+<p class="text">The doc is accessilble via <code>http://host:port/restsql/conf/documentation/{resName}</code>. The browser will make format it for human consumption with the referenced XSL stylesheet.</p>
+			 
+</div>
+</body>
+</html>

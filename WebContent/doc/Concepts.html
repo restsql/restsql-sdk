@@ -231,6 +231,9 @@
 <div class="text">restSQL creates a construct containing the metadata for the SQL Resource on its first use (initial request for it). This metadata is used to generate SQL for requests. The metadata includes the defining query, the table roles and default database, as well as data derived by interrogating the database. That includes column type information, and primary and foreign keys. This is done by executing the defining query as well as querying the database's data dictionary (information schema).</div>
 <p class="text">The metadata is available to users through both HTTP and Java APIs.</p>
 
+<h2>SQL Resource Documentation</h2>
+<div class="text">A resource definition may contain a &lt;documentation&gt; element with a resource description, column description and example request/response pairs. See <a href="SqlResourceDocumentation.html">SQL Resource Documentation</a> for more detail.</div>
+
 <h2>Client</h2>
 <div class="text">Clients send requests to and receive responses from restSQL for SQL Resource CRUD operations or for support (SQL Resource metadata, definition, configuration, logging, statistics). Clients may use the HTTP or Java APIs.</div>
 

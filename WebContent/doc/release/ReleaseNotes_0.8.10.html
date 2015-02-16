@@ -48,19 +48,21 @@
 <div id="content"> 
 <h1>Release Notes - 0.8.10</h1>
 <h3>Summary</h3>
-<div class="text">restSQL 0.8.10 adds performance monitoring.</div>
+<div class="text">restSQL 0.8.10 adds performance monitoring and resource documentation.</div>
 
 <h3>Performance Monitoring</h3>
 <p class="text"><a href="dropwizard.github.io/metrics/">Codahale Metrics</a> has been integrated into the framework. See the <a href="../Monitoring.html">Monitoring</a> for more info on capabilities and configuration.</p>
 
+<h3>SQL Resource Documentation</h3>
+<p class="text">A resource definition may contain a &lt;documentation&gt; element with a resource description, column description and example request/response pairs. See <a href="../SqlResourceDocumentation.html">SQL Resource Documentation</a> for more detail.</p>
+
 <h3>Logging Improvements</h3>
-<p class="text">On startup, restSQL now prints the logging conf location and number of properties loaded from the restsql.properties to the console:
+<p class="text">On startup, restSQL now prints the logging conf location and number of properties loaded from the restsql.properties to the console:</p>
 <pre>
 INFO: restSQL using logging conf from $WEBAPPS/restsql/resources/properties/default-log4j.properties
 INFO: restSQL loaded 5 properties from /etc/opt/restsql/restsql-mysql.properties
 </pre>
-The same messages as well the customized properties are also written to the internal.log. An error is printed to the console if any problems are encountered, for example the restsql.properties or logging conf file are not found. The full configuration is still available at <code>http://host:port/restsql/conf.</code>
-</p>
+<p class="text">The same messages as well the customized properties are also written to the internal.log. An error is printed to the console if any problems are encountered, for example the restsql.properties or logging conf file are not found. The full configuration is still available at <code>http://host:port/restsql/conf.</code></p>
 
 <h3>Migration</h3>
 <p class="text">None</p>
