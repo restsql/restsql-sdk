@@ -36,7 +36,7 @@ public class Select_FlatResource {
 
 	// Worker methods
 	
-	/** Requests record with id 1000 from the Country resource. */
+	/** Requests row with id 1000 from the Country resource. */
 	private static void doSelectWithPk() throws SqlResourceException {
 		// Get the resource object
 		SqlResource sqlResource = Factory.getSqlResource("Country");
@@ -56,7 +56,7 @@ public class Select_FlatResource {
 		printResults("Select using PK", results, requestLogger);
 	}
 
-	/** Requests records with country name like A% from the Country resource. */
+	/** Requests rows with country name like A% from the Country resource. */
 	private static void doSelectWithWildcard() throws SqlResourceException {
 		// Get the resource object
 		SqlResource sqlResource = Factory.getSqlResource("Country");
@@ -76,7 +76,7 @@ public class Select_FlatResource {
 		printResults("Select with Wildcard", results, requestLogger);
 	}
 
-	/** Requests second page of records. */
+	/** Requests second page of rows. */
 	private static void doSelectWithLimit() throws SqlResourceException {
 		// Get the resource object
 		SqlResource sqlResource = Factory.getSqlResource("Country");
@@ -97,7 +97,7 @@ public class Select_FlatResource {
 		printResults("Select with Limit", results, requestLogger);
 	}
 	
-	/** Requests records with country name like A% from the Country resource with a limit and returns XML. */
+	/** Requests rows with country name like A% from the Country resource with a limit and returns XML. */
 	private static void doSelectWithNonPkAndLimitReturnXml() throws SqlResourceException {
 		// Get the resource object
 		SqlResource sqlResource = Factory.getSqlResource("Country");
@@ -131,9 +131,9 @@ public class Select_FlatResource {
 		System.out.println(requestLogger.getSql());
 		if (results.size() > 0) {
 			System.out.println(results.size() + " Results:");
-			for (Map<String, Object> record : results) {
-				String resultString = "country_id: " + record.get("country_id") + ", country: "
-						+ record.get("country") + ", last_update: " + record.get("last_update");
+			for (Map<String, Object> row : results) {
+				String resultString = "country_id: " + row.get("country_id") + ", country: "
+						+ row.get("country") + ", last_update: " + row.get("last_update");
 				System.out.println("\t" + resultString);
 			}
 		} else {

@@ -39,7 +39,7 @@ public class InsertUpdateDelete_FlatResource {
 
 	// Worker methods
 
-	/** Deletes record with names like Test% from the Country resource. */
+	/** Deletes rows with names like Test% from the Country resource. */
 	private static void doDeleteMultiple() throws SqlResourceException {
 		System.out.println("Delete Multiple");
 
@@ -62,7 +62,7 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("\tdeleted " + rowsAffected + " row(s)\n");
 	}
 
-	/** Deletes record with id 1000 from the Country resource. */
+	/** Deletes row with id 1000 from the Country resource. */
 	private static void doDeleteWithPk() throws SqlResourceException {
 		System.out.println("Delete with PK");
 
@@ -86,14 +86,14 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("\tdeleted " + rowsAffected + " row(s)\n");
 	}
 
-	/** Deletes records with country name like W% from the Country resource. */
+	/** Deletes rows with country name like W% from the Country resource. */
 	private static void doDeleteWithWildcard() throws SqlResourceException {
 		System.out.println("Delete with wildcard");
 
 		// Get the resource object
 		final SqlResource sqlResource = Factory.getSqlResource("Country");
 
-		// Create the record
+		// Create the row
 		final List<RequestValue> params = new ArrayList<RequestValue>(3);
 		params.add(new RequestValue("country_id", "1000"));
 		params.add(new RequestValue("country", "Test1"));
@@ -119,7 +119,7 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("\tdeleted " + rowsAffected + " row(s)\n");
 	}
 
-	/** Creates record in the Country resource. */
+	/** Creates row in the Country resource. */
 	private static void doInsert(final List<RequestValue> params) throws SqlResourceException {
 		// Get the resource object
 		final SqlResource sqlResource = Factory.getSqlResource("Country");
@@ -138,14 +138,14 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("\tinserted " + rowsAffected + " row(s)");
 	}
 
-	/** Updates record with country name Wohoo! in the Country resource. */
+	/** Updates row with country name Wohoo! in the Country resource. */
 	private static void doUpdateWithParam() throws SqlResourceException {
 		System.out.println("Update with Param");
 
 		// Get the resource object
 		final SqlResource sqlResource = Factory.getSqlResource("Country");
 
-		// Create the record
+		// Create the row
 		final List<RequestValue> params = new ArrayList<RequestValue>(3);
 
 		// Create the delete request
@@ -167,14 +167,14 @@ public class InsertUpdateDelete_FlatResource {
 
 	// Helper methods
 
-	/** Updates record with id 1000 from the Country resource. */
+	/** Updates row with id 1000 from the Country resource. */
 	private static void doUpdateWithPk() throws SqlResourceException {
 		System.out.println("Update with PK");
 
 		// Get the resource object
 		final SqlResource sqlResource = Factory.getSqlResource("Country");
 
-		// Create the record
+		// Create the row
 		final List<RequestValue> params = new ArrayList<RequestValue>(3);
 		params.add(new RequestValue("country_id", "1000"));
 		params.add(new RequestValue("country", "Test1"));

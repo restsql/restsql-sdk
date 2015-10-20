@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>restSQL: restSQL In Operator</title> 
+	<title>restSQL Release Notes - 0.8.10</title> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
 	<link href="../doc.css" rel="stylesheet" type="text/css"/>
 </head> 
@@ -46,19 +46,18 @@
 </div>
 
 <div id="content"> 
-<h1>In Operator</h1>
-<p class="text">The SQL IN operator is supported in read requests on numeric, date and string parameters by enclosing a comma-separated list in parenthesis. This is used in the <a href="ResGetQuery.html">GET by Query</a> method.</p>
+<h1>Release Notes - 0.8.11</h1>
+<h3>Summary</h3>
+<div class="text">restSQL 0.8.11 enhances resource customization and more flexible configuration file location.</div>
 
-<p class="text">Examples</p>
-<ul>
-	<li>price in 100, 200 or 300: price=(100,200,300)</li>
-	<li>rating in G or R: rating=(G,R)</li>
-</ul>
+<h3>Resource Customization</h3>
+<p class="text">The <code>alias</code> table metadata attribute has been deprecated and replaced by the <code>rowAlias</code> and <code>rowSetAlias</code> attributes. This enables you to control the JSON object names in request/responses and Java API map child key names, whereas in previous releases the framework appended an "s" to the alias. See the aliases section in <a href="../Concepts.html#ColumnandTableAliases">Concepts</a> for more detail.</p>
 
-<p class="text">To use a literal ( as the first character in a parameter value, you must escape it with a URL encoded backslash (%5C). For example, the <code>title=%5C(hello</code> find rows with title matching '(hello' (encode as '\(hello').</p>
-		
-<p class="text">For Java API usage, prefix the value in a <a href="../../javadoc/api/org/restsql/core/NameValuePair.html">NameValuePair</a> object with the unencoded operator. Zero or more of these are passed in a <code>List</code> of parameters when creating a <a href="../../javadoc/api/org/restsql/core/Request.html">Request</a> object with the <a href="../../javadoc/api/org/restsql/core/Factory.html">Factory</a>.</p>
+<h3>Flexible Configuration File Location</h3>
+<p class="text"></p>
 
+<h3>Migration</h3>
+<p class="text">The table metadata attribute will continue to work without errors or warnings. The alias drives the rowwAlias value and alias + "s" the rowSetAlias. Replace the alias with rowAlias and rowSetAlias at your own pace.</p>
 </div>
 </body>
 </html>

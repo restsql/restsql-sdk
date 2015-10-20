@@ -86,7 +86,7 @@
 
 <p class="text">Results are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</p>
 
-<p class="text">Queries on hierarchical resources with <code>_limit</code> parameters are constrained by the total record count of <em>all the children</em> plus any parents that are childless. For example, supposing a query is limited to 100. If there are thousands of parents, but the first parent (PK order) has no children, the second has 44 children, and the third 130 children, then the results will be the first parent with 0 children, the second parent with 44 children and the third parent with 55 children. The limit is imposed on the SQL query that returns results in a flat, denormalized manner and then restSQL transforms this into a hiearchical representation.</p>
+<p class="text">Queries on hierarchical resources with <code>_limit</code> parameters are constrained by the total row count of <em>all the children</em> plus any parents that are childless. For example, supposing a query is limited to 100. If there are thousands of parents, but the first parent (PK order) has no children, the second has 44 children, and the third 130 children, then the results will be the first parent with 0 children, the second parent with 44 children and the third parent with 55 children. The limit is imposed on the SQL query that returns results in a flat, denormalized manner and then restSQL transforms this into a hiearchical representation.</p>
 
 <h2>XML Examples</h2>
 <pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1

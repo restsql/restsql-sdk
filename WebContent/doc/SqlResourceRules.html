@@ -68,7 +68,7 @@
 	<li>Columns
 		<ul>
 			<li>Columns must be declared explictly. Do not use SELECT * or SELECT {table}.* in a query.</li>
-			<li>Columns may contain functions however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any records in the body in a write operation.</li>
+			<li>Columns may contain functions however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any rows in the body in a write operation.</li>
 			<li>Columns may be aliased in a query. The alias is used in requests and responses.</li>
 			<li>Parents in a flat or hierarchical resource and children in a many-to-many hierarchical resource must have a primary key for to operate successfully.</li>
 			<li>A hierarchical resource query must include the parent and child primary keys.</li>
@@ -80,6 +80,13 @@
 			<li>For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared.</li>			
 			<li>Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</li>
 			<li>Extensions must have a foreign key to the parent, and optionally a separate primary key.</li>
+		</ul>
+	</li>
+	<li>Aliases
+		<ul>
+			<li>Columns may be aliased in queries. The column alias is used in both requests and responses. A 400 Bad Request is returned for requests using the cardinal column name.</li>
+			<li>The parent and child tables may be aliased in the metadata but <em>not</em> the query. Columns must be disambiguated in the query using the full table name. The aliases are used in both request body and responses body XML elements or JSON attributes, as well as request URL paramters. The metadata table element attributes are rowAlias for XML and rowSetAlias for JSON. The rowSetAlias also changes the child row key value in a result set row map when using the Java API.</li>
+			<li>The parent extension or child extensions tables may not be aliased. These are joined with the parent or child to form single rows and need not be aliased.</li>
 		</ul>
 	</li>
 </ul>
