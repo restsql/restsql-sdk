@@ -59,7 +59,15 @@
 		</tr>
 		<tr>
 			<td><strong>Query Params</strong></td>
-			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query. Use '%' for wildcard, which is URL encoded as <code>%25</code>.
+			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query.<br/><br/>
+			Value encoding:
+			<ul>
+				<li>Use equals or not equals value. See <a href="Operators.html#EqualsNotEquals">Equals/Not Equals Operators</a> for more detail.</li> 
+				<li>Include '%' anywhere in the value for the wildcard, which is URL encoded as <code>%25</code>. This will use the a SQL LIKE instead of equals operator. See <a href="Operators.html#Like">Like Operator</a> for more detail.</li>
+				<li>Use null or not null. See <a href="Operators.html#NullAndNotNull">Null/Not Null Operators</a> for more detail.</li> 
+				<li>Surround a commad-separated list in parenthesis. See <a href="Operators.html#In">In Operator</a> for more detail.</li> 
+				<li>Prefix one of four url encoded comparison operators at the beginning of the value. See <a href="Operators.html#Comparison">Comparison Operators</a> for more detail.</li> 
+			</ul>
 			</td>
 		</tr>
 		<tr>

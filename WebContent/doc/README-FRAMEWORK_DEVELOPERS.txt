@@ -73,6 +73,8 @@ Follow Sun's Java naming conventions and Javadoc style guidelines. Package overv
 -------------------------------------------------------------------------------
 Directories and Configuration Files
 
+Note: All path separators must use the forward slash, even on Windows. To refer to a path on Windows, for example c:\tools\restsql, use the form /tools/restsql, or if the app server is on a different drive, use file:///c:/tools/restsql.
+
 Source Root
 Set up your Eclipse projects in /opt/restsql/code if possible. restSQL configuration uses absolute paths in most cases. The property values and default web.xml will work out of the box if you use /opt/restsql/code (or C:\opt\restsql\code on Windows) as your root.
 

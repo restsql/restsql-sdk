@@ -60,11 +60,13 @@
 		<tr>
 			<td><strong>Query Params</strong></td>
 			<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query.<br/><br/>
-			Options:
+			Value encoding:
 			<ul>
-				<li>Surround a commad-separated list in parenthesis. See <a href="InOperator.html">In Operator</a> for more detail.</li> 
-				<li>Prefix one of four url encoded comparison operators at the beginning of the value. See <a href="ComparisonOperators.html">Comparison Operators</a> for more detail.</li> 
-				<li>Include '%' in value for wildcard, which is URL encoded as <code>%25</code>. This will use the a SQL LIKE instead of equals. For example to find all actors with first names that start with 'Ja', use <code>first_name=Ja%25</code>. If the selector value has an actual percent, then it must be escaped with a backslash, and both must be URL encoded. For example, to select the actor with the description of 'modified%', use<code>description=modified%5C%25</code></li>.
+				<li>Use equals or not equals value. See <a href="Operators.html#EqualsNotEquals">Equals/Not Equals Operators</a> for more detail.</li> 
+				<li>Include '%' anywhere in the value for the wildcard, which is URL encoded as <code>%25</code>. This will use the a SQL LIKE instead of equals operator. See <a href="Operators.html#Like">Like Operator</a> for more detail.</li>
+				<li>Use null or not null. See <a href="Operators.html#NullAndNotNull">Null/Not Null Operators</a> for more detail.</li> 
+				<li>Surround a commad-separated list in parenthesis. See <a href="Operators.html#In">In Operator</a> for more detail.</li> 
+				<li>Prefix one of four url encoded comparison operators at the beginning of the value. See <a href="Operators.html#Comparison">Comparison Operators</a> for more detail.</li> 
 				<li>Special parameters: <code>_limit</code>={integer}, <code>_offset</code>={integer}, <code>_output</code>={media-type}</li>
 			</ul>
 			</td>
@@ -155,7 +157,7 @@ Content-Type: application/xml
 &lt;/readResponse&gt;
 </pre>
 
-<div class="text">A query with <a href="ComparisonOperators.html">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.</div>
+<div class="text">A query with <a href="Operators.html#Comparison">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.</div>
 <pre>GET /restsql/res/Actor?surname=%3EWILLIAMS HTTP/1.1
 Accept: application/xml</pre>
 <pre>HTTP/1.1 200 OK
@@ -203,8 +205,8 @@ Content-Type: application/json
 }
 </pre>
 
-<div class="text">A limited query:</div>
-<pre>GET /restsql/res/Actor?_limit=10&amp;_offset=0 HTTP/1.1
+<div class="text">Find acgtors with surnames that are not null and limit the response to ten rows</div>
+<pre>GET /restsql/res/Actor?surname=!null&amp;_limit=10&amp;_offset=0 HTTP/1.1
 Accept: application/json</pre>
 <pre>HTTP/1.1 200 OK
 Content-Type: application/json
@@ -244,7 +246,7 @@ Content-Type: application/json
 }
 </pre>
 
-<div class="text">A query with <a href="ComparisonOperators.html">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.</div>
+<div class="text">A query with <a href="Operators.html#Comparison">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.</div>
 <pre>GET /restsql/res/Actor?surname=%3EWILLIAMS HTTP/1.1
 Accept: application/json</pre>
 <pre>HTTP/1.1 200 OK
