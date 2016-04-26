@@ -1,71 +1,110 @@
+<!DOCTYPE HTML>
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-	<title>restSQL Release Notes - 0.8.8</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link href="../doc.css" rel="stylesheet" type="text/css"/>
-</head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL Release Notes - 0.8.8</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
 <body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="../AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../api/index.html">HTTP API Reference</a></li>
+						<li><a href="../api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
 
-<div id="top">
-    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
-</div>
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"><span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-<div id="nav">
-    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
-    <div class="nav-category">HTTP API
-        <div class="nav-item"><a class="nav-link" href="../ref/index.html">Reference</a></div>
-        <div class="nav-item"><a class="nav-link" href="../ref/ResHttpStatus.html">Status Codes</a></div>
-        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
-    </div>
-    <div class="nav-category">Java API
-        <div class="nav-item"><a class="nav-link" href="../../examples/java">Examples</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Javadoc - API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../javadoc/full/index.html">Javadoc - Full</a></div>
-    </div>
-    <div class="nav-category">Configuration
-        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Monitoring.html">Monitoring</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
-    </div>
-    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../sponsors/Sponsors.html">Sponsors</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
-</div>
+	<div class="container">
 
-<div id="content"> 
-<h1>Release Notes - 0.8.8</h1>
-<h3>Summary</h3>
-<div class="text">restSQL 0.8.8 adds an automatic resource definition generation tool.</div>
-<ol>
-	<li>Get started with the framework faster by generating resource definitions for all tables in a database schema.</li>
-	<li>Framework refactoring necessitates changes to restsql.properties files.</li>
-	<li>The release also addresses <a href="https://github.com/restsql/restsql/issues/51">Issue #51</a> and restores operation of the definition viewer in the SDK API Explorer.</li>
-</ol>
+		<div class="page-header">
+			<h1>Release Notes - 0.8.8</h1>
+		</div>
 
-<h3>Automatic Resource Definition Generation Tool</h3>
-<p class="text">The tool creates resource definition templates for all columns for each table in a database schema. The definitions are created in the user-provided subfolder. These resources can be immediately used, or modified and reloaded and moved as necessary.</p>
+		<h3>Summary</h3>
+		<div class="text">restSQL 0.8.8 adds an automatic resource definition generation tool.</div>
+		<ol>
+			<li>Get started with the framework faster by generating resource definitions for all tables in a database schema.</li>
+			<li>Framework refactoring necessitates changes to restsql.properties files.</li>
+			<li>The release also addresses <a href="https://github.com/restsql/restsql/issues/51">Issue #51</a> and restores operation of the definition viewer in the SDK API Explorer.
+			</li>
+		</ol>
 
-<p class="text">The tool is accessed after deploying restsql from the Tools link on the home page, or from <code>http://host:port/restsql/tools</code>. Enter the subfolder name (default is 'auto') and the database name. The definitions are created in the configured SQL Resources directory (in the restsql.properties file). These are viewable from the SQL Resources browser, i.e. <code>http://host:port/restsql/res</code>.</p>
+		<h3>Automatic Resource Definition Generation Tool</h3>
+		<p class="text">The tool creates resource definition templates for all columns for each table in a database schema. The definitions are created in the user-provided subfolder. These resources can be immediately used, or modified and reloaded and moved as necessary.</p>
 
-<h3>restsql.properties changes</h3>
-<p class="text">Db-specific implementations of SqlBuilder were added.</p>
-<p class="text">A new tool, ResourceDefinitionGenerator was added, with db-specific implmentations.</p>
-<p class="text">Framework now binds to ColumnMetaData and TableMetaData interfaces, so custom implementations can be provided.</p>
-<p class="text">Following are the excerpts with the additional properties</p>
-<pre>
+		<p class="text">
+			The tool is accessed after deploying restsql from the Tools link on the home page, or from
+			<code>http://host:port/restsql/tools</code>
+			. Enter the subfolder name (default is 'auto') and the database name. The definitions are created in the configured SQL Resources directory (in the restsql.properties file). These are viewable from the SQL Resources browser, i.e.
+			<code>http://host:port/restsql/res</code>
+			.
+		</p>
+
+		<h3>restsql.properties changes</h3>
+		<p class="text">Db-specific implementations of SqlBuilder were added.</p>
+		<p class="text">A new tool, ResourceDefinitionGenerator was added, with db-specific implmentations.</p>
+		<p class="text">Framework now binds to ColumnMetaData and TableMetaData interfaces, so custom implementations can be provided.</p>
+		<p class="text">Following are the excerpts with the additional properties</p>
+		<pre>
 # DB-specific implementation classes - match the implementation to your database
 ...
 org.restsql.core.SqlBuilder=org.restsql.core.impl.mysql.MySqlSqlBuilder
@@ -77,15 +116,19 @@ org.restsql.core.ColumnMetaData=org.restsql.core.impl.ColumnMetaDataImpl
 org.restsql.core.TableMetaData=org.restsql.core.impl.TableMetaDataImpl
 
 </pre>
-<p class="text">If you are using MySQL with the built-in implementation classes, none of the preceeding properties are required. Please refer to the following examples:</p>
-<ul>
-	<li><a href="../../defaults/properties/default-restsql.properties">Complete</a></li>
-	<li><a href="../../examples/properties/restsql-mysql.properties">Minimal MySQL</a></li>
-	<li><a href="../../examples/properties/restsql-postgresql.properties">Minimal PostgreSQL</a></li>
-</ul>
+		<p class="text">If you are using MySQL with the built-in implementation classes, none of the preceeding properties are required. Please refer to the following examples:</p>
+		<ul>
+			<li><a href="../../defaults/properties/default-restsql.properties">Complete</a></li>
+			<li><a href="../../examples/properties/restsql-mysql.properties">Minimal MySQL</a></li>
+			<li><a href="../../examples/properties/restsql-postgresql.properties">Minimal PostgreSQL</a></li>
+		</ul>
 
-<h3>Migration</h3>
-<p class="text">Possibly change restsql.properties per above.</p>
-</div>
+		<h3>Migration</h3>
+		<p class="text">Possibly change restsql.properties per above.</p>
+		
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
 </body>
 </html>

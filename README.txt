@@ -1,4 +1,4 @@
-README.txt (19-Nov-2011)
+README.txt (25-Apr-2016)
 
 restSQL SDK Deployment Guide
 
@@ -31,6 +31,22 @@ The restsql and restsql-sdk versions are found in the jar and war's META-INF/MAN
 Installing restSQL SDK
 
 Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser
+
+Enable directory listings in your app container's config. For example for Tomcat, edit $TOMCAT_HOME/conf/web.xml section for the DefaultServlet, setting the directory listing value to true:
+
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet> 
 
 Install restsql WAR mode (see restSQL README.txt) with one variation: the restsql.properties must be changed to reference the sdk's SQL Resources definition directory. Below is an example:
 

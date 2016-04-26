@@ -1,135 +1,177 @@
+<!DOCTYPE HTML>
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-	<title>restSQL Overview</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link href="doc.css" rel="stylesheet" type="text/css"/>
-</head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL Overview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.ico" />
+<link rel="stylesheet" href="assets/bootstrap.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+</head>
 <body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="Overview.html">Overview</a></li>
+						<li><a href="Architecture.html">Architecture</a></li>
+						<li><a href="Concepts.html">Concepts</a></li>
+						<li><a href="AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="api/index.html">HTTP API Reference</a></li>
+						<li><a href="api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../examples/java">Java API Examples</a></li>
+						<li><a href="../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="Security.html">Security</a></li>
+						<li><a href="Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="Support.html">Support</a></li>
+						<li><a class="nav-link" href="License.html">License</a></li>
+						<li><a href="sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="ReleaseHistory.html">Release History</a></li>
+					</ul></li>
 
-<div id="top">
-    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
-</div>
+				<li><a href="Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-<div id="nav">
-    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
-    <div class="nav-category">HTTP API
-        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
-        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
-        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
-    </div>
-    <div class="nav-category">Java API
-        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
-    </div>
-    <div class="nav-category">Configuration
-        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
-        <div class="nav-item"><a class="nav-link" href="Monitoring.html">Monitoring</a></div>
-        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
-        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
-    </div>
-    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="sponsors/Sponsors.html">Sponsors</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
-</div>
+	<div class="container">
 
+		<div class="page-header">
+			<h1>Overview</h1>
+		</div>
 
-<div id="content"> 
-<h1>restSQL Overview</h1>
-<div class="text">restSQL is an ultra-lightweight data access layer for HTTP clients. restSQL is a persistence framework or engine in the middle tier of a classic three tier architecture: client, application server and database. It may also be embedded in any middle-tier as a Java library.</div>
+		<p class="text">
+			restSQL is an ultra-lightweight data access layer for HTTP clients. restSQL is a persistence framework or engine in the middle tier of a classic three tier architecture: client, application server and database. It may also be embedded in any middle-tier as a Java library.
+		</p>
 
-<p class="text"><span style="color: red; font-weight: bold; font-size: 14pt">Latest Release</span>: <span style="font-weight:bold">restSQL 0.8.11</span>, released Nov 11, 2015, expands SQL operator support and improves resource customization. See the <a href="release/ReleaseNotes_0.8.11.html">release notes</a> for more detail.</p>
+		<p class="text">
+			If you would like to be notified of new releases, please <a href="Subscribe.html">subscribe</a> to our mailing list.
+		</p>
 
-<p class="text">If you would like to be notified of new releases, please <a href="Subscribe.html">subscribe</a> to our mailing list.</p>
-
-<h4>What it is</h4>
-<ul>
-	<li>an SQL generator with Java and HTTP APIs</li>
-	<li>uses a simple RESTful HTTP API with XML or JSON serialization</li>
-	<li>presents flat or hierarchical views of relational database tables</li>
-	<li>organizes access through query-able and updatable database views called SQL Resources</li>
-	<li>uses declarative authorization</li>
-	<li>offers declarative and plugin mechanisms for implementing domain constraints and business logic</li>
-	<li>a JEE web application or a Java library</li>
-	<li>platform, JEE container and database agnostic</li>
-</ul>
-
-<h4>What it is Not</h4>
-<ul>
-	<li>an HTTP to JDBC/ODBC bridge that tunnels SQL over HTTP</li>
-	<li>an Object-Relational Mapping tool (ORM) that maps tables to objects</li>
-	<li>a database or a data storage engine</li>
-	<li>a sophisticated query or report generator</li>
-	<li>an OLAP-style cube or data warehousing engine</li>
-</ul>
-
-<h4>Where it could be Used</h4>
-<div class="text">Applications needing:</div>
-<ul>
-	<li>basic CRUD (Create-Read-Update-Delete) access to relational databases</li>
-	<li>a database abstraction layer</li>
-	<li>a lighter-weight alternative to ORM (e.g. ADO or EJB)</li>
-	<li>a lighter-weight alternative to WSDL/SOAP</li>
-</ul>
-
-
-<h4>Motivation</h4>
-<div class="text">For many apps:</div>
-<ul>
-	<li>Conventional ORM is too heavyweight
+		<h4>What it is</h4>
 		<ul>
-			<li>We’ve gone overboard with objects</li>
-			<li>Oodles of classes, interfaces, deployment descriptors</li>
-			<li>OQL - another language to learn</li>
+			<li>an SQL generator with Java and HTTP APIs</li>
+			<li>uses a simple RESTful HTTP API with XML or JSON serialization</li>
+			<li>presents flat or hierarchical views of relational database tables</li>
+			<li>organizes access through query-able and updatable database views called SQL Resources</li>
+			<li>uses declarative authorization</li>
+			<li>offers declarative and plugin mechanisms for implementing domain constraints and business logic</li>
+			<li>a JEE web application or a Java library</li>
+			<li>platform, JEE container and database agnostic</li>
 		</ul>
-	</li>
-	<li>Conventional ORM is inflexible
-		<ul>
-			<li>A domain object layer rarely serves multiple apps well</li>
-			<li>Entity objects can’t be joined into arbitrary views</li>
-			<li>More accidental complexity: code required to join entities</li>
-		</ul>
-	</li>
-	<li>Conventional Web Services is too heavyweight
-		<ul>
-			<li>WSDL and SOAP are complicated</li>
-			<li>RESTful Web Services and WADL are simpler</li>
-		</ul>
-	</li>
-</ul>
 
-<h4>The bottom line &#8211; 80/20</h4>
-<ul>
-	<li>restSQL is targeted at the 80% of data access that is basic CRUD</li>
-	<li>No more messing around with basic SQL, some complex ORM tool, oodles of Objects and Interfaces, or quirky OQL.</li>
-	<li>Developers can spend their efforts on the remaining 20% of the database access, using an approach appropriate to the problem.</li>
-	<li>restSQL frees developers to focus on the essential work of software engineering:
+		<h4>What it is Not</h4>
 		<ul>
-			<li>architecture, data modeling, workflow, UI design, business logic, testing and tuning</li>
-			<li>and making our stakeholders happy</li>
-		</ul> 
-	</li>
-</ul>
+			<li>an HTTP to JDBC/ODBC bridge that tunnels SQL over HTTP</li>
+			<li>an Object-Relational Mapping tool (ORM) that maps tables to objects</li>
+			<li>a database or a data storage engine</li>
+			<li>a sophisticated query or report generator</li>
+			<li>an OLAP-style cube or data warehousing engine</li>
+		</ul>
 
-<h2>Description</h2>
-<div class="text">restSQL is a different kind of middle tier framework. There is no object-relational mapping, no object query language and no beans. It is intentionally not an object-oriented view of the database. It provides an interface based on <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">Representational State Transfer</a> (REST) principles, which use HTTP's built-in features, rather than abstracting away from them. The framework makes it simple to put a RESTful interface on a database.</div>
-<p class="text">The framework is used in two ways: 1) Clients may connect directly to the restSQL engine using the HTTP API, and 2) your Services use a Java API.</p>
-<p class="text">Optionally, applications provide Java-based triggers to manage data validation and business logic.
-restSQL right-sizes five technologies: SQL, XML, JSON, Java and HTTP. SQL is embedded in XML files that define resources, like database views, that may be queried, added to, updated or deleted using HTTP or a Java access API. Data is serialized over XML or JSON. The framework itself is written in Java and deployed as a JAR or WAR on a standard JEE Container.</p>
-<p class="text">restSQL enables you to build multiple SQL Resources, queryable and updatable database views that exist on the middle tier and are accessible via Java or HTTP APIs. SQL Resources may be flat views or hierarchical parent-child. The SQL Resource is defined in an XML file. The core of the definition is the query expression, an SQL DML expression.</p>
-<p style="font-size:1.25em">restSQL &#8211; <span style="text-decoration:none">Trim your Middle</span></p>
-</div>
+		<h4>Where it could be Used</h4>
+		<div class="text">Applications needing:</div>
+		<ul>
+			<li>basic CRUD (Create-Read-Update-Delete) access to relational databases</li>
+			<li>a database abstraction layer</li>
+			<li>a lighter-weight alternative to ORM (e.g. ADO or EJB)</li>
+			<li>a lighter-weight alternative to WSDL/SOAP</li>
+		</ul>
+
+
+		<h4>Motivation</h4>
+		<div class="text">For many apps:</div>
+		<ul>
+			<li>Conventional ORM is too heavyweight
+				<ul>
+					<li>We’ve gone overboard with objects</li>
+					<li>Oodles of classes, interfaces, deployment descriptors</li>
+					<li>OQL - another language to learn</li>
+				</ul>
+			</li>
+			<li>Conventional ORM is inflexible
+				<ul>
+					<li>A domain object layer rarely serves multiple apps well</li>
+					<li>Entity objects can’t be joined into arbitrary views</li>
+					<li>More accidental complexity: code required to join entities</li>
+				</ul>
+			</li>
+			<li>Conventional Web Services is too heavyweight
+				<ul>
+					<li>WSDL and SOAP are complicated</li>
+					<li>RESTful Web Services and WADL are simpler</li>
+				</ul>
+			</li>
+		</ul>
+
+		<h4>The bottom line &#8211; 80/20</h4>
+		<ul>
+			<li>restSQL is targeted at the 80% of data access that is basic CRUD</li>
+			<li>No more messing around with basic SQL, some complex ORM tool, oodles of Objects and Interfaces, or quirky OQL.</li>
+			<li>Developers can spend their efforts on the remaining 20% of the database access, using an approach appropriate to the problem.</li>
+			<li>restSQL frees developers to focus on the essential work of software engineering:
+				<ul>
+					<li>architecture, data modeling, workflow, UI design, business logic, testing and tuning</li>
+					<li>and making our stakeholders happy</li>
+				</ul>
+			</li>
+		</ul>
+
+		<h4>Description</h4>
+		<div class="text">
+			restSQL is a different kind of middle tier framework. There is no object-relational mapping, no object query language and no beans. It is intentionally not an object-oriented view of the database. It provides an interface based on <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">Representational State Transfer</a> (REST) principles, which use HTTP's built-in features, rather than abstracting away from them. The framework makes it simple to put a RESTful interface on a database.
+		</div>
+		<p class="text">The framework is used in two ways: 1) Clients may connect directly to the restSQL engine using the HTTP API, and 2) your Services use a Java API.</p>
+		<p class="text">Optionally, applications provide Java-based triggers to manage data validation and business logic. restSQL right-sizes five technologies: SQL, XML, JSON, Java and HTTP. SQL is embedded in XML files that define resources, like database views, that may be queried, added to, updated or deleted using HTTP or a Java access API. Data is serialized over XML or JSON. The framework itself is written in Java and deployed as a JAR or WAR on a standard JEE Container.</p>
+		<p class="text">restSQL enables you to build multiple SQL Resources, queryable and updatable database views that exist on the middle tier and are accessible via Java or HTTP APIs. SQL Resources may be flat views or hierarchical parent-child. The SQL Resource is defined in an XML file. The core of the definition is the query expression, an SQL DML expression.</p>
+		<p style="font-size: 1.5em">
+			restSQL &#8211; <span style="text-decoration: none">Trim your Middle</span>
+		</p>
+
+		<p class="text" style="padding-top: 10px">Next Step: <a href="Architecture.html">Architecture</a></p>
+
+	</div>
+
+	<script src="assets/jquery.min.js"></script>
+	<script src="assets/bootstrap.min.js"></script>
 </body>
 </html>

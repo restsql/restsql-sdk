@@ -1,71 +1,104 @@
+<!DOCTYPE HTML>
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-	<title>restSQL Release Notes - 0.8.7</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link href="../doc.css" rel="stylesheet" type="text/css"/>
-</head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL Release Notes - 0.8.7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
 <body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="../AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../api/index.html">HTTP API Reference</a></li>
+						<li><a href="../api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
 
-<div id="top">
-    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
-</div>
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-<div id="nav">
-    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
-    <div class="nav-category">HTTP API
-        <div class="nav-item"><a class="nav-link" href="../ref/index.html">Reference</a></div>
-        <div class="nav-item"><a class="nav-link" href="../ref/ResHttpStatus.html">Status Codes</a></div>
-        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
-    </div>
-    <div class="nav-category">Java API
-        <div class="nav-item"><a class="nav-link" href="../../examples/java">Examples</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Javadoc - API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../javadoc/full/index.html">Javadoc - Full</a></div>
-    </div>
-    <div class="nav-category">Configuration
-        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Monitoring.html">Monitoring</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
-    </div>
-    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../sponsors/Sponsors.html">Sponsors</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
-</div>
+	<div class="container">
 
-<div id="content"> 
-<h1>Release Notes - 0.8.7</h1>
-<h3>Summary</h3>
-<div class="text">restSQL 0.8.7 adds auto-increment/sequence-based column support and extends function-based column support to PostgreSQL.</div>
-<ol>
-	<li>Insert responses now embed the inserted object(s), including the value of an auto-generated numeric column value (usually a primary key).</li>
-	<li>Function-based columns in select operations will now work in PostgreSQL, as well as MySQL.</li>
-	<li>The release includes two changes to the Java API that will require minor client updates. Some implementation packages were created necessitating changes to restsql.properties files.</li>
-	<li>The release also fixes <a href="https://github.com/restsql/restsql/issues/41">Deployment errors on JBoss 6/7</a> and <a href="https://github.com/restsql/restsql/issues/42">404 Not Found on configuration browsing</a>.</li>
-</ol>
+		<div class="page-header">
+			<h1>Release Notes - 0.8.7</h1>
+		</div>
 
-<h3>Auto-increment/Sequence support</h3>
-<p class="text">Following shows an insert that excludes the primary key, actor_id, relying on the default value's auto-increment in MySQL or sequence in PostgreSQL:</p>
-<pre>POST /restsql/res/Actor HTTP/1.1
+		<h3>Summary</h3>
+		<div class="text">restSQL 0.8.7 adds auto-increment/sequence-based column support and extends function-based column support to PostgreSQL.</div>
+		<ol>
+			<li>Insert responses now embed the inserted object(s), including the value of an auto-generated numeric column value (usually a primary key).</li>
+			<li>Function-based columns in select operations will now work in PostgreSQL, as well as MySQL.</li>
+			<li>The release includes two changes to the Java API that will require minor client updates. Some implementation packages were created necessitating changes to restsql.properties files.</li>
+			<li>The release also fixes <a href="https://github.com/restsql/restsql/issues/41">Deployment errors on JBoss 6/7</a> and <a href="https://github.com/restsql/restsql/issues/42">404 Not Found on configuration browsing</a>.
+			</li>
+		</ol>
+
+		<h3>Auto-increment/Sequence support</h3>
+		<p class="text">Following shows an insert that excludes the primary key, actor_id, relying on the default value's auto-increment in MySQL or sequence in PostgreSQL:</p>
+		<pre>POST /restsql/res/Actor HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Accept: application/xml
 
 first_name=JULIANNE&amp;last_name=DENCH
 </pre>
-<p class="text">The write response now includes the inserted object, along with the auto-generated primary key value:</p>
-<pre>HTTP/1.1 200 OK
+		<p class="text">The write response now includes the inserted object, along with the auto-generated primary key value:</p>
+		<pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
 &lt;writeResponse rowsAffected="1"&gt;
@@ -73,10 +106,10 @@ Content-Type: application/xml
 &lt;writeResponse/&gt;
 </pre>
 
-<p class="text">The response for a delete and update request will continue to only include the rowsAffected attribute (no child elements).</p>
+		<p class="text">The response for a delete and update request will continue to only include the rowsAffected attribute (no child elements).</p>
 
-<p class="text">Auto-generated columns in child tables in hierarchical resources will also work. Following shows an insert for children in a hierarchical resource:</p>
-<pre>POST /restsql/res/LanguageFilms HTTP/1.1
+		<p class="text">Auto-generated columns in child tables in hierarchical resources will also work. Following shows an insert for children in a hierarchical resource:</p>
+		<pre>POST /restsql/res/LanguageFilms HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 
@@ -97,8 +130,8 @@ Accept: application/json
 }
 </pre>
 
-<p class="text">and the response:</p>
-<pre>HTTP/1.1 200 OK
+		<p class="text">and the response:</p>
+		<pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
 { "rowsAffected": 4,
@@ -119,27 +152,47 @@ Content-Type: application/json
 }
 </pre>
 
-<p class="text">Java clients can use the new <a href="../../javadoc/api/org/restsql/core/WriteResponse.html">WriteResponse</a> object to examine the auto-generated column value.</p>
+		<p class="text">
+			Java clients can use the new <a href="../../javadoc/api/org/restsql/core/WriteResponse.html">WriteResponse</a> object to examine the auto-generated column value.
+		</p>
 
-<h3>Function-based columns in PostgreSQL</h3>
-<p class="text">Columns may contain functions however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any rows in the body in a write operation. This support was previously only available forMySQL. </p>
+		<h3>Function-based columns in PostgreSQL</h3>
+		<p class="text">Columns may contain functions however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any rows in the body in a write operation. This support was previously only available forMySQL.</p>
 
-<p class="text">This extension was contributed by <a href="https://github.com/rhuitl">rhuitl</a>.</p>
+		<p class="text">
+			This extension was contributed by <a href="https://github.com/rhuitl">rhuitl</a>.
+		</p>
 
-<p class="text">See <a href="../SqlResourceRules.html">SqlResource Rules</a> for guidelines on SQL Resources.</p>
+		<p class="text">
+			See <a href="../SqlResourceRules.html">SqlResource Rules</a> for guidelines on SQL Resources.
+		</p>
 
 
-<h3>Java API Changes</h3>
-<p class="text">The <code>org.restsql.core.NameValuePair</code> was renamed to <a href="../../javadoc/api/org/restsql/core/RequestValue.html">RequestValue</a>, but its usage and functionality remain unchanged. It models a request parameter name-value-operator trinity and a resource identifier name-value pair (a PK as a request parameter). <code>RequestValue</code>s are passed in collections to <a href="../../javadoc/api/org/restsql/core/Factory.html">Factory.getRequest(..)</a> methods when creating a <a href="../../javadoc/api/org/restsql/core/Request.html">Request</a>.</p>
-<p class="text">The <code>org.restsql.core.SqlResource.write()</code> signature has changed. It now returns a <a href="../../javadoc/api/org/restsql/core/WriteResponse.html">WriteResponse</a> object instead of an integer. The write response includes the rows affected integer and it contains a collection of <a href="../../javadoc/api/org/restsql/core/ResponseValue.html">ResponseValue</a>s, which models the inserted row values, including any auto-generated column values (based on auto-increment or sequence). The collection is a list of sets (<code>List&lt;Set&lt;ResponseValue&gt;&gt;</code>) since it is also used by the framework for HTTP POSTs with XML/JSON bodies containing multiple requests. For a single insert request, get the first row (index 0). Children are embedded in a ResponseValue named after the child table name (or alias). The value is list of sets (<code>List&lt;Set&lt;ResponseValue&gt;&gt;</code>). ResponseValue is ordered by its column number in the set.</p>
+		<h3>Java API Changes</h3>
+		<p class="text">
+			The
+			<code>org.restsql.core.NameValuePair</code>
+			was renamed to <a href="../../javadoc/api/org/restsql/core/RequestValue.html">RequestValue</a>, but its usage and functionality remain unchanged. It models a request parameter name-value-operator trinity and a resource identifier name-value pair (a PK as a request parameter).
+			<code>RequestValue</code>
+			s are passed in collections to <a href="../../javadoc/api/org/restsql/core/Factory.html">Factory.getRequest(..)</a> methods when creating a <a href="../../javadoc/api/org/restsql/core/Request.html">Request</a>.
+		</p>
+		<p class="text">
+			The
+			<code>org.restsql.core.SqlResource.write()</code>
+			signature has changed. It now returns a <a href="../../javadoc/api/org/restsql/core/WriteResponse.html">WriteResponse</a> object instead of an integer. The write response includes the rows affected integer and it contains a collection of <a href="../../javadoc/api/org/restsql/core/ResponseValue.html">ResponseValue</a>s, which models the inserted row values, including any auto-generated column values (based on auto-increment or sequence). The collection is a list of sets (
+			<code>List&lt;Set&lt;ResponseValue&gt;&gt;</code>
+			) since it is also used by the framework for HTTP POSTs with XML/JSON bodies containing multiple requests. For a single insert request, get the first row (index 0). Children are embedded in a ResponseValue named after the child table name (or alias). The value is list of sets (
+			<code>List&lt;Set&lt;ResponseValue&gt;&gt;</code>
+			). ResponseValue is ordered by its column number in the set.
+		</p>
 
-<p class="text">Note: API stability is planned for 1.0 release.</p>
+		<p class="text">Note: API stability is planned for 1.0 release.</p>
 
-<h3>restsql.properties changes</h3>
-<p class="text">A new sequence manager interface and db-specific implementations were added.</p>
-<p class="text">New db-specific packages were created and the metadata implementations were moved and renamed.</p>
-<p class="text">All serialization classes were moved to a new package.</p>
-<pre>
+		<h3>restsql.properties changes</h3>
+		<p class="text">A new sequence manager interface and db-specific implementations were added.</p>
+		<p class="text">New db-specific packages were created and the metadata implementations were moved and renamed.</p>
+		<p class="text">All serialization classes were moved to a new package.</p>
+		<pre>
 # DB-specific implementation classes - match the implementation to your database
 # For MySQL:
 #	org.restsql.core.SequenceManager=org.restsql.core.impl.mysql.MySqlSequenceManager
@@ -156,17 +209,23 @@ org.restsql.core.Factory.RequestDeserializerFactory=org.restsql.core.impl.serial
 org.restsql.core.Factory.ResponseSerializerFactory=org.restsql.core.impl.serial.ResponseSerializerFactoryImpl
 
 </pre>
-<p class="text">If you are using MySQL with the built-in implementation classes, none of the preceeding properties are required. Please refer to the following examples:</p>
-<ul>
-	<li><a href="../../defaults/properties/default-restsql.properties">Complete</a></li>
-	<li><a href="../../examples/properties/restsql-mysql.properties">Minimal MySQL</a></li>
-	<li><a href="../../examples/properties/restsql-postgresql.properties">Minimal PostgreSQL</a></li>
-</ul>
+		<p class="text">If you are using MySQL with the built-in implementation classes, none of the preceeding properties are required. Please refer to the following examples:</p>
+		<ul>
+			<li><a href="../../defaults/properties/default-restsql.properties">Complete</a></li>
+			<li><a href="../../examples/properties/restsql-mysql.properties">Minimal MySQL</a></li>
+			<li><a href="../../examples/properties/restsql-postgresql.properties">Minimal PostgreSQL</a></li>
+		</ul>
 
-<h3>Migration</h3>
-<p class="text">HTTP API requests have not changed. HTTP Responses for Insert (POST) requests now embed the inserted objects. Client code will need to change to take consume the returned child elements (XML) or child attributes (JSON).</p>
-<p class="text">Java API clients must be changed to use the renamed <a href="../../javadoc/api/org/restsql/core/RequestValue.html">RequestValue</a> object and to accept the new <a href="../../javadoc/api/org/restsql/core/WriteResponse.html">WriteResponse</a> object on write operations.</p>
-<p class="text">Possibly change restsql.properties per above.</p>
-</div>
+		<h3>Migration</h3>
+		<p class="text">HTTP API requests have not changed. HTTP Responses for Insert (POST) requests now embed the inserted objects. Client code will need to change to take consume the returned child elements (XML) or child attributes (JSON).</p>
+		<p class="text">
+			Java API clients must be changed to use the renamed <a href="../../javadoc/api/org/restsql/core/RequestValue.html">RequestValue</a> object and to accept the new <a href="../../javadoc/api/org/restsql/core/WriteResponse.html">WriteResponse</a> object on write operations.
+		</p>
+		<p class="text">Possibly change restsql.properties per above.</p>
+
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
 </body>
 </html>

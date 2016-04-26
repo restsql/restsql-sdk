@@ -1,128 +1,174 @@
+<!DOCTYPE HTML>
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-	<title>restSQL Concepts</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link href="doc.css" rel="stylesheet" type="text/css"/>
-</head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL Concepts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.ico" />
+<link rel="stylesheet" href="assets/bootstrap.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+</head>
 <body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="Overview.html">Overview</a></li>
+						<li><a href="Architecture.html">Architecture</a></li>
+						<li><a href="Concepts.html">Concepts</a></li>
+						<li><a href="AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="api/index.html">HTTP API Reference</a></li>
+						<li><a href="api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../examples/java">Java API Examples</a></li>
+						<li><a href="../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="Security.html">Security</a></li>
+						<li><a href="Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="Support.html">Support</a></li>
+						<li><a class="nav-link" href="License.html">License</a></li>
+						<li><a href="sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="ReleaseHistory.html">Release History</a></li>
+					</ul></li>
 
-<div id="top">
-    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
-</div>
+				<li><a href="Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-<div id="nav">
-    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
-    <div class="nav-category">HTTP API
-        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
-        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
-        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
-    </div>
-    <div class="nav-category">Java API
-        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
-    </div>
-    <div class="nav-category">Configuration
-        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
-        <div class="nav-item"><a class="nav-link" href="Monitoring.html">Monitoring</a></div>
-        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
-        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
-    </div>
-    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="sponsors/Sponsors.html">Sponsors</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
-</div>
+	<div class="container">
 
+		<div class="page-header">
+			<h1>Concepts</h1>
+		</div>
 
-<div id="content"> 
-<h1>Concepts</h1>
-<p class="centered"><img src="Concepts.png" alt="Concept Map" title="Concept Map" /></p>
+		<p class="centered">
+			<img src="Concepts.png" alt="Concept Map" title="Concept Map" />
+		</p>
 
-<h2>restSQL</h2>
-<div class="text">restSQL is a persistence framework or engine in the middle tier of a classic three tier architecture: client, application server and database. restSQL is not an HTTP to JDBC/ODBC bridge that tunnels SQL over HTTP. Nor is restSQL an Object-Relational Mapping tool, abstracting SQL by mapping tables to objects. restSQL is an SQL generator with Java and HTTP APIs. restSQL keeps SQL out of the client but also eliminates the need for the middle-tier to construct SQL for basic CRUD (Create-Read-Update-Delete) operations. restSQL does not offer sophisticated query or report generation, nor OLAP-style cube or data warehousing support. restSQL is targeted at OLTP applications needing basic CRUD access.</div>
-<p class="text">restSQL may be deployed in two modes: as an HTTP Service (WAR) or as a Java library (JAR). In both cases, restSQL is more of an engine than a framework, because very few extensions are required. No object hierarchy needs to be created and no persistence managers need be customized. A simple XML file defines an SQL Resource, an queryable and updatable database view that is managed by the engine. Declarative attribute validators may be employed to enforce simple data constraints (e.g. numeric ranges, string length or format), or applications may provide custom Java-based attribute validators for more enforcing more complex domain constraints. Additionally Java-based triggers may be deployed to enforce domain constraints or perform business logic.</p>
-<p class="text">restSQL was designed from the ground up for its implementation to be customized. The API interfaces are distinct from the implementation. Applications access implementations of various constructs using Factories. Applications may provide their own implementations by registering their factories which create the custom implementations. This may be useful for users needing application-specific extensions or support for new databases.</p>
+		<h2>restSQL</h2>
+		<div class="text">restSQL is a persistence framework or engine in the middle tier of a classic three tier architecture: client, application server and database. restSQL is not an HTTP to JDBC/ODBC bridge that tunnels SQL over HTTP. Nor is restSQL an Object-Relational Mapping tool, abstracting SQL by mapping tables to objects. restSQL is an SQL generator with Java and HTTP APIs. restSQL keeps SQL out of the client but also eliminates the need for the middle-tier to construct SQL for basic CRUD (Create-Read-Update-Delete) operations. restSQL does not offer sophisticated query or report generation, nor OLAP-style cube or data warehousing support. restSQL is targeted at OLTP applications needing basic CRUD access.</div>
+		<p class="text">restSQL may be deployed in two modes: as an HTTP Service (WAR) or as a Java library (JAR). In both cases, restSQL is more of an engine than a framework, because very few extensions are required. No object hierarchy needs to be created and no persistence managers need be customized. A simple XML file defines an SQL Resource, an queryable and updatable database view that is managed by the engine. Declarative attribute validators may be employed to enforce simple data constraints (e.g. numeric ranges, string length or format), or applications may provide custom Java-based attribute validators for more enforcing more complex domain constraints. Additionally Java-based triggers may be deployed to enforce domain constraints or perform business logic.</p>
+		<p class="text">restSQL was designed from the ground up for its implementation to be customized. The API interfaces are distinct from the implementation. Applications access implementations of various constructs using Factories. Applications may provide their own implementations by registering their factories which create the custom implementations. This may be useful for users needing application-specific extensions or support for new databases.</p>
 
-<h2>SQL Resource</h2>
-<div class="text">restSQL exposes a specific HTTP-based CRUD interface to the database via SQL Resources. SQL Resources are updatable views managed by the middle-tier (restSQL engine), rather than the database. </div>
-<p class="text">SQL Resources are accessed by name, using URIs in the pattern /restsql/res/{resName} with HTTP methods POST, GET, PUT and DELETE and often request bodies in XML and URL Encoded Form Parameters. The HTTP API offers flexibility in request forms; there are often multiple ways of submitting the same request. Path and query parameters qualify the rows for the operation. URL Encoded requests specify Insert or Update parameters. Or XML bodies specify write operation parameters, possibly for multiple rows.</p>
-<p class="text">SQL Resources are defined in XML files. The definition contains the core SELECT query to generate SQL. The framework builds an internal metadata construct by examining the query and interrogating the database. It appends WHERE clauses to the definition query for for read (SELECT) operations. It generates SQL for write (INSERT, UPDATE, DELETE) operations.</p>
+		<h2>SQL Resource</h2>
+		<div class="text">restSQL exposes a specific HTTP-based CRUD interface to the database via SQL Resources. SQL Resources are updatable views managed by the middle-tier (restSQL engine), rather than the database.</div>
+		<p class="text">SQL Resources are accessed by name, using URIs in the pattern /restsql/res/{resName} with HTTP methods POST, GET, PUT and DELETE and often request bodies in XML and URL Encoded Form Parameters. The HTTP API offers flexibility in request forms; there are often multiple ways of submitting the same request. Path and query parameters qualify the rows for the operation. URL Encoded requests specify Insert or Update parameters. Or XML bodies specify write operation parameters, possibly for multiple rows.</p>
+		<p class="text">SQL Resources are defined in XML files. The definition contains the core SELECT query to generate SQL. The framework builds an internal metadata construct by examining the query and interrogating the database. It appends WHERE clauses to the definition query for for read (SELECT) operations. It generates SQL for write (INSERT, UPDATE, DELETE) operations.</p>
 
-<p class="text">Group By queries are not supported (yet).</p>
+		<p class="text">Group By queries are not supported (yet).</p>
 
-<h2>SQL Resource Structure</h2>
-<div class="text">SQL Resource definition queries may be composed of multiple tables. The joins are specified in the query. Write operations will be issued separately for each table in the query. The driving table in the query is called the parent, and the joined tables are called the parent extensions.</div>
-<p class="text">SQL Resources may be <b>flat</b> or <b>hierarchical</b>. A flat SQL Resource returns read responses with each row in a single element/object. A hierarchical SQL Resource returns read responses in a single-level nested element/object set. Only one level parent-child, not arbitrary depth hiearchies is supported. The definition indicates the parent, child and extension tables such that the engine can differentiate the data. Hierarchical SQL Resources may be one-to-many or many-to-many. For example, employees typically report to one department so department-employee is a one-to-many relationship. Multiple departments collaborate on multiple projects, so department-project is a many-to-many relationship. In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be used to create and delete them. Updates to the children are not supported in a many-to-many SQL Resource.</p>
+		<h2>SQL Resource Structure</h2>
+		<div class="text">SQL Resource definition queries may be composed of multiple tables. The joins are specified in the query. Write operations will be issued separately for each table in the query. The driving table in the query is called the parent, and the joined tables are called the parent extensions.</div>
+		<p class="text">
+			SQL Resources may be <b>flat</b> or <b>hierarchical</b>. A flat SQL Resource returns read responses with each row in a single element/object. A hierarchical SQL Resource returns read responses in a single-level nested element/object set. Only one level parent-child, not arbitrary depth hiearchies is supported. The definition indicates the parent, child and extension tables such that the engine can differentiate the data. Hierarchical SQL Resources may be one-to-many or many-to-many. For example, employees typically report to one department so department-employee is a one-to-many relationship. Multiple departments collaborate on multiple projects, so department-project is a many-to-many relationship. In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be
+			used to create and delete them. Updates to the children are not supported in a many-to-many SQL Resource.
+		</p>
 
-<p class="text">See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.</p>
+		<p class="text">
+			See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.
+		</p>
 
-<h2>Table Role</h2>
-<div class="text">Each table in the defining query has a role that is declared in the metadata element. The roles define the structure for restSQL such that data is differentiated in request processing.</div>
-<p class="text">A many-to-many hierarchical SQL Resource called ActorFilm is used to elaborate the concept. The following diagram depicts the physical data model for its tables:</p>
-<p class="centered"><img src="ActorFilmDataModel.png" alt="ActorFilm Phyisical Data Model" title="ActorFilm Phyisical Data Model"/></p>
-<p class="text">The roles are defined in the following table with examples from ActorFilm:</p>
-<table>
-	<tbody>
-		<tr>
-			<th>Role</th>
-			<th>Meaning</th>
-			<th>Applies To</th>
-			<th>ActorFilm Example</th>
-		</tr>
-		<tr>
-			<td style="white-space: nowrap">Parent</td>
-			<td>Driving table. XML/JSON objects will be named using this table for all flat rows and hierarchical parent rows.</td>
-			<td style="white-space: nowrap">Flat, Hierarchical</td>
-			<td>actor</td>
-		</tr>
-		<tr>
-			<td style="white-space: nowrap">Parent Extension</td>
-			<td>Joined table to the parent that adds more columns. Appears to the client as if parent and extensions are one row/object.</td>
-			<td style="white-space: nowrap">Flat, Hierarchical</td>
-			<td>actor_rating</td>
-		</tr>
-		<tr>
-			<td style="white-space: nowrap">Child</td>
-			<td>Defines row/objects that are contained by the parent and will be nested in an XML/JSON representation. The child in a master-detail form/view.</td>
-			<td style="white-space: nowrap">Hierarchical</td>
-			<td>film</td>
-		</tr>
-		<tr>
-			<td style="white-space: nowrap">Child Extension</td>
-			<td>Joined table to the child that adds more columns. Appears to the client as if child and extensions are one row/object.</td>
-			<td style="white-space: nowrap">Hierarchical</td>
-			<td>film_rating</td>
-		</tr>
-		<tr>
-			<td style="white-space: nowrap">Join</td>
-			<td>The join table in a many-to-many relationship.</td>
-			<td style="white-space: nowrap">Hierarchical Many-to-Many</td>
-			<td>film_actor</td>
-		</tr>
-	</tbody>
-</table>
+		<h2>Table Role</h2>
+		<div class="text">Each table in the defining query has a role that is declared in the metadata element. The roles define the structure for restSQL such that data is differentiated in request processing.</div>
+		<p class="text">A many-to-many hierarchical SQL Resource called ActorFilm is used to elaborate the concept. The following diagram depicts the physical data model for its tables:</p>
+		<p class="centered">
+			<img src="ActorFilmDataModel.png" alt="ActorFilm Phyisical Data Model" title="ActorFilm Phyisical Data Model" />
+		</p>
+		<p class="text">The roles are defined in the following table with examples from ActorFilm:</p>
+		<table>
+			<tbody>
+				<tr>
+					<th>Role</th>
+					<th>Meaning</th>
+					<th>Applies To</th>
+					<th>ActorFilm Example</th>
+				</tr>
+				<tr>
+					<td style="white-space: nowrap">Parent</td>
+					<td>Driving table. XML/JSON objects will be named using this table for all flat rows and hierarchical parent rows.</td>
+					<td style="white-space: nowrap">Flat, Hierarchical</td>
+					<td>actor</td>
+				</tr>
+				<tr>
+					<td style="white-space: nowrap">Parent Extension</td>
+					<td>Joined table to the parent that adds more columns. Appears to the client as if parent and extensions are one row/object.</td>
+					<td style="white-space: nowrap">Flat, Hierarchical</td>
+					<td>actor_rating</td>
+				</tr>
+				<tr>
+					<td style="white-space: nowrap">Child</td>
+					<td>Defines row/objects that are contained by the parent and will be nested in an XML/JSON representation. The child in a master-detail form/view.</td>
+					<td style="white-space: nowrap">Hierarchical</td>
+					<td>film</td>
+				</tr>
+				<tr>
+					<td style="white-space: nowrap">Child Extension</td>
+					<td>Joined table to the child that adds more columns. Appears to the client as if child and extensions are one row/object.</td>
+					<td style="white-space: nowrap">Hierarchical</td>
+					<td>film_rating</td>
+				</tr>
+				<tr>
+					<td style="white-space: nowrap">Join</td>
+					<td>The join table in a many-to-many relationship.</td>
+					<td style="white-space: nowrap">Hierarchical Many-to-Many</td>
+					<td>film_actor</td>
+				</tr>
+			</tbody>
+		</table>
 
-<p class="text">For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared. Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</p>
+		<p class="text">For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared. Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</p>
 
-<p class="text">If tables are unqualified, restSQL uses the default database. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</p>
+		<p class="text">If tables are unqualified, restSQL uses the default database. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</p>
 
-<p class="text">See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.</p>
+		<p class="text">
+			See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.
+		</p>
 
-<h2>SQL Resource Definition</h2>
-<div class="text">SQL Resources are defined in XML definition files in the <code>sqlresources.dir</code> restsql.properties property. Here is an example of a flat resource called FilmRating in a file named FilmRating.xml:</div>
-<pre>
+		<h2>SQL Resource Definition</h2>
+		<div class="text">
+			SQL Resources are defined in XML definition files in the
+			<code>sqlresources.dir</code>
+			restsql.properties property. Here is an example of a flat resource called FilmRating in a file named FilmRating.xml:
+		</div>
+		<pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -140,8 +186,8 @@
    &lt;/metadata&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
-<div class="text">Here is an example of a one-to-many hierarchical resource called LanguageFilm in a file named LanguageFilm.xml:</div>
-<pre>
+		<div class="text">Here is an example of a one-to-many hierarchical resource called LanguageFilm in a file named LanguageFilm.xml:</div>
+		<pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -158,8 +204,8 @@
    &lt;/metadata&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
-<div class="text">Many-to-many resources also require the parent-child join table to be declared, as in the following resource, ActorFilm:</div>
-<pre>
+		<div class="text">Many-to-many resources also require the parent-child join table to be declared, as in the following resource, ActorFilm:</div>
+		<pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -184,16 +230,32 @@
 &lt;/rs:sqlResource&gt;
 </pre>
 
-<h2>SQL Resource Names</h2>
-<div class="text">The SQL resource name is inferred from the file name and its location if it is in a subdirectory below the resources root directory (<code>sqlresources.dir</code>). SQL resource namespaces may be organized into arbitrary-depth directories. The directory path is converted into dotted notation, following the Java package concept. For example, if ActorFilm.xml is placed in the subdirectory <code>actor/ext</code>, as in <code>{sqlresources.dir}/actor/ext/ActorFilm.xml</code>, then its name is <code>actor.ext.ActorFilm</code>. In the HTTP requests, it would be available at the URI <code>/restsql/res/actor.ext.ActorFilm</code>. If ActorFilm.xml is placed in the resources root, it would be available at the URI <code>/restsql/res/ActorFilm</code>.</div>
+		<h2>SQL Resource Names</h2>
+		<div class="text">
+			The SQL resource name is inferred from the file name and its location if it is in a subdirectory below the resources root directory (
+			<code>sqlresources.dir</code>
+			). SQL resource namespaces may be organized into arbitrary-depth directories. The directory path is converted into dotted notation, following the Java package concept. For example, if ActorFilm.xml is placed in the subdirectory
+			<code>actor/ext</code>
+			, as in
+			<code>{sqlresources.dir}/actor/ext/ActorFilm.xml</code>
+			, then its name is
+			<code>actor.ext.ActorFilm</code>
+			. In the HTTP requests, it would be available at the URI
+			<code>/restsql/res/actor.ext.ActorFilm</code>
+			. If ActorFilm.xml is placed in the resources root, it would be available at the URI
+			<code>/restsql/res/ActorFilm</code>
+			.
+		</div>
 
-<a name="ColumnandTableAliases"></a>
-<h2>Column and Table Aliases</h2>
-<div class="text">Column labels may be used to alias a column. Column aliasing is done in the SQL query. In the FilmLanguage example below release_year will appear in requests/responses as year.</div>
-<p class="text">Warning: Aliasing primary keys in hierarchical resources is currently not supported.</p>
-<p class="text">The parent and child tables may also be aliased in the metadata, but <em>not</em> in the SQL query. These names will appear in the elements of the request or response XML/JSON. You must not alias tables in the SQL query. Columns must be disambiguated using the full table name. restSQL table aliasing is for request/response element naming only.</p> 
-<p class="text">The LanguageFilm example below uses table aliases:</p>
-<pre>
+		<a name="ColumnandTableAliases"></a>
+		<h2>Column and Table Aliases</h2>
+		<div class="text">Column labels may be used to alias a column. Column aliasing is done in the SQL query. In the FilmLanguage example below release_year will appear in requests/responses as year.</div>
+		<p class="text">Warning: Aliasing primary keys in hierarchical resources is currently not supported.</p>
+		<p class="text">
+			The parent and child tables may also be aliased in the metadata, but <em>not</em> in the SQL query. These names will appear in the elements of the request or response XML/JSON. You must not alias tables in the SQL query. Columns must be disambiguated using the full table name. restSQL table aliasing is for request/response element naming only.
+		</p>
+		<p class="text">The LanguageFilm example below uses table aliases:</p>
+		<pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -211,8 +273,8 @@
 &lt;/rs:sqlResource&gt;
 </pre>
 
-<p class="text">Instead of using element names language and film, the names lang and movie are used, as in:</p>
-<pre>
+		<p class="text">Instead of using element names language and film, the names lang and movie are used, as in:</p>
+		<pre>
     &lt;readResponse&gt;
         &lt;lang language_id="100" langName="New Esperanto"&gt;
             &lt;movie year="2011" title="ESCAPE FROM TOMORROW" film_id="5000" /&gt;
@@ -225,8 +287,8 @@
     &lt;/readResponse&gt;
 </pre>
 
-<p class="text">and the JSON version:</p>
-<pre>
+		<p class="text">and the JSON version:</p>
+		<pre>
 { "langs": [
    { "langId": 100, "langName": "New Esperanto",
       "movies": [
@@ -244,9 +306,9 @@
 }
 </pre>
 
-<p class="text">For JSON serialization, by default the rowAlias, or table name if not defined, is pluralized with an 's'. Use the rowSetAlias table attribute to override this default, as in:</p>
+		<p class="text">For JSON serialization, by default the rowAlias, or table name if not defined, is pluralized with an 's'. Use the rowSetAlias table attribute to override this default, as in:</p>
 
-<pre>
+		<pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -264,8 +326,8 @@
 &lt;/rs:sqlResource&gt;
 </pre>
 
-<p class="text">Results in the parent collection name as lang, but the child is defaulted to films:</p>
-<pre>
+		<p class="text">Results in the parent collection name as lang, but the child is defaulted to films:</p>
+		<pre>
 { "languageSet": [
    { "langId": 100, "langName": "New Esperanto",
       "films": [
@@ -283,65 +345,69 @@
 }
 </pre>
 
-<p class="text">See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.</p>
+		<p class="text">
+			See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.
+		</p>
 
-<h2>MetaData</h2>
-<div class="text">restSQL creates a construct containing the metadata for the SQL Resource on its first use (initial request for it). This metadata is used to generate SQL for requests. The metadata includes the defining query, the table roles and default database, as well as data derived by interrogating the database. That includes column type information, and primary and foreign keys. This is done by executing the defining query as well as querying the database's data dictionary (information schema).</div>
-<p class="text">The metadata is available to users through both HTTP and Java APIs.</p>
+		<h2>MetaData</h2>
+		<div class="text">restSQL creates a construct containing the metadata for the SQL Resource on its first use (initial request for it). This metadata is used to generate SQL for requests. The metadata includes the defining query, the table roles and default database, as well as data derived by interrogating the database. That includes column type information, and primary and foreign keys. This is done by executing the defining query as well as querying the database's data dictionary (information schema).</div>
+		<p class="text">The metadata is available to users through both HTTP and Java APIs.</p>
 
-<h2>SQL Resource Documentation</h2>
-<div class="text">A resource definition may contain a &lt;documentation&gt; element with a resource description, column description and example request/response pairs. See <a href="SqlResourceDocumentation.html">SQL Resource Documentation</a> for more detail.</div>
+		<h2>SQL Resource Documentation</h2>
+		<div class="text">
+			A resource definition may contain a &lt;documentation&gt; element with a resource description, column description and example request/response pairs. See <a href="SqlResourceDocumentation.html">SQL Resource Documentation</a> for more detail.
+		</div>
 
-<h2>Client</h2>
-<div class="text">Clients send requests to and receive responses from restSQL for SQL Resource CRUD operations or for support (SQL Resource metadata, definition, configuration, logging, statistics). Clients may use the HTTP or Java APIs.</div>
+		<h2>Client</h2>
+		<div class="text">Clients send requests to and receive responses from restSQL for SQL Resource CRUD operations or for support (SQL Resource metadata, definition, configuration, logging, statistics). Clients may use the HTTP or Java APIs.</div>
 
-<h2>HTTP Request</h2>
-<div class="text">SQL Resource requests are sent to the resource URI, /restsql/res/{resName}, sometimes with path or query parameters, often with XML, JSON or URL encoded request bodies. The restSQL HTTP interface uses a high-REST style where the HTTP method indicates the operation, rather than using GET and/or POST and including the method in the path. The following table describes the operations, HTTP methods and corresponding SQL Statement types:</div>
-<table>
-	<tbody>
-		<tr>
-			<th>Operation</th>
-			<th>HTTP Method</th>
-			<th>SQL Statement</th>
-		</tr>
-		<tr>
-			<td>Create</td>
-			<td>POST</td>
-			<td>INSERT</td>
-		</tr>
-		<tr>
-			<td>Read</td>
-			<td>GET</td>
-			<td>SELECT</td>
-		</tr>
-		<tr>
-			<td>Update</td>
-			<td>PUT</td>
-			<td>UPDATE</td>
-		</tr>
-		<tr>
-			<td>Delete</td>
-			<td>DELETE</td>
-			<td>DELETE</td>
-		</tr>
-	</tbody>
-</table>
-<p class="text">Read requests have no body and are filtered by path params:</p>
-<pre>GET /restsql/res/Actor/124 HTTP/1.1</pre>
-<div class="text">or query params:</div>
-<pre>GET /restsql/res/Actor?last_name=SMITH HTTP/1.1</pre>
-<div class="text">Write requests sometimes have path params:</div>
-<pre>DELETE /restsql/res/Actor/124 HTTP/1.1</pre>
-<div class="text">or query params:</div>
-<pre>DELETE /restsql/res/Actor?last_name=SMITH HTTP/1.1</pre>
-<div class="text">or params and a body:</div>
-<pre>PUT /restsql/res/Film?title=DARK%25 HTTP/1.1
+		<h2>HTTP Request</h2>
+		<div class="text">SQL Resource requests are sent to the resource URI, /restsql/res/{resName}, sometimes with path or query parameters, often with XML, JSON or URL encoded request bodies. The restSQL HTTP interface uses a high-REST style where the HTTP method indicates the operation, rather than using GET and/or POST and including the method in the path. The following table describes the operations, HTTP methods and corresponding SQL Statement types:</div>
+		<table>
+			<tbody>
+				<tr>
+					<th>Operation</th>
+					<th>HTTP Method</th>
+					<th>SQL Statement</th>
+				</tr>
+				<tr>
+					<td>Create</td>
+					<td>POST</td>
+					<td>INSERT</td>
+				</tr>
+				<tr>
+					<td>Read</td>
+					<td>GET</td>
+					<td>SELECT</td>
+				</tr>
+				<tr>
+					<td>Update</td>
+					<td>PUT</td>
+					<td>UPDATE</td>
+				</tr>
+				<tr>
+					<td>Delete</td>
+					<td>DELETE</td>
+					<td>DELETE</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="text">Read requests have no body and are filtered by path params:</p>
+		<pre>GET /restsql/res/Actor/124 HTTP/1.1</pre>
+		<div class="text">or query params:</div>
+		<pre>GET /restsql/res/Actor?last_name=SMITH HTTP/1.1</pre>
+		<div class="text">Write requests sometimes have path params:</div>
+		<pre>DELETE /restsql/res/Actor/124 HTTP/1.1</pre>
+		<div class="text">or query params:</div>
+		<pre>DELETE /restsql/res/Actor?last_name=SMITH HTTP/1.1</pre>
+		<div class="text">or params and a body:</div>
+		<pre>PUT /restsql/res/Film?title=DARK%25 HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
 rating=R&amp;rental_duration=2
 </pre>
-<div class="text">or sometimes just a body:</div>
-<pre>POST /restsql/res/Actor HTTP/1.1
+		<div class="text">or sometimes just a body:</div>
+		<pre>POST /restsql/res/Actor HTTP/1.1
 Content-Type: application/xml
 
 &lt;request&gt;
@@ -351,20 +417,22 @@ Content-Type: application/xml
 &lt;/request&gt;
 </pre>
 
-<p class="text">See the <a href="ref/index.html">HTTP API</a> and <a href="../javadoc/api/index.html">Java API</a> references for more on requests. See <a href="ref/Operators.html">Operators</a> for more on SQL operator support.</p>
+		<p class="text">
+			See the <a href="api/index.html">HTTP API</a> and <a href="../javadoc/api/index.html">Java API</a> references for more on requests. See <a href="api/Operators.html">Operators</a> for more on SQL operator support.
+		</p>
 
-<h2>HTTP Response</h2>
-<div class="text">Responses use W3C standard HTTP status codes, generally 200 for success, 400 for an invalid request and 500 for an SQL error. The content type is XML or JSON.</div>
+		<h2>HTTP Response</h2>
+		<div class="text">Responses use W3C standard HTTP status codes, generally 200 for success, 400 for an invalid request and 500 for an SQL error. The content type is XML or JSON.</div>
 
-<p class="text">Following is an example of a Create request for a flat SQL Resource:</p>
-<pre>POST /restsql/res/Actor HTTP/1.1
+		<p class="text">Following is an example of a Create request for a flat SQL Resource:</p>
+		<pre>POST /restsql/res/Actor HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Accept: application/xml
 
 actor_id=201&amp;first_name=JULIANNE&amp;last_name=DENCH
 </pre>
-<p class="text">and the response:</p>
-<pre>HTTP/1.1 200 OK
+		<p class="text">and the response:</p>
+		<pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
 &lt;writeResponse rowsAffected="1"&gt;
@@ -372,15 +440,15 @@ Content-Type: application/xml
 &lt;writeResponse/&gt;
 </pre>
 
-<p class="text">Following is a variation of the previous example without the primary key, actor_id, relying on the default value's auto-increment in MySQL or sequence in PostgreSQL:</p>
-<pre>POST /restsql/res/Actor HTTP/1.1
+		<p class="text">Following is a variation of the previous example without the primary key, actor_id, relying on the default value's auto-increment in MySQL or sequence in PostgreSQL:</p>
+		<pre>POST /restsql/res/Actor HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Accept: application/xml
 
 first_name=JULIANNE&amp;last_name=DENCH
 </pre>
-<p class="text">and the response:</p>
-<pre>HTTP/1.1 200 OK
+		<p class="text">and the response:</p>
+		<pre>HTTP/1.1 200 OK
 Content-Type: application/xml
 
 &lt;writeResponse rowsAffected="1"&gt;
@@ -388,12 +456,12 @@ Content-Type: application/xml
 &lt;writeResponse/&gt;
 </pre>
 
-<p class="text">Following is an example of a Read request with query parameters on a many-to-many hierarchical SQL Resource:</p>
-<pre>GET /restsql/res/actor.ext.ActorFilm?last_name=SMITH HTTP/1.1
+		<p class="text">Following is an example of a Read request with query parameters on a many-to-many hierarchical SQL Resource:</p>
+		<pre>GET /restsql/res/actor.ext.ActorFilm?last_name=SMITH HTTP/1.1
 Accept: application/json
 </pre>
-<p class="text">and the response:</p>
-<pre>HTTP/1.1 200 OK
+		<p class="text">and the response:</p>
+		<pre>HTTP/1.1 200 OK
 Content-Type: application/json
 
 { "actors": [
@@ -415,42 +483,60 @@ Content-Type: application/json
 }
 </pre>
 
-<div class="text">Following is an example of an invalid Read request:</div>
-<pre>DELETE /restsql/res/Film?blah=blah HTTP/1.1</pre>
-<pre>HTTP/1.1 400 Bad Request
+		<div class="text">Following is an example of an invalid Read request:</div>
+		<pre>DELETE /restsql/res/Film?blah=blah HTTP/1.1</pre>
+		<pre>HTTP/1.1 400 Bad Request
 
 No valid parameters found
 </pre>
-<div class="text">Following is returned when the defining query is invalid:</div>
-<pre>GET /restsql/res/Actor/3 HTTP/1.1</pre>
-<pre>HTTP/1.1 500 Internal Server Error
+		<div class="text">Following is returned when the defining query is invalid:</div>
+		<pre>GET /restsql/res/Actor/3 HTTP/1.1</pre>
+		<pre>HTTP/1.1 500 Internal Server Error
 
 You have an error in your SQL syntax; check the manual that corresponds to your MySQL 
 server version for the right syntax to use near 'LIMIT 0,1' at line 1 :: 
 select actor_id, first_name, last_name from  LIMIT 0,1
 </pre>
 
-<h2>Authorizer</h2>
-<div class="text">Requests on SQL Resources can be authorized using the Authorizer. The Authorizer uses a role-based access control (RBAC) approach. Roles are mapped to SQL Resources and actions (request types) in a simple configuration file, the privileges.properties.  The path to it is entered in the <code>security.privileges</code> property in the restsql.properties. Following is an example:</div>
-<pre>
+		<h2>Authorizer</h2>
+		<div class="text">
+			Requests on SQL Resources can be authorized using the Authorizer. The Authorizer uses a role-based access control (RBAC) approach. Roles are mapped to SQL Resources and actions (request types) in a simple configuration file, the privileges.properties. The path to it is entered in the
+			<code>security.privileges</code>
+			property in the restsql.properties. Following is an example:
+		</div>
+		<pre>
    # SQL Resource Privilege definitions
 
    # [SqlResource,*].[requestType,*]=[*,role]		Note: comma-separate multiple roles
    *.select=all,limited,readonly
    Film.insert,update=limited
 </pre>
-<div class="text">The above example declares that the all, limited and readonly roles may perform SELECT requests on all SQL Resources. The limited role may additionally perform inserts and updates on the SQL Resource "Film".</div>
+		<div class="text">The above example declares that the all, limited and readonly roles may perform SELECT requests on all SQL Resources. The limited role may additionally perform inserts and updates on the SQL Resource "Film".</div>
 
-<p class="text">In the restSQL WAR mode, clients use standard HTTP Basic or Digest authentication and standard JEE web app declarative security mechanisms. Credentials and role assignments are provided by a standard Realm plugin, which could be file-, RDBMS- or LDAP-based. The authentication method, realm and protected resources are declared in restSQL's Deployment Descriptor (web.xml). The Authorizer, when configured, is used by the restSQL HTTP Service. The container will send 401 responses for requests without credentials or with invalid credentials. restSQL will send 403 responses for unauthorized requests.</p>
+		<p class="text">In the restSQL WAR mode, clients use standard HTTP Basic or Digest authentication and standard JEE web app declarative security mechanisms. Credentials and role assignments are provided by a standard Realm plugin, which could be file-, RDBMS- or LDAP-based. The authentication method, realm and protected resources are declared in restSQL's Deployment Descriptor (web.xml). The Authorizer, when configured, is used by the restSQL HTTP Service. The container will send 401 responses for requests without credentials or with invalid credentials. restSQL will send 403 responses for unauthorized requests.</p>
 
-<p class="text">In the restSQL JAR mode, the app is responsible for authenticating users and associating users with roles. The app will call restSQL's <code>Authorizer</code> with a <code>SecurityContext</code> implementation prior to executing SQL Resource requests.</p>
+		<p class="text">
+			In the restSQL JAR mode, the app is responsible for authenticating users and associating users with roles. The app will call restSQL's
+			<code>Authorizer</code>
+			with a
+			<code>SecurityContext</code>
+			implementation prior to executing SQL Resource requests.
+		</p>
 
-<h2>Trigger</h2>
-<div class="text">Java-based triggers may be deployed to enforce domain constraints in the middle-tier or perform business logic. These triggers implement the <code>Trigger</code> interface or extend the convenience class <code>AbstractTrigger</code>. Triggers have methods that fire before and after each CRUD operation. Throwing an <code>InvalidRequestException</code> on a beforeXxx method stops the request. A properties file maps trigger classes to one or more SQL Resources.</div>
+		<h2>Trigger</h2>
+		<div class="text">
+			Java-based triggers may be deployed to enforce domain constraints in the middle-tier or perform business logic. These triggers implement the
+			<code>Trigger</code>
+			interface or extend the convenience class
+			<code>AbstractTrigger</code>
+			. Triggers have methods that fire before and after each CRUD operation. Throwing an
+			<code>InvalidRequestException</code>
+			on a beforeXxx method stops the request. A properties file maps trigger classes to one or more SQL Resources.
+		</div>
 
-<h2>Attribute Validator (Planned Feature)</h2>
-<div class="text">Attribute validators are a lighter-weight alternative to triggers to enforce simple data type constraints. Standard validators enforce numeric ranges, string lengths and string formats (via regular expression). These are declared in the SQL Resource definition. Following is an example:</div>
-<pre>
+		<h2>Attribute Validator (Planned Feature)</h2>
+		<div class="text">Attribute validators are a lighter-weight alternative to triggers to enforce simple data type constraints. Standard validators enforce numeric ranges, string lengths and string formats (via regular expression). These are declared in the SQL Resource definition. Following is an example:</div>
+		<pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -464,8 +550,14 @@ select actor_id, first_name, last_name from  LIMIT 0,1
    &lt;validatedAttribute name="class" type="Integer" minValue="1" maxValue="5" /&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
-<div class="text">restSQL will stop the request and return a 400 Bad Request if an attribute does not meet declared rules.</div>
-<p class="text">Custom Java-based attribute validators may be deployed to enforce more complex domain logic. The design of this feature is pending.</p>
-</div>
+		<div class="text">restSQL will stop the request and return a 400 Bad Request if an attribute does not meet declared rules.</div>
+		<p class="text">Custom Java-based attribute validators may be deployed to enforce more complex domain logic. The design of this feature is pending.</p>
+
+		<p class="text" style="padding-top: 10px">Next Step: <a href="AdminConsole.html">Admin Console</a></p>
+
+	</div>
+
+	<script src="assets/jquery.min.js"></script>
+	<script src="assets/bootstrap.min.js"></script>
 </body>
 </html>

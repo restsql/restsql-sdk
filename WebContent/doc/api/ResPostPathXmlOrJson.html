@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL: SQL Resource POST Path XML or JSON</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="../AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="index.html">HTTP API Reference</a></li>
+						<li><a href="ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="../sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
+
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>SQL Resource POST Path XML or JSON</h1>
+		</div>
+
+		<table>
+			<tbody>
+				<tr>
+					<td><strong>Method</strong></td>
+					<td colspan="3">POST</td>
+				</tr>
+				<tr>
+					<td><strong>Path</strong></td>
+					<td colspan="3">/res/{resName}/{resId}</td>
+				</tr>
+				<tr>
+					<td><strong>Query Params</strong></td>
+					<td colspan="3">None</td>
+				</tr>
+				<tr>
+					<td><strong>Request body</strong></td>
+					<td>One or more child rows to insert for parent identified in path</td>
+					<td><a href="../../wadl/Request.xsd">Request.xsd</a></td>
+					<td>Content-Type: application/xml or application/json</td>
+				</tr>
+				<tr>
+					<td><strong>Response body</strong></td>
+					<td>Number of rows inserted and their values. Includes any auto-generated numeric ids from columns with auto-increment/sequence defined as default value.</td>
+					<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+					<td>Content-Type: application/xml or application/json</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Description</h2>
+		<div class="text">Creates one or more children rows for parent matching path parameters for a one-to-many hierarchical SQL Resource. Associates one or more children rows to parent matching path parameters for a many-to-many hierarchical SQL Resource.</div>
+		<h2>XML Examples</h2>
+		<div class="text">A one-to-many hierarchical SQL resource (child rows are created):</div>
+		<pre>POST /restsql/res/LanguageFilm/456 HTTP/1.1
+Content-Type: application/xml
+
+&lt;request&gt;
+   &lt;film film_id="42" title="ADAPTATION HOLES" year="2006" /&gt;
+   &lt;film film_id="43" title="ATLANTIS CAUSE" year="2006" /&gt;
+   &lt;film film_id="44" title="BERETS AGENT" year="2006" /&gt;
+&lt;/request&gt;
+</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="3"&gt;
+   &lt;language language_id="456"&gt;
+      &lt;film film_id="42" title="ADAPTATION HOLES" year="2006" /&gt;
+      &lt;film film_id="43" title="ATLANTIS CAUSE" year="2006" /&gt;
+      &lt;film film_id="44" title="BERETS AGENT" year="2006" /&gt;
+   &lt;/language&gt;
+&lt;/writeResponse&gt;
+</pre>
+
+		<p class="text">Following is the same request minus the pk values. The autogenerated values are returned in the response.</p>
+		<pre>POST /restsql/res/LanguageFilm/456 HTTP/1.1
+Content-Type: application/xml
+
+&lt;request&gt;
+   &lt;film title="ADAPTATION HOLES" year="2006" /&gt;
+   &lt;film title="ATLANTIS CAUSE" year="2006" /&gt;
+   &lt;film title="BERETS AGENT" year="2006" /&gt;
+&lt;/request&gt;
+</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="3"&gt;
+   &lt;language language_id="456"&gt;
+      &lt;film film_id="42" title="ADAPTATION HOLES" year="2006" /&gt;
+      &lt;film film_id="43" title="ATLANTIS CAUSE" year="2006" /&gt;
+      &lt;film film_id="44" title="BERETS AGENT" year="2006" /&gt;
+   &lt;/language&gt;
+&lt;/writeResponse&gt;
+</pre>
+
+		<div class="text">A many-to-many hierarchical SQL resource (child rows are only associated to parent):</div>
+		<pre>POST /restsql/res/ActorFilm/123 HTTP/1.1
+Content-Type: application/xml
+
+&lt;request&gt;
+   &lt;film film_id="3" /&gt;
+   &lt;film film_id="43" /&gt;
+   &lt;film film_id="67" /&gt;
+&lt;/request&gt;
+</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;writeResponse rowsAffected="3"&gt;
+   &lt;actor actor_id="123"&gt;
+      &lt;film film_id="3" /&gt;
+      &lt;film film_id="43" /&gt;
+      &lt;film film_id="67" /&gt;
+   &lt;/actor&gt;
+&lt;/writeResponse&gt;
+</pre>
+
+		<h2>JSON Examples</h2>
+		<div class="text">A one-to-many hierarchical SQL resource (child rows are created):</div>
+		<pre>POST /restsql/res/LanguageFilm/456 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "films": [
+      { "film_id": 81, "title": "ADAPTATION HOLES", "year": 2006 },
+      { "film_id": 82, "title": "ATLANTIS CAUSE", "year": 2006 },
+      { "film_id": 83, "title": "BERETS AGENT", "year": 2006 }
+   ]
+}
+</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "rowsAffected": 3,
+   "languages": [
+      { "language_id": 456,
+         "films": [
+            { "film_id": 81, "title": "ADAPTATION HOLES", "year": 2006 },
+            { "film_id": 82, "title": "ATLANTIS CAUSE", "year": 2006 },
+            { "film_id": 83, "title": "BERETS AGENT", "year": 2006 }
+         ]
+      }
+   ]
+}</pre>
+
+		<div class="text">A many-to-many hierarchical SQL resource (child rows are only associated to parent):</div>
+		<pre>POST /restsql/res/ActorFilm/123 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{ "films": [
+      { "film_id": 42 },
+      { "film_id": 43 },
+      { "film_id": 44 },
+   ]
+}
+</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+{ "rowsAffected": 3,
+    "actors": [
+      { "actor_id": 123,
+         "films": [
+            { "film_id": 42 },
+            { "film_id": 43 },
+            { "film_id": 44 },
+         ]
+      }
+   ]
+}</pre>
+
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
+</body>
+</html>

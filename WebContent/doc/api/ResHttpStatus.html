@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL: SQL Resource HTTP Status Codes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="../AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="index.html">HTTP API Reference</a></li>
+						<li><a href="ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="../sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
+
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>SQL Resource HTTP Status Codes</h1>
+		</div>
+
+		<h2>200 - OK</h2>
+		<div class="text">
+			Request completed successfully. Response body is XML (Content-Type: application/xml) or JSON (Content-type: application/json). Read (GET) requests return content in a
+			<code>readResponse</code>
+			document XML element or JSON object. Empty
+			<code>readResponse</code>
+			document or JSON object is returned if the no rows match criteria. Write (POST, PUT, DELETE) requests return results in a
+			<code>writeResponse</code>
+			document element or JSON object. The response indicates the number of rows affected by the write operation.
+		</div>
+
+		<h2>4xx - Invalid Requests</h2>
+		<div style="margin-left: 1em">
+			<h3>400 - Bad Request</h3>
+			<div class="text">Request parameters are invalid. The response body is plain text (Content-Type: text/plain) and will indicate the problem. Examples: query parameters indicate invalid column labels, limit provided without offset, trigger is blocking request for some domain rule violation.</div>
+
+			<h3>401 - Unauthorized (Not authenticated)</h3>
+			<div class="text">
+				The request requires user authentication. Credentials are provided in the WWW-Authenticate header using the <a href="http://www.ietf.org/rfc/rfc2617.txt">HTTP Basic or Digest Authentication scheme</a>. If the user name/password are provided correctly, then 401 also indicates invalid credentials.
+			</div>
+
+			<h3>403 - Forbidden (Authenticated but not authorized)</h3>
+			<div class="text">The user does not have sufficient privileges to complete the request. The user's granted role(s) is not enabled for the request type on the SQL Resource.</div>
+
+			<h3>404 - Not Found</h3>
+			<div class="text">SQL Resource does not exist.</div>
+
+			<h3>405 - Method Not Allowed</h3>
+			<div class="text">Request content type and method are invalid.</div>
+		</div>
+
+		<h2>500 - Internal Server Error</h2>
+		<div class="text">Generally an SQL error. Examples: the SQL Resource definition query is invalid, the request parameters created an invalid SQL statement, the request violated a database constraint.</div>
+
+		<h2>More References</h2>
+		<div class="text">
+			Also see the official IETF <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP 1.1 Status Code Definitions</a>.
+		</div>
+
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
+</body>
+</html>

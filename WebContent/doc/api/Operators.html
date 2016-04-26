@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL: Operators</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="../AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="index.html">HTTP API Reference</a></li>
+						<li><a href="ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="../sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
+
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Operators</h1>
+		</div>
+
+		<a id="EqualsNotEquals"></a>
+		<h1>Equals and Not Equals Operators</h1>
+		<p class="text">
+			The SQL = and != operators are supported in read, update and delete requests on any columns in query parameters (row selectors) in the <a href="ResGetQuery.html">GET by Query</a>, <a href="ResPutQueryUrlEnc.html">PUT by Query</a> and <a href="ResDeleteQuery.html">DELETE by Query</a> methods.
+		</p>
+
+		<p class="text">Examples</p>
+		<ul>
+			<li>price is 200: price=200</li>
+			<li>rating is not 4: rating=!4</li>
+		</ul>
+
+		<p class="text">
+			To match on a string literal beginning with !, escape it with a backslash as in \!<i>string</i>. For example, to match the title on the string '!bang-bang-dead', prefix with a URL encoded backslash title=%5C!bang-bang-dead. For Java API usage, prefix the value in a <a href="../../javadoc/api/org/restsql/core/NameValuePair.html">NameValuePair</a> object with the unencoded operator.
+		</p>
+
+
+		<a id="Like"></a>
+		<h1>Like Operator</h1>
+		<p class="text">
+			Include '%' in anywhere in the query parameter value for the SQL match any wildcard. URL encode % as
+			<code>%25</code>
+			. This will use the a SQL LIKE instead of equals. For example to find all actors with first names that start with 'Ja', use
+			<code>first_name=Ja%25</code>
+			. If the selector value has an actual percent, then it must be escaped with a backslash, and both must be URL encoded. For example, to select rows with the description of 'modified%', use
+			<code>description=modified%5C%25</code>
+			.
+		</p>
+		<p class="text">
+			The wildcard is supported in read, update and delete requests on any columns in query parameters (row selectors) in the <a href="ResGetQuery.html">GET by Query</a>, <a href="ResPutQueryUrlEnc.html">PUT by Query</a> and <a href="ResDeleteQuery.html">DELETE by Query</a> methods.
+		</p>
+
+
+		<a id="NullNotNull"></a>
+		<h1>Null and Not Null Operators</h1>
+		<p class="text">
+			The SQL IS NULL and IS NOT NULL operators are supported in read, update and delete requests on any columns in query parameters (row selectors) in the <a href="ResGetQuery.html">GET by Query</a>, <a href="ResPutQueryUrlEnc.html">PUT by Query</a> and <a href="ResDeleteQuery.html">DELETE by Query</a> methods.
+		</p>
+
+		<p class="text">Examples</p>
+		<ul>
+			<li>price is null: price=null</li>
+			<li>rating is not null: rating=!null</li>
+		</ul>
+
+		<p class="text">
+			To match on the actual literal 'null', escape it with a backslash as in \null. In a query parameter you must URL encode it as %5Cnull. For example, the title=%5Cnull find rows with title matching the string 'null'. Likewise to match on the literal '!null' use \!null, or URL encoded as %5C!null. For Java API usage, prefix the value in a <a href="../../javadoc/api/org/restsql/core/NameValuePair.html">NameValuePair</a> object with the unencoded operator.
+		</p>
+
+		<p class="text">
+			The null version is also supported in form parameters in <a href="ResPostUrlEnc.html">POST with form (URL Encoded)</a> and <a href="ResPutQueryUrlEnc.html">PUT by Query</a> methods. This is used to set a column value to null in an insert or update. Again for the literals 'null' use the backslash escape as above. Likewise the form parameter literal '!null' must also be escaped as above.
+		</p>
+
+
+		<a id="Comparison"></a>
+		<h1>Comparison Operators</h1>
+		<p class="text">
+			Comparison operators are supported in read requests on numeric, date and string parameters by prefixing the mathematical symbol in the value. This is used in the <a href="ResGetQuery.html">GET by Query</a>, <a href="ResPutQueryUrlEnc.html">PUT by Query</a> and <a href="ResDeleteQuery.html">DELETE by Query</a> methods.
+		</p>
+
+		<p class="text">The following operators are supported:</p>
+		<table>
+			<tbody>
+				<tr>
+					<th>Operator</th>
+					<th>Symbol</th>
+					<th>URL Encoded Symbol</th>
+					<th>Example</th>
+					<th>URL Encoded Example</th>
+				</tr>
+				<tr>
+					<td>Greater than</td>
+					<td>&gt;</td>
+					<td>%3E</td>
+					<td>price &gt; 100</td>
+					<td>price=%3E100</td>
+				</tr>
+				<tr>
+					<td>Greater than or equal to</td>
+					<td>&gt;=</td>
+					<td>%3E%3D</td>
+					<td>price &gt;= 100</td>
+					<td>price=%3E%3D100</td>
+				</tr>
+				<tr>
+					<td>Less than</td>
+					<td>&lt;</td>
+					<td>%3C</td>
+					<td>price &lt; 200</td>
+					<td>price=%3C200</td>
+				</tr>
+				<tr>
+					<td>Less than or equal to</td>
+					<td>&lt;=</td>
+					<td>%3C%3D</td>
+					<td>price &lt;= 200</td>
+					<td>price=%3C%3D200</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p class="text">Ranges will be supported by specifying the parameter twice, as in:</p>
+		<ul>
+			<li>price between 100 and 200: price=%3E100&amp;price=%3C200</li>
+			<li>price between 100 and 200, inclusive: price=%3E%3D100&amp;price=%3C%3D200</li>
+		</ul>
+
+		<p class="text">
+			To use a literal &lt; or &gt; as the first character in a parameter value, you must escape it with a URL encoded backslash (%5C). For example, the
+			<code>title=%5C%3Chello</code>
+			find rows with title matching '&lt;hello' (encode as '\&lt;hello').
+		</p>
+
+		<p class="text">HTTP Status Code 400 (InvalidRequestException) will returned to the requestor if a parameter is supplied:</p>
+		<ul>
+			<li>more than once if no comparison operators are present</li>
+			<li>more than twice if comparison operators are present</li>
+		</ul>
+
+		<p class="text">Multiple parameters will be ANDed in the SQL. No ORing will be supported.</p>
+
+		<p class="text">
+			For Java API usage, prefix the value in a <a href="../../javadoc/api/org/restsql/core/NameValuePair.html">NameValuePair</a> object with the unencoded operator. Zero or more of these are passed in a
+			<code>List</code>
+			of parameters when creating a <a href="../../javadoc/api/org/restsql/core/Request.html">Request</a> object with the <a href="../../javadoc/api/org/restsql/core/Factory.html">Factory</a>.
+		</p>
+
+
+		<a id="In"></a>
+		<h1>In Operator</h1>
+		<p class="text">
+			The SQL IN operator is supported in read requests on numeric, date and string parameters by enclosing a comma-separated list in parenthesis. This is used in the <a href="ResGetQuery.html">GET by Query</a>, <a href="ResPutQueryUrlEnc.html">PUT by Query</a> and <a href="ResDeleteQuery.html">DELETE by Query</a> methods.
+		</p>
+
+		<p class="text">Examples</p>
+		<ul>
+			<li>price in 100, 200 or 300: price=(100,200,300)</li>
+			<li>rating in G or R: rating=(G,R)</li>
+		</ul>
+		<p class="text">
+			To use a literal '(' as the first character in a parameter value, you must escape it with a URL encoded backslash (%5C). For example, the title=%5C(hello find rows with title matching the string '(hello'. For Java API usage, prefix the value in a <a href="../../javadoc/api/org/restsql/core/NameValuePair.html">NameValuePair</a> object with the unencoded operator. Zero or more of these are passed in a
+			<code>List</code>
+			of parameters when creating a <a href="../../javadoc/api/org/restsql/core/Request.html">Request</a> object with the <a href="../../javadoc/api/org/restsql/core/Factory.html">Factory</a>.
+		</p>
+
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
+</body>
+</html>

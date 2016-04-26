@@ -1,71 +1,113 @@
+<!DOCTYPE HTML>
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-	<title>restSQL Release Notes - 0.8.10</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link href="../doc.css" rel="stylesheet" type="text/css"/>
-</head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL Release Notes - 0.8.10</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
 <body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="../AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../api/index.html">HTTP API Reference</a></li>
+						<li><a href="../api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
 
-<div id="top">
-    <img src="../top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
-</div>
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"><span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-<div id="nav">
-    <div class="nav-topitem"><a class="nav-link" href="../Overview.html">Overview</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Architecture.html">Architecture</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Concepts.html">Concepts</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Service.html">Browse Service</a></div>
-    <div class="nav-category">HTTP API
-        <div class="nav-item"><a class="nav-link" href="../ref/index.html">Reference</a></div>
-        <div class="nav-item"><a class="nav-link" href="../ref/ResHttpStatus.html">Status Codes</a></div>
-        <div class="nav-item"><a class="nav-link" href="../ApiExplorer.html">Explorer</a></div>
-    </div>
-    <div class="nav-category">Java API
-        <div class="nav-item"><a class="nav-link" href="../../examples/java">Examples</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../javadoc/api/index.html">Javadoc - API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../javadoc/full/index.html">Javadoc - Full</a></div>
-    </div>
-    <div class="nav-category">Configuration
-        <div class="nav-item"><a class="nav-link" href="../Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../defaults/">Default Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../../examples/">Example Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Logging.html">Logging</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Monitoring.html">Monitoring</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Security.html">Security</a></div>
-        <div class="nav-item"><a class="nav-link" href="../Triggers.html">Triggers</a></div>
-    </div>
-    <div class="nav-topitem"><a class="nav-link" href="../Roadmap.html">Roadmap</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Support.html">Support</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../License.html">License</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../sponsors/Sponsors.html">Sponsors</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../ReleaseHistory.html">Release History</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="../Download.html">Download</a></div>
-</div>
+	<div class="container">
 
-<div id="content"> 
-<h1>Release Notes - 0.8.10</h1>
-<h3>Summary</h3>
-<div class="text">restSQL 0.8.10 adds performance monitoring and resource documentation.</div>
+		<div class="page-header">
+			<h1>Release Notes - 0.8.10</h1>
+		</div>
+		<h3>Summary</h3>
+		<div class="text">restSQL 0.8.10 adds performance monitoring and resource documentation.</div>
 
-<h3>Performance Monitoring</h3>
-<p class="text"><a href="dropwizard.github.io/metrics/">Codahale Metrics</a> has been integrated into the framework. See the <a href="../Monitoring.html">Monitoring</a> for more info on capabilities and configuration.</p>
+		<h3>Performance Monitoring</h3>
+		<p class="text">
+			<a href="dropwizard.github.io/metrics/">Codahale Metrics</a> has been integrated into the framework. See the <a href="../Monitoring.html">Monitoring</a> for more info on capabilities and configuration.
+		</p>
 
-<h3>SQL Resource Documentation</h3>
-<p class="text">A resource definition may contain a &lt;documentation&gt; element with a resource description, column description and example request/response pairs. See <a href="../SqlResourceDocumentation.html">SQL Resource Documentation</a> for more detail.</p>
+		<h3>SQL Resource Documentation</h3>
+		<p class="text">
+			A resource definition may contain a &lt;documentation&gt; element with a resource description, column description and example request/response pairs. See <a href="../SqlResourceDocumentation.html">SQL Resource Documentation</a> for more detail.
+		</p>
 
-<h3>Logging Improvements</h3>
-<p class="text">On startup, restSQL now prints the logging conf location and number of properties loaded from the restsql.properties to the console:</p>
-<pre>
+		<h3>Logging Improvements</h3>
+		<p class="text">On startup, restSQL now prints the logging conf location and number of properties loaded from the restsql.properties to the console:</p>
+		<pre>
 INFO: restSQL using logging conf from $WEBAPPS/restsql/resources/properties/default-log4j.properties
 INFO: restSQL loaded 5 properties from /etc/opt/restsql/restsql-mysql.properties
 </pre>
-<p class="text">The same messages as well the customized properties are also written to the internal.log. An error is printed to the console if any problems are encountered, for example the restsql.properties or logging conf file are not found. The full configuration is still available at <code>http://host:port/restsql/conf.</code></p>
+		<p class="text">
+			The same messages as well the customized properties are also written to the internal.log. An error is printed to the console if any problems are encountered, for example the restsql.properties or logging conf file are not found. The full configuration is still available at
+			<code>http://host:port/restsql/conf.</code>
+		</p>
 
-<h3>Migration</h3>
-<p class="text">None</p>
-</div>
+		<h3>Migration</h3>
+		<p class="text">None</p>
+
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
 </body>
 </html>

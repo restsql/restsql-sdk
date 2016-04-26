@@ -1,102 +1,139 @@
+<!DOCTYPE HTML>
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-	<title>restSQL SQL Resource Rules</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link href="doc.css" rel="stylesheet" type="text/css"/>
-</head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL SQL Resource Rules</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.ico" />
+<link rel="stylesheet" href="assets/bootstrap.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+</head>
 <body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="Overview.html">Overview</a></li>
+						<li><a href="Architecture.html">Architecture</a></li>
+						<li><a href="Concepts.html">Concepts</a></li>
+						<li><a href="AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="api/index.html">HTTP API Reference</a></li>
+						<li><a href="api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../examples/java">Java API Examples</a></li>
+						<li><a href="../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="Security.html">Security</a></li>
+						<li><a href="Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="Support.html">Support</a></li>
+						<li><a class="nav-link" href="License.html">License</a></li>
+						<li><a href="sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="ReleaseHistory.html">Release History</a></li>
+					</ul></li>
 
-<div id="top">
-    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
-</div>
+				<li><a href="Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-<div id="nav">
-    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
-    <div class="nav-category">HTTP API
-        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
-        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
-        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
-    </div>
-    <div class="nav-category">Java API
-        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
-    </div>
-    <div class="nav-category">Configuration
-        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
-        <div class="nav-item"><a class="nav-link" href="Monitoring.html">Monitoring</a></div>
-        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
-        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
-    </div>
-    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="sponsors/Sponsors.html">Sponsors</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
-</div>
+	<div class="container">
 
+		<div class="page-header">
+			<h1>SQL Resource Rules</h1>
+		</div>
 
-<div id="content"> 
-<h1>SQL Resource Rules</h1>
-<p class="text">This page elaborates on the constraints referenced in the SQL Resources sections in the <a href="Concepts.html">Concepts</a> page. SQL Resource definitions are defined one per XML file and are constrained by an <a href="../wadl/SqlResource.xsd">XML schema</a>. Examples are found <a href="../examples/sqlresources">here</a>. These examples may also be explored with the <a href="../api-explorer">HTTP API Explorer</a>.</p>
+		<p class="text">
+			This page elaborates on the constraints referenced in the SQL Resources sections in the <a href="Concepts.html">Concepts</a> page. SQL Resource definitions are defined one per XML file and are constrained by an <a href="../wadl/SqlResource.xsd">XML schema</a>. Examples are found <a href="../examples/sqlresources">here</a>. These examples may also be explored with the <a href="../api-explorer">HTTP API Explorer</a>.
+		</p>
 
-<h3>Structure</h3>
-<ul>
-	<li>Content
+		<h3>Structure</h3>
 		<ul>
-			<li>One query and one metadata element are required.</li>
-			<li>Within a metadata element, one database element and one table element with role Parent are required. Other tables may be required. See Tables section below.</li>
+			<li>Content
+				<ul>
+					<li>One query and one metadata element are required.</li>
+					<li>Within a metadata element, one database element and one table element with role Parent are required. Other tables may be required. See Tables section below.</li>
+				</ul>
+			</li>
+			<li>Queries
+				<ul>
+					<li>GROUP BY and ORDER BY in queries are not supported. Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</li>
+					<li>Views are not allowed. Metadata, e.g. column source tables and primary keys, for views is not easily discoverable.</li>
+					<li>Do not use table aliases in the query. Qualify columns with the full table name. Table aliases are defined in the metadata element. The alias is used in requests and responses.</li>
+				</ul>
+			</li>
+			<li>Columns
+				<ul>
+					<li>Columns must be declared explictly. Do not use SELECT * or SELECT {table}.* in a query.</li>
+					<li>Columns may contain functions however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any rows in the body in a write operation.</li>
+					<li>Columns may be aliased in a query. The alias is used in requests and responses.</li>
+					<li>Parents in a flat or hierarchical resource and children in a many-to-many hierarchical resource must have a primary key for to operate successfully.</li>
+					<li>A hierarchical resource query must include the parent and child primary keys.</li>
+				</ul>
+			</li>
+			<li>Tables
+				<ul>
+					<li>If tables are unqualified, restSQL uses the default database defined in the metadata. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</li>
+					<li>For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared.</li>
+					<li>Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</li>
+					<li>Extensions must have a foreign key to the parent, and optionally a separate primary key.</li>
+				</ul>
+			</li>
+			<li>Aliases
+				<ul>
+					<li>Columns may be aliased in queries. The column alias is used in both requests and responses. A 400 Bad Request is returned for requests using the cardinal column name.</li>
+					<li>The parent and child tables may be aliased in the metadata but <em>not</em> the query. Columns must be disambiguated in the query using the full table name. The aliases are used in both request body and responses body XML elements or JSON attributes, as well as request URL paramters. The metadata table element attributes are rowAlias for XML and rowSetAlias for JSON. The rowSetAlias also changes the child row key value in a result set row map when using the Java API.
+					</li>
+					<li>The parent extension or child extensions tables may not be aliased. These are joined with the parent or child to form single rows and need not be aliased.</li>
+				</ul>
+			</li>
 		</ul>
-	</li>
-	<li>Queries
+		<h3>Behavior</h3>
 		<ul>
-			<li>GROUP BY and ORDER BY in queries are not supported. Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</li>
-			<li>Views are not allowed. Metadata, e.g. column source tables and primary keys, for views is not easily discoverable.</li>
-			<li>Do not use table aliases in the query. Qualify columns with the full table name. Table aliases are defined in the metadata element. The alias is used in requests and responses.</li>
+			<li>In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be used to create and delete them. Updates to the children are not supported in a many-to-many SQL Resource.</li>
+			<li>For hierarchical SQL Resources, parents and children are managed separately. Writes (INSERT, UPDATE, DELETE) are submitted separately. One exception is with one-to-many, if the child (and child extensions) is defined with an ON DELETE CASCADE, a delete of the parent will delete the children (and child extensions).</li>
+			<li>Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</li>
 		</ul>
-	</li>
-	<li>Columns
-		<ul>
-			<li>Columns must be declared explictly. Do not use SELECT * or SELECT {table}.* in a query.</li>
-			<li>Columns may contain functions however these may only be returned passively in a read request. They may not be queried as a parameter to any operation, nor may they be contained in any rows in the body in a write operation.</li>
-			<li>Columns may be aliased in a query. The alias is used in requests and responses.</li>
-			<li>Parents in a flat or hierarchical resource and children in a many-to-many hierarchical resource must have a primary key for to operate successfully.</li>
-			<li>A hierarchical resource query must include the parent and child primary keys.</li>
-		</ul>
-	</li>
-	<li>Tables
-		<ul>
-			<li>If tables are unqualified, restSQL uses the default database defined in the metadata. If they are qualified in the query (e.g. sakila.actor), then they must be qualified in the role definitions.</li>
-			<li>For a flat SQL Resource, a Parent table must be declared. For a one-to-many hierarchical SQL Resource, a Parent and a Child table must be declared. For a many-to-many hierarchical, a Parent, a Join and a Child table must be declared.</li>			
-			<li>Only one Parent, Child and Join table may be defined, but an unlimited number of ParentExtensions and ChildExtensions are possible. ParentExtensions and ChildExtensions are optional.</li>
-			<li>Extensions must have a foreign key to the parent, and optionally a separate primary key.</li>
-		</ul>
-	</li>
-	<li>Aliases
-		<ul>
-			<li>Columns may be aliased in queries. The column alias is used in both requests and responses. A 400 Bad Request is returned for requests using the cardinal column name.</li>
-			<li>The parent and child tables may be aliased in the metadata but <em>not</em> the query. Columns must be disambiguated in the query using the full table name. The aliases are used in both request body and responses body XML elements or JSON attributes, as well as request URL paramters. The metadata table element attributes are rowAlias for XML and rowSetAlias for JSON. The rowSetAlias also changes the child row key value in a result set row map when using the Java API.</li>
-			<li>The parent extension or child extensions tables may not be aliased. These are joined with the parent or child to form single rows and need not be aliased.</li>
-		</ul>
-	</li>
-</ul>
-<h3>Behavior</h3>
-<ul>
-	<li>In a one-to-many hierarchical SQL Resource, children are fully managable. Conversely, in a many-to-many hierarchical SQL Resource, the child rows may not be created or deleted; rather they are associated and disassociated with the parent. A separate SQL Resource for the the child may be used to create and delete them. Updates to the children are not supported in a many-to-many SQL Resource.</li>
-	<li>For hierarchical SQL Resources, parents and children are managed separately. Writes (INSERT, UPDATE, DELETE) are submitted separately. One exception is with one-to-many, if the child (and child extensions) is defined with an ON DELETE CASCADE, a delete of the parent will delete the children (and child extensions).</li>
-	<li>Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</li>
-</ul>
-			 
-</div>
+
+	</div>
+
+	<script src="assets/jquery.min.js"></script>
+	<script src="assets/bootstrap.min.js"></script>
 </body>
 </html>

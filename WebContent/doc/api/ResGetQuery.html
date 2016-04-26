@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL: SQL Resource GET Query</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="../AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="index.html">HTTP API Reference</a></li>
+						<li><a href="ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="../sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
+
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>SQL Resource GET Query</h1>
+		</div>
+
+		<table>
+			<tbody>
+				<tr>
+					<td><strong>Method</strong></td>
+					<td colspan="3">GET</td>
+				</tr>
+				<tr>
+					<td><strong>Path</strong></td>
+					<td colspan="3">/res/{resName}?{name}={value}</td>
+				</tr>
+				<tr>
+					<td><strong>Query Params</strong></td>
+					<td colspan="3">Zero or more name-value pairs. Use column labels, not names, as defined in the SQL Resource query.<br />
+					<br /> Value encoding:
+						<ul>
+							<li>Use equals or not equals value. See <a href="Operators.html#EqualsNotEquals">Equals/Not Equals Operators</a> for more detail.
+							</li>
+							<li>Include '%' anywhere in the value for the wildcard, which is URL encoded as <code>%25</code>. This will use the a SQL LIKE instead of equals operator. See <a href="Operators.html#Like">Like Operator</a> for more detail.
+							</li>
+							<li>Use null or not null. See <a href="Operators.html#NullAndNotNull">Null/Not Null Operators</a> for more detail.
+							</li>
+							<li>Surround a commad-separated list in parenthesis. See <a href="Operators.html#In">In Operator</a> for more detail.
+							</li>
+							<li>Prefix one of four url encoded comparison operators at the beginning of the value. See <a href="Operators.html#Comparison">Comparison Operators</a> for more detail.
+							</li>
+							<li>Special parameters: <code>_limit</code>={integer}, <code>_offset</code>={integer}, <code>_output</code>={media-type}
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td><strong>Request body</strong></td>
+					<td colspan="3">None</td>
+				</tr>
+				<tr>
+					<td><strong>Response body</strong></td>
+					<td>Results as XML</td>
+					<td><a href="../../wadl/Response.xsd">Response.xsd</a></td>
+					<td>Content-Type: application/xml or application/json</td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Description</h2>
+		<div class="text">
+			Returns rows matching query parameters. A no-parameter request returns all rows. Empty
+			<code>readResponse</code>
+			document is returned if the no rows match criteria.
+		</div>
+
+		<p class="text">Results are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</p>
+
+		<p class="text">
+			Queries on hierarchical resources with
+			<code>_limit</code>
+			parameters are constrained by the total row count of <em>all the children</em> plus any parents that are childless. For example, supposing a query is limited to 100. If there are thousands of parents, but the first parent (PK order) has no children, the second has 44 children, and the third 130 children, then the results will be the first parent with 0 children, the second parent with 44 children and the third parent with 55 children. The limit is imposed on the SQL query that returns results in a flat, denormalized manner and then restSQL transforms this into a hiearchical representation.
+		</p>
+
+		<h2>XML Examples</h2>
+		<pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/xml</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+		<div class="text">
+			A wildcarded query uses a
+			<code>%</code>
+			symbol, as in SQL, which matches any number of characters. It must be URL-encoded to
+			<code>%25</code>
+			in a URL.
+		</div>
+		<pre>GET /restsql/res/Actor?last_name=S%25 HTTP/1.1
+Accept: application/xml</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="180" first_name="JEFF" last_name="SILVERSTONE" /&gt;
+   &lt;actor actor_id="195" first_name="JAYNE" last_name="SILVERSTONE" /&gt;
+   &lt;actor actor_id="78" first_name="GROUCHO" last_name="SINATRA" /&gt;
+   &lt;actor actor_id="31" first_name="SISSY" last_name="SOBIESKI" /&gt;
+   &lt;actor actor_id="44" first_name="NICK" last_name="STALLONE" /&gt;
+   &lt;actor actor_id="24" first_name="CAMERON" last_name="STREEP" /&gt;
+   &lt;actor actor_id="116" first_name="DAN" last_name="STREEP" /&gt;
+   &lt;actor actor_id="192" first_name="JOHN" last_name="SUVARI" /&gt;
+   &lt;actor actor_id="9" first_name="JOE" last_name="SWANK" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+		<div class="text">A limited query:</div>
+		<pre>GET /restsql/res/Actor?_limit=10&amp;_offset=0 HTTP/1.1
+Accept: application/xml</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="1" first_name="PENELOPE" last_name="GUINESS" /&gt;
+   &lt;actor actor_id="2" first_name="NICK" last_name="WAHLBERG" /&gt;
+   &lt;actor actor_id="3" first_name="ED" last_name="CHASE" /&gt;
+   &lt;actor actor_id="4" first_name="JENNIFER" last_name="DAVIS" /&gt;
+   &lt;actor actor_id="5" first_name="JOHNNY" last_name="LOLLOBRIGIDA" /&gt;
+   &lt;actor actor_id="6" first_name="BETTE" last_name="NICHOLSON" /&gt;
+   &lt;actor actor_id="7" first_name="GRACE" last_name="MOSTEL" /&gt;
+   &lt;actor actor_id="8" first_name="MATTHEW" last_name="JOHANSSON" /&gt;
+   &lt;actor actor_id="9" first_name="JOE" last_name="SWANK" /&gt;
+   &lt;actor actor_id="10" first_name="CHRISTIAN" last_name="GABLE" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+		<div class="text">A hierarchical SQL resource:</div>
+		<pre>GET /restsql/res/ActorFilm?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/xml</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+   &lt;actor actor_id="123" first_name="JULIANNE" last_name="DENCH"&gt;
+      &lt;film year="2600" title="ADAPTATION HOLES" film_id="3" /&gt;
+      &lt;film year="2600" title="ATLANTIS CAUSE" film_id="43" /&gt;
+      &lt;film year="2600" title="BERETS AGENT" film_id="67" /&gt;
+      &lt;film year="2600" title="BULL SHAWSHANK" film_id="105" /&gt;
+      &lt;film year="2600" title="CHOCOLATE DUCK" film_id="148" /&gt;
+   &lt;/actor&gt;
+&lt;/readResponse&gt;
+</pre>
+
+		<div class="text">
+			A query with <a href="Operators.html#Comparison">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.
+		</div>
+		<pre>GET /restsql/res/Actor?surname=%3EWILLIAMS HTTP/1.1
+Accept: application/xml</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/xml
+
+&lt;readResponse&gt;
+	&lt;actor id="147" first_name="FAY" surname="WINSLET" /&gt;
+	&lt;actor id="156" first_name="FAY" surname="WOOD" /&gt;
+	&lt;actor id="164" first_name="HUMPHREY" surname="WILLIS" /&gt;
+	&lt;actor id="168" first_name="WILL" surname="WILSON" /&gt;
+	&lt;actor id="186" first_name="JULIA" surname="ZELLWEGER" /&gt;
+&lt;/readResponse&gt;
+</pre>
+
+
+		<h2>JSON Examples</h2>
+		<pre>GET /restsql/res/Actor?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/json</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": 123, "first_name": "JULIANNE", "surname": "DENCH" }
+   ]
+}
+</pre>
+
+		<div class="text">
+			A wildcarded query uses a
+			<code>%</code>
+			symbol, as in SQL, which matches any number of characters. It must be URL-encoded to
+			<code>%25</code>
+			in a URL.
+		</div>
+		<pre>GET /restsql/res/Actor?last_name=S%25 HTTP/1.1
+Accept: application/json</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": 180, "first_name": "JEFF", "surname": "SILVERSTONE" },
+      { "actor_id": 195, "first_name": "JAYNE", "surname": "SILVERSTONE" }
+      { "actor_id": 78, "first_name": "GROUCHO", "surname": "SINATRA" },
+      { "actor_id": 31, "first_name": "SISSY", "surname": "SOBIESKI" },
+      { "actor_id": 44, "first_name": "NICK", "surname": "STALLONE" },
+      { "actor_id": 24, "first_name": "CAMERON", "surname": "STREEP" },
+      { "actor_id": 116, "first_name": "DAN", "surname": "STREEP" },
+      { "actor_id": 192, "first_name": "JOHN", "surname": "SUVARI" },
+      { "actor_id": 9, "first_name": "JOE", "surname": "SWANK" },
+   ]
+}
+</pre>
+
+		<div class="text">Find acgtors with surnames that are not null and limit the response to ten rows</div>
+		<pre>GET /restsql/res/Actor?surname=!null&amp;_limit=10&amp;_offset=0 HTTP/1.1
+Accept: application/json</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": 1, "first_name": "PENELOPE", "surname": "GUINESS" },
+      { "actor_id": 2, "first_name": "NICK", "surname": "WAHLBERG" },
+      { "actor_id": 3, "first_name": "ED", "surname": "CHASE" },
+      { "actor_id": 4, "first_name": "JENNIFER", "surname": "DAVIS" },
+      { "actor_id": 5, "first_name": "JOHNNY", "surname": "LOLLOBRIGIDA" },
+      { "actor_id": 6, "first_name": "BETTE", "surname": "NICHOLSON" },
+      { "actor_id": 7, "first_name": "GRACE", "surname": "MOSTEL" },
+      { "actor_id": 8, "first_name": "MATTHEW", "surname": "JOHANSSON" },
+      { "actor_id": 9, "first_name": "JOE", "surname": "SWANK" },
+      { "actor_id": 10, "first_name": "CHRISTIAN", "surname": "GABLE" }
+   ]
+}
+</pre>
+
+		<div class="text">A hierarchical SQL resource:</div>
+		<pre>GET /restsql/res/ActorFilm?first_name=JULIANNE&amp;last_name=DENCH HTTP/1.1
+Accept: application/json</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": 123, "first_name": "JULIANNE", "surname": "DENCH" },
+         "films": [
+            { "year": 2006, "title": "ADAPTATION HOLES", "film_id": 3 },
+            { "year": 2006, "title": "ATLANTIS CAUSE", "film_id": 43 },
+            { "year": 2006, "title": "BERETS AGENT", "film_id": 67 },
+            { "year": 2006, "title": "BULL SHAWSHANK", "film_id": 105 },
+            { "year": 2006, "title": "CHOCOLATE DUCK", "film_id": 138 },
+         ]
+      }
+   ]
+}
+</pre>
+
+		<div class="text">
+			A query with <a href="Operators.html#Comparison">comparison operators</a>. This one finds find actors with surname &gt; 'WILLIAMS'.
+		</div>
+		<pre>GET /restsql/res/Actor?surname=%3EWILLIAMS HTTP/1.1
+Accept: application/json</pre>
+		<pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "actors": [
+      { "actor_id": 147, "first_name": "FAY", "surname": "WINSLET" },
+      { "actor_id": 156, "first_name": "FAY", "surname": "WOOD" },
+      { "actor_id": 164, "first_name": "HUMPHREY", "surname": "WILLIS" },
+      { "actor_id": 168, "first_name": "WILL", "surname": "WILSON" },
+      { "actor_id": 186, "first_name": "JULIA", "surname": "ZELLWEGER" }
+   ]
+}
+</pre>
+
+
+		<p class="text">
+			Without an Accept header, the output format defaults to application/xml. An alternative to the Accept header is using the
+			<code>_output</code>
+			query parameter with the mime type, as in:
+		</p>
+		<pre>GET /restsql/res/ActorFilm/123?_output=application/json HTTP/1.1
+</pre>
+		<div class="text">
+			will return JSON output. See <a href="ResMediaTypes.html">Media Types</a> for more discussion.
+		</div>
+
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
+</body>
+</html>

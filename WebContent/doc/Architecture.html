@@ -1,95 +1,160 @@
+<!DOCTYPE HTML>
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-	<title>restSQL Architecture</title> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link href="doc.css" rel="stylesheet" type="text/css"/>
-</head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL Architecture</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.ico" />
+<link rel="stylesheet" href="assets/bootstrap.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+</head>
 <body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="Overview.html">Overview</a></li>
+						<li><a href="Architecture.html">Architecture</a></li>
+						<li><a href="Concepts.html">Concepts</a></li>
+						<li><a href="AdminConsole.html">Admin Console</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="api/index.html">HTTP API Reference</a></li>
+						<li><a href="api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="ApiExplorer.html">HTTP API Explorer</a></li>
+						<li class="divider"></li>
+						<li><a href="../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../examples/java">Java API Examples</a></li>
+						<li><a href="../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="Security.html">Security</a></li>
+						<li><a href="Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="Support.html">Support</a></li>
+						<li><a class="nav-link" href="License.html">License</a></li>
+						<li><a href="sponsors/Sponsors.html">Sponsors</a></li>
+						<li><a href="ReleaseHistory.html">Release History</a></li>
+					</ul></li>
 
-<div id="top">
-    <img src="top.png" alt="http://restsql.org" title="http://restsql.org" onclick="window.location ='http://restsql.org'" onmouseover="this.style.cursor='pointer'"/>
-</div>
+				<li><a href="Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
 
-<div id="nav">
-    <div class="nav-topitem"><a class="nav-link" href="Overview.html">Overview</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Architecture.html">Architecture</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Concepts.html">Concepts</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Service.html">Browse Service</a></div>
-    <div class="nav-category">HTTP API
-        <div class="nav-item"><a class="nav-link" href="ref/index.html">Reference</a></div>
-        <div class="nav-item"><a class="nav-link" href="ref/ResHttpStatus.html">Status Codes</a></div>
-        <div class="nav-item"><a class="nav-link" href="ApiExplorer.html">Explorer</a></div>
-    </div>
-    <div class="nav-category">Java API
-        <div class="nav-item"><a class="nav-link" href="../examples/java">Examples</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/api/index.html">Javadoc - API</a></div>
-        <div class="nav-item"><a class="nav-link" href="../javadoc/full/index.html">Javadoc - Full</a></div>
-    </div>
-    <div class="nav-category">Configuration
-        <div class="nav-item"><a class="nav-link" href="Deployment.html">Deployment</a></div>
-        <div class="nav-item"><a class="nav-link" href="../defaults/">Default Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="../examples/">Example Conf</a></div>
-        <div class="nav-item"><a class="nav-link" href="Logging.html">Logging</a></div>
-        <div class="nav-item"><a class="nav-link" href="Monitoring.html">Monitoring</a></div>
-        <div class="nav-item"><a class="nav-link" href="Security.html">Security</a></div>
-        <div class="nav-item"><a class="nav-link" href="Triggers.html">Triggers</a></div>
-    </div>
-    <div class="nav-topitem"><a class="nav-link" href="Roadmap.html">Roadmap</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Support.html">Support</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="License.html">License</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="sponsors/Sponsors.html">Sponsors</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="ReleaseHistory.html">Release History</a></div>
-    <div class="nav-topitem"><a class="nav-link" href="Download.html">Download</a></div>
-</div>
+	<div class="container">
 
+		<div class="page-header">
+			<h1>Architecture</h1>
+		</div>
 
-<div id="content"> 
-<h1>Architecture</h1>
-<p class="text">restSQL may be deployed in two modes: a Web Service and a Java library. The Web Service is a standard JEE web application. This deployment is also known as WAR (Web application ARchive) mode. The following diagram depicts an application using the HTTP interface:</p>
-<p class="image"><img src="HttpApiDeployment.png" alt="HTTP API Deployment" title="HTTP API Deployment" /></p>
-<p class="text">The other deployment mode is known as the JAR (Java ARchive) mode. The following diagram depicts an application using the Java interface:</p>
-<p class="image"><img src="JavaApiDeployment.png" alt="Java API Deployment" title="Java API Deployment" /></p>
-<p class="text">The following diagram depicts the layers of the software stack:</p>
-<p class="image"><img src="Layers.png" alt="Software Layers" title="Software Layers" /></p>
-<h2>Requirements</h2>
-<ul>
-	<li>Platform Independent - Pure Java solution</li>
-	<li>Java Runtime Environment (JRE) - Tested with 1.7 (libs available for 1.6 as well)</li>
-	<li>SQL Database - Tested with MySQL 5.6 and PostgreSQL 9.3; framework has extension mechanisms for others</li>
-	<li>JEE Container for Web Service deployment mode - Tested with Apache Tomcat 7, JBoss AS 6 and WebLogic Server 12c (12.1.2)</li>
-	<li>Java Archive (JAR) Tool for deployment - Tested with 1.7</li>
-	<li>Web Browser for SDK - Tested with IE 7, Firefox 4, Chrome 31</li>
-</ul>
-<h2>Extensibility</h2>
-<p class="text">The framework is very extensible. The core API is a set of interfaces, exceptions and utilities. The implementation classes implement the core interfaces. Implementations are loaded through a factory utility. The factory is configured with the restSQL properties file. You can provide custom implementations and instruct the factory to use them by registering them in the restSQL properties file.</p>
-<p class="text">The <a href="README-FRAMEWORK_DEVELOPERS.txt">Framework Developer Guide</a> will help you kickstart. Contact the <a href="mailto:mark.sawers@restsql.org">Project Lead</a> for more assistance.</p>
-<h2>Database Interoperability</h2>
-<p class="text">Currently MySQL and PostgreSQL are supported out-of-the-box by restSQL. The most common customization is expected to be for other databases. This will likely require development effort, however, this will not be a full-on project. restSQL has provided default implementations that may be extended using the template method pattern or whose core behavior may be overriden if that is more appropriate. The factory utility provides you the opportunity to add database support without changing restSQL itself. (Of course you are most encouraged to contribute your additions to the project!). Additionally, there is an extensive test harness that will be used to ensure compliance.</p>
+		<p class="text">restSQL may be deployed in two modes: a Web Service and a Java library. The Web Service is a standard JEE web application. This deployment is also known as WAR (Web application ARchive) mode. The following diagram depicts an application using the HTTP interface:</p>
+		<p class="image">
+			<img src="HttpApiDeployment.png" alt="HTTP API Deployment" title="HTTP API Deployment" />
+		</p>
+		<p class="text">The other deployment mode is known as the JAR (Java ARchive) mode. The following diagram depicts an application using the Java interface:</p>
+		<p class="image">
+			<img src="JavaApiDeployment.png" alt="Java API Deployment" title="Java API Deployment" />
+		</p>
+		<p class="text">The following diagram depicts the layers of the software stack:</p>
+		<p class="image">
+			<img src="Layers.png" alt="Software Layers" title="Software Layers" />
+		</p>
+		<h2>Requirements</h2>
+		<ul>
+			<li>Platform Independent - Pure Java solution</li>
+			<li>Java Runtime Environment (JRE) - Tested with 1.7 (libs available for 1.6 as well)</li>
+			<li>SQL Database - Tested with MySQL 5.6 and PostgreSQL 9.3; framework has extension mechanisms for others</li>
+			<li>JEE Container for Web Service deployment mode - Tested with Apache Tomcat 7, JBoss AS 6 and WebLogic Server 12c (12.1.2)</li>
+			<li>Java Archive (JAR) Tool for deployment - Tested with 1.7</li>
+			<li>Web Browser for SDK - Tested with IE 7, Firefox 4, Chrome 31</li>
+		</ul>
+		<h2>Extensibility</h2>
+		<p class="text">The framework is very extensible. The core API is a set of interfaces, exceptions and utilities. The implementation classes implement the core interfaces. Implementations are loaded through a factory utility. The factory is configured with the restSQL properties file. You can provide custom implementations and instruct the factory to use them by registering them in the restSQL properties file.</p>
+		<p class="text">
+			The <a href="README-FRAMEWORK_DEVELOPERS.txt">Framework Developer Guide</a> will help you kickstart. Contact the <a href="mailto:mark.sawers@restsql.org">Project Lead</a> for more assistance.
+		</p>
+		<h2>Database Interoperability</h2>
+		<p class="text">Currently MySQL and PostgreSQL are supported out-of-the-box by restSQL. The most common customization is expected to be for other databases. This will likely require development effort, however, this will not be a full-on project. restSQL has provided default implementations that may be extended using the template method pattern or whose core behavior may be overriden if that is more appropriate. The factory utility provides you the opportunity to add database support without changing restSQL itself. (Of course you are most encouraged to contribute your additions to the project!). Additionally, there is an extensive test harness that will be used to ensure compliance.</p>
 
-<p class="text">In order for restSQL work its magic, it needs to introspect the data dictionary and observe database-specific SQL rules. The following differences in database engines affect restSQL:</p>
-<ul>
-	<li>Information schema is implemented differently, even if it follows the the ANSI/ISO 2003 information schema standard. For example, MySQL equates the schema concept to a database and PostgreSQL equates the catalog concept to a database.</li>
-	<li>Table identification varies. For example, MySQL uses the form database.table while PostgreSQL uses database.schema.table.</li>
-	<li>JDBC driver implementation varies. For example, PostgreSQL will return the column label on the standard <code>ResultSetMetaData.getColumnName()</code>. A driver-specific call must be used to get the actual column name.</li>
-	<li>Non-core SQL varies. For example, pagination in MySQL and PostgreSQL uses the "LIMIT n OFFSET n" syntax whereas SQL Server uses "TOP n" and Oracle "ROWNUM &lt; n". </li>
-</ul>
-<p class="text">Based on the differences seen between MySQL and PostgreSQL, a new database will likely need a new <code>SqlResourceMetaData</code> implementation. The <code>AbstractSqlResourceMetaData</code> may be extended instead of starting from scratch. It uses a template method design pattern for assisting in limited extensions. Additionally, a new <code>SqlBuilder</code> implementation may be necessary, for example in adding support for pagination. The default <code>SqlBuilderImpl</code> may be extended rather than starting from scratch.</p>
+		<p class="text">In order for restSQL work its magic, it needs to introspect the data dictionary and observe database-specific SQL rules. The following differences in database engines affect restSQL:</p>
+		<ul>
+			<li>Information schema is implemented differently, even if it follows the the ANSI/ISO 2003 information schema standard. For example, MySQL equates the schema concept to a database and PostgreSQL equates the catalog concept to a database.</li>
+			<li>Table identification varies. For example, MySQL uses the form database.table while PostgreSQL uses database.schema.table.</li>
+			<li>JDBC driver implementation varies. For example, PostgreSQL will return the column label on the standard <code>ResultSetMetaData.getColumnName()</code>. A driver-specific call must be used to get the actual column name.
+			</li>
+			<li>Non-core SQL varies. For example, pagination in MySQL and PostgreSQL uses the "LIMIT n OFFSET n" syntax whereas SQL Server uses "TOP n" and Oracle "ROWNUM &lt; n".</li>
+		</ul>
+		<p class="text">
+			Based on the differences seen between MySQL and PostgreSQL, a new database will likely need a new
+			<code>SqlResourceMetaData</code>
+			implementation. The
+			<code>AbstractSqlResourceMetaData</code>
+			may be extended instead of starting from scratch. It uses a template method design pattern for assisting in limited extensions. Additionally, a new
+			<code>SqlBuilder</code>
+			implementation may be necessary, for example in adding support for pagination. The default
+			<code>SqlBuilderImpl</code>
+			may be extended rather than starting from scratch.
+		</p>
 
-<h2>Security</h2>
-<p class="text">restSQL access may be encrypted, authenticated and authorized. restSQL provides resource authorization capability, ensuring users only access the SQL Resources and methods appropriate to their assigned role(s). restSQL provides a standard, maintainable role-based access approach to authorization. Role to SQL Resource and request type assignments (privileges) are provided via a simple configuration file.</p>
+		<h2>Security</h2>
+		<p class="text">restSQL access may be encrypted, authenticated and authorized. restSQL provides resource authorization capability, ensuring users only access the SQL Resources and methods appropriate to their assigned role(s). restSQL provides a standard, maintainable role-based access approach to authorization. Role to SQL Resource and request type assignments (privileges) are provided via a simple configuration file.</p>
 
-<p class="text">In restSQL WAR mode, the JEE container provides encryption and authentication, as well as user to role assignments. The confidentiality of data and credentials in transport is defined in the restSQL Deployment Descriptor (web.xml). The transport can be coerced to HTTPS (HTTP over SSL/TLS). The credential can be encoded in HTTP Basic or Digest schemes. The container-provided realm is also defined in the Deployment Descriptor. The realm could be file-, RDBMS- or LDAP-based, providing both user credentials and mappings to roles. If a request passes realm authentication, the restSQL HTTP Service authorizes each SQL Resource request, forbidding those that are unauthorized. </p>
+		<p class="text">In restSQL WAR mode, the JEE container provides encryption and authentication, as well as user to role assignments. The confidentiality of data and credentials in transport is defined in the restSQL Deployment Descriptor (web.xml). The transport can be coerced to HTTPS (HTTP over SSL/TLS). The credential can be encoded in HTTP Basic or Digest schemes. The container-provided realm is also defined in the Deployment Descriptor. The realm could be file-, RDBMS- or LDAP-based, providing both user credentials and mappings to roles. If a request passes realm authentication, the restSQL HTTP Service authorizes each SQL Resource request, forbidding those that are unauthorized.</p>
 
-<p class="text">In restSQL JAR mode, the app is responsible for authentication and user to role mapping and calls an <code>Authorizer</code> prior to executing SQL Resource requests.</p>
+		<p class="text">
+			In restSQL JAR mode, the app is responsible for authentication and user to role mapping and calls an
+			<code>Authorizer</code>
+			prior to executing SQL Resource requests.
+		</p>
 
-<p class="text">Server-side input validation (data types, values, etc.) may be provided by application-provided, Java-based Triggers.</p>
+		<p class="text">Server-side input validation (data types, values, etc.) may be provided by application-provided, Java-based Triggers.</p>
 
-<p class="text">restSQL protects against SQL Injection with input parameter type checking and prepared statements for database access. The value portion of an SQL expression is set as a question mark (and with PostgreSQL a type case, e.g. <code>?::integer</code>) and a JDBC method setXxx() is called with the value. The database will process column values as values. Harmful execution statements cannot be injected into restSQL parameter values. Addtionally the framework now converts all String input parameter values for numeric and boolean column type to Inter, Long, Float, Double or Boolean. An exception is thrown if the value cannot be converted.</p>
+		<p class="text">
+			restSQL protects against SQL Injection with input parameter type checking and prepared statements for database access. The value portion of an SQL expression is set as a question mark (and with PostgreSQL a type case, e.g.
+			<code>?::integer</code>
+			) and a JDBC method setXxx() is called with the value. The database will process column values as values. Harmful execution statements cannot be injected into restSQL parameter values. Addtionally the framework now converts all String input parameter values for numeric and boolean column type to Inter, Long, Float, Double or Boolean. An exception is thrown if the value cannot be converted.
+		</p>
 
-<p class="text">See <a href="Security.html">Security</a> for more detail.</p>
-</div>
+		<p class="text">
+			See <a href="Security.html">Security</a> for more detail.
+		</p>
+
+		<p class="text" style="padding-top: 10px">Next Step: <a href="Concepts.html">Concepts</a></p>
+	</div>
+
+	<script src="assets/jquery.min.js"></script>
+	<script src="assets/bootstrap.min.js"></script>
 </body>
 </html>
