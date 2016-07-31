@@ -306,7 +306,7 @@
 }
 </pre>
 
-		<p class="text">For JSON serialization, by default the rowAlias, or table name if not defined, is pluralized with an 's'. Use the rowSetAlias table attribute to override this default, as in:</p>
+		<p class="text">For JSON serialization, the array structure eliminates per-row naming and only the collection is named. Therefore the configuration is different. By default the rowAlias, or table name if not defined, is pluralized with an 's' to name a collection. Use the rowSetAlias table attribute to override this default, as in:</p>
 
 		<pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -320,23 +320,23 @@
    &lt;/query&gt;
    &lt;metadata&gt;
       &lt;database default="sakila" /&gt;
-      &lt;table name="language" rowAlias="languageSet" rowSetAlias="lang" role="Parent" /&gt;
-      &lt;table name="film" role="Child" /&gt;
+      &lt;table name="language" rowAlias="lang" rowSetAlias="languageSet" role="Parent" /&gt;
+      &lt;table name="film" rowAlias="movie" role="Child" /&gt;
    &lt;/metadata&gt;
 &lt;/rs:sqlResource&gt;
 </pre>
 
-		<p class="text">Results in the parent collection name as lang, but the child is defaulted to films:</p>
+		<p class="text">Results in the parent collection name as languageSet, and the child is set to movies:</p>
 		<pre>
 { "languageSet": [
    { "langId": 100, "langName": "New Esperanto",
-      "films": [
+      "movies": [
          { "year": 2011, "title": "ESCAPE FROM TOMORROW", "film_id": 5000 },
          { "year": 2012, "title": "BLOOD PURPLE", "film_id": 5001 }
       ]
    },
    { "langId": 101, "langName": "New Greek",
-      "films": [
+      "movies": [
          { "year": 2012, "title": "THE DARKENING", "film_id": 5002 },
          { "year": 2012, "title": "THE LIGHTENING", "film_id": 5003 }
        ]
@@ -344,6 +344,8 @@
   ]
 }
 </pre>
+		<p class="text">With JSON, the rowAlias is ignored if rowSetAlias is used. If the rowSetAlias was omitted on language, a plural rowAlias is used as the collection name - langs. In the film case, the rowAlias is pluralized in the collection as movies. If both were ommitted, a plural table name is used - languages or films.</p>
+		<p class="text">In both formats, the rowAlias and rowSetAlias attributes are useful in customizing names and in suppressing the pluralization if your table name is already pluralized.</p>
 
 		<p class="text">
 			See <a href="SqlResourceRules.html">SQL Resource Rules</a> for an elaboration on constraints.
