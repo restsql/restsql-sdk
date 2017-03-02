@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd ">
+	<query>
+		select country_id, country, last_update
+		from country
+	</query>
+	<metadata>
+		<database default="sakila" />
+		<table name="country" role="Parent" />
+	</metadata>
+</rs:sqlResource>

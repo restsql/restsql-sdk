@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd ">
+	<query>
+		select language.language_id, language.name "langName", film_id, title, release_year "year"
+		from language
+		left outer join film on film.language_id = language.language_id
+	</query>
+	<metadata>
+		<database default="sakila" />
+		<table name="language" alias="lang" role="Parent" />
+		<table name="film" alias="movie" role="Child" />
+	</metadata>
+</rs:sqlResource>

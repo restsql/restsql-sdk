@@ -173,7 +173,7 @@
 	}
 
 	function setResName(newResName) {
-		resName = newResName;
+		resName = "sdk." + newResName;
 		submitRequest("GET", restsqlBaseUri + "/conf/definition/" + resName, null, "definition", null);
 		window.frames[3].location = "build-select.html";
 		window.frames[5].location = "response.html";

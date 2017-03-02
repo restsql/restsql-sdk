@@ -359,7 +359,9 @@ monitoring.graphite.frequency=seconds
 		<p class="text">Properties: Follow the instructions for Configuring restSQL.</p>
 		<p class="text">Deploy: Copy jar to the classpath of your web app, e.g. WEB-INF/lib. The following third party dependencies also need to be in your classpath:</p>
 		<ul>
+			<li>commons-lang.jar - tested with version 2.6</li>
 			<li>commons-logging.jar - tested with version 1.1.1</li>
+			<li>json_simple - tested with version 1.1</li>
 			<li>log4j.jar - tested with 1.2.16</li>
 		</ul>
 		<p class="text">log4j is not necessary if your app uses Java Native Logging. restSQL has been tested with JRE 1.6 and Java Native Logging.</p>
@@ -382,7 +384,7 @@ monitoring.graphite.frequency=seconds
 		<h2>Resource Definition Generation Tool</h2>
 		<p class="text">The tool creates resource definition templates for all columns for each table in a database schema. The definitions are created in the user-provided subfolder. These resources can be immediately used, or modified and reloaded and moved as necessary.</p>
 
-		<p class="text">The tool is accessed after deploying restsql from the Tools link on the home page, or from http://host:port/restsql/tools. Enter the subfolder name (default is 'auto') and the database name. The definitions are created in the configured SQL Resources directory (in the restsql.properties file). These are viewable from the SQL Resources browser, i.e. http://host:port/restsql/res.</p>
+		<p class="text">The tool is accessed after deploying restsql from the Tools link on the home page, or from http://host:port/restsql/tools/. Enter the subfolder name (default is 'auto') and the database name. The definitions are created in the configured SQL Resources directory (in the restsql.properties file). These are viewable from the SQL Resources browser, i.e. http://host:port/restsql/res.</p>
 
 		<h2>Installing restSQL SDK</h2>
 		<p class="text">Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser</p>

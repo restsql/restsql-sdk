@@ -1,0 +1,5 @@
+DELETE FROM mysql.user WHERE User='root';
+
+CREATE USER 'root'@'%' IDENTIFIED BY 'sakila';
+GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
