@@ -1,4 +1,4 @@
-README.txt (25-Apr-2016)
+README.txt (15-Mar-2017)
 
 restSQL SDK Deployment Guide
 
@@ -19,7 +19,11 @@ restSQL binary distributions contain three libraries:
 
 restSQL source distributions consist of one jar:
     1. restsql-{version}-src.jar    (service and core framework)
-    
+
+restSQL docker images:
+	1. restsql/service - service and core framework
+	2. restsql/service-sdk - service and core framework + sdk
+	3. restsql/mysql-sakila - MySQL 7 + Sakila + restsql-test extensions
 
 -------------------------------------------------------------------------------
 Versions

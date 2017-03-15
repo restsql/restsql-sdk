@@ -88,21 +88,30 @@
 		</ol>
 		<div class="text">restSQL binary distributions contain three libraries:</div>
 		<ol>
-			<li>restsql-{version}.jar - core framework only</li>
-			<li>restsql-{version}.war - service and core framework, 3rd party dependencies</li>
-			<li>restsql-sdk-{version}.war - SDK</li>
+			<li><a href="Download.html">restsql-{version}.jar</a> - core framework only</li>
+			<li><a href="Download.html">restsql-{version}.war</a> - service and core framework, 3rd party dependencies</li>
+			<li><a href="Download.html">restsql-sdk-{version}.war</a> - SDK</li>
 		</ol>
 		<div class="text">restSQL source distributions consist of one jar:</div>
 		<ol>
-			<li>restsql-{version}-src.jar - service and core framework</li>
+			<li><a href="Download.html">restsql-{version}-src.jar</a> - service and core framework</li>
 		</ol>
+		<div class="text">restSQL docker images:</div>
+		<ol>
+			<li><a href="https://hub.docker.com/r/restsql/service/">restsql/service</a> - service and core framework</li>
+			<li><a href="https://hub.docker.com/r/restsql/service-sdk/">restsql/service-sdk</a> - service and core framework + sdk</li>
+			<li><a href="https://hub.docker.com/r/restsql/mysql-sakila/">restsql/mysql-sakila</a> - MySQL 7 + Sakila + restsql-test extensions</li>
+		</ol>
+		
 
 		<h2>Deployment Modes</h2>
-		<div class="text">restSQL may be deployed in two modes:</div>
+		<div class="text">restSQL may be deployed in three modes:</div>
 		<ol>
-			<li>WAR - web application<br /> Clients use an HTTP service (web app) directly
+			<li><a href="#docker-mode">Docker - containerized web application</a><br /> Clients use an HTTP service (docker container) directly
 			</li>
-			<li>JAR - java library<br /> Clients use your service which uses the restSQL Java API
+			<li><a href="#war-mode">WAR - web application</a><br /> Clients use an HTTP service (web app) directly
+			</li>
+			<li><a href="#jar-mode">JAR - java library</a><br /> Clients use your service which uses the restSQL Java API
 			</li>
 		</ol>
 
@@ -259,7 +268,13 @@ monitoring.graphite.frequency=seconds
 		<p class="text">See the SDK for more detail on Security, Logging and Trigger configuration.</p>
 
 		<p class="text">Access http://yourhost:port/restsql for links to the effective runtime configuration.</p>
+		
+		<p class="text"><a id="docker-mode"></a>&nbsp;</p>
+		<h2>Installing restSQL Docker mode</h2>
+		
+		<p class="text">See <a href="https://hub.docker.com/r/restsql/service/">restsql/service</a> or <a href="https://hub.docker.com/r/restsql/service-sdk/">restsql/service-sdk</a> docker hub documentation.
 
+		<p class="text"><a id="war-mode"></a>&nbsp;</p>
 		<h2>Installing restSQL WAR mode</h2>
 
 		<p class="text">Requirements: JEE Container, RDBMS, JAR tool</p>
@@ -355,6 +370,7 @@ monitoring.graphite.frequency=seconds
 
 		<p class="text">Note: If you receive a 500 response to any res query with the text "No suitable driver found", then the container cannot find your jdbc driver. This can usually be fixed by placing the database driver in some common server library location. This also occurs after deploying the restSQL.war to WebLogic using the console when the container is running. After a container restart, the driver is found.</p>
 
+		<p class="text"><a id="jar-mode"></a>&nbsp;</p>
 		<h2>Installing restSQL JAR mode</h2>
 		<p class="text">Properties: Follow the instructions for Configuring restSQL.</p>
 		<p class="text">Deploy: Copy jar to the classpath of your web app, e.g. WEB-INF/lib. The following third party dependencies also need to be in your classpath:</p>

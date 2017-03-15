@@ -2,7 +2,7 @@
 <project name="restsql-sdk" default="dist">
 	<property file="build.properties" />
 
-	<target name="dist" depends="defaults,database,javadoc,wadl,lib" description="generates distribution files" />
+	<target name="dist" depends="defaults,database,javadoc,swagger-wadl,lib" description="generates distribution files" />
 
 	<target name="clean" description="deletes output dir">
 		<delete dir="obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
@@ -71,7 +71,10 @@
 		</copy>
 	</target>
 
-	<target name="wadl">
+	<target name="swagger-wadl">
+		<copy todir="WebContent">
+			<fileset file="../restsql/WebContent/restsql-swagger.json" />
+		</copy>
 		<copy todir="WebContent/wadl">
 			<fileset dir="../restsql/WebContent/wadl" />
 		</copy>
