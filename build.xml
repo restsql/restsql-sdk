@@ -35,6 +35,9 @@
 		<copy todir="WebContent/defaults/properties">
 			<fileset dir="../restsql/src/resources/properties/" includes="default-*.properties" />
 		</copy>
+		<copy todir="WebContent/defaults/xml">
+			<fileset dir="../restsql/WebContent/WEB-INF" includes="web.xml" />
+		</copy>
 	</target>
 
 	<target name="exec-examples" depends="compile-examples" description="executes example programs">
@@ -50,7 +53,7 @@
 	<target name="lib">
 		<mkdir dir="obj/lib" />
 		<jar destfile="obj/lib/restsql-sdk-${build.version}.war">
-			<fileset dir="WebContent" />
+			<fileset dir="WebContent" excludes="**/.DS_Store"/>
 			<fileset file="CONTRIBUTORS.txt" />
 			<fileset file="LICENSE.txt" />
 			<manifest>

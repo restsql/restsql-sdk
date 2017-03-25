@@ -44,7 +44,7 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("Delete Multiple");
 
 		// Get the resource object
-		final SqlResource sqlResource = Factory.getSqlResource("Country");
+		final SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the delete request
 		final List<RequestValue> resIds = null;
@@ -67,7 +67,7 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("Delete with PK");
 
 		// Get the resource object
-		final SqlResource sqlResource = Factory.getSqlResource("Country");
+		final SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the delete request
 		final List<RequestValue> resIds = new ArrayList<RequestValue>(1);
@@ -91,7 +91,7 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("Delete with wildcard");
 
 		// Get the resource object
-		final SqlResource sqlResource = Factory.getSqlResource("Country");
+		final SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the row
 		final List<RequestValue> params = new ArrayList<RequestValue>(3);
@@ -122,7 +122,7 @@ public class InsertUpdateDelete_FlatResource {
 	/** Creates row in the Country resource. */
 	private static void doInsert(final List<RequestValue> params) throws SqlResourceException {
 		// Get the resource object
-		final SqlResource sqlResource = Factory.getSqlResource("Country");
+		final SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the request
 		final List<RequestValue> resIds = null;
@@ -143,7 +143,7 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("Update with Param");
 
 		// Get the resource object
-		final SqlResource sqlResource = Factory.getSqlResource("Country");
+		final SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the row
 		final List<RequestValue> params = new ArrayList<RequestValue>(3);
@@ -151,7 +151,6 @@ public class InsertUpdateDelete_FlatResource {
 		// Create the delete request
 		final List<RequestValue> resIds = new ArrayList<RequestValue>(1);
 		resIds.add(new RequestValue("country", "Test2"));
-		params.add(new RequestValue("country", "Test1"));
 		params.add(new RequestValue("last_update", "2012-02-18 10:00:10"));
 		final List<List<RequestValue>> childrenParams = null;
 		final RequestLogger requestLogger = Factory.getRequestLogger();
@@ -172,7 +171,7 @@ public class InsertUpdateDelete_FlatResource {
 		System.out.println("Update with PK");
 
 		// Get the resource object
-		final SqlResource sqlResource = Factory.getSqlResource("Country");
+		final SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the row
 		final List<RequestValue> params = new ArrayList<RequestValue>(3);

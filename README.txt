@@ -1,4 +1,4 @@
-README.txt (15-Mar-2017)
+README.txt (24-Mar-2017)
 
 restSQL SDK Deployment Guide
 
@@ -23,7 +23,7 @@ restSQL source distributions consist of one jar:
 restSQL docker images:
 	1. restsql/service - service and core framework
 	2. restsql/service-sdk - service and core framework + sdk
-	3. restsql/mysql-sakila - MySQL 7 + Sakila + restsql-test extensions
+	3. restsql/mysql-sakila - MySQL 5.7 + Sakila + restsql-test extensions
 
 -------------------------------------------------------------------------------
 Versions
@@ -36,7 +36,13 @@ Installing restSQL SDK
 
 Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser
 
-Enable directory listings in your app container's config. For example for Tomcat, edit $TOMCAT_HOME/conf/web.xml section for the DefaultServlet, setting the directory listing value to true:
+Database: The HTTP API Explorer requires access to an extended sakila database (http://dev.mysql.com/doc/sakila/en/sakila.html). It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and for PostgreSQL. The bash script is restsql-sdk/database/<database>/create-sakila.sh and the Windows batch script is restsql-sdk/database/<database>/create-sakila.bat, where database is either mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
+
+Install restsql WAR mode (see restSQL README.txt).
+
+Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory, e.g. /usr/local/tomcat/webapps/restsql-sdk. 
+
+Enable directory listings in your app container's config. For example for Tomcat, edit $TOMCAT_HOME/conf/web.xml section for the DefaultServlet or add the following to restsql-sdk/WEB-INF/web.xml, setting the directory listing value to true:
 
     <servlet>
         <servlet-name>default</servlet-name>
@@ -51,14 +57,7 @@ Enable directory listings in your app container's config. For example for Tomcat
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet> 
-
-Install restsql WAR mode (see restSQL README.txt) with one variation: the restsql.properties must be changed to reference the sdk's SQL Resources definition directory. Below is an example:
-
-    # sqlresources.dir=/absolute/path
-    sqlresources.dir=/opt/tomcat/webapps/restsql-sdk/examples/sqlresources
-
-Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory, e.g. /opt/tomcat/webapps/restsql-sdk. Restart the container or use your preferred deloyment method.
-
+    
     The SDK war contents are:
         restsql-sdk/
             api-explorer/
@@ -73,8 +72,11 @@ Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory,
     
     Note that the restsql-sdk war contains only static web content. 
 
-Database: The HTTP API Explorer requires access to an extended sakila database (http://dev.mysql.com/doc/sakila/en/sakila.html). It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and for PostgreSQL. The bash script is restsql-sdk/database/<database>/create-sakila.sh and the Windows batch script is restsql-sdk/database/<database>/create-sakila.bat, where database is either mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
+You can either change restSQL's sqlresources.dir to point to the SDK's sqlresources path, or copy the SDK's resources to the existing restSQL's sqlresources.dir (default is <code>/etc/opt/restsql/sqlresources</code>). Copying is easier:
+   cp /usr/local/tomcat/webapps/restsql-sdk/examples/sdk /etc/opt/restsql/sqlresources/sdk
 
+Restart the container or use your preferred deloyment method. To see if the resources are available, check the restSQL resource listing in the console, at http://host:port/restsql/res/. You should see six resources with names like sdk.Country, sdk.film.Film, etc.
+		
 Troubleshooting: The HTTP API Explorer requires access to a restsql service instance. If you have not deployed restsql to the same host/port as the SDK and to the location /restsql, then you will need to make one small tweak. Change two Javascript variables in restsql-sdk/api-explorer/index.html. Here is an example:
 
     var restsqlHost = "http://somehost:8080";

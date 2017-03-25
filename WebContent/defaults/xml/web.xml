@@ -10,12 +10,8 @@
 		<filter-name>jersey</filter-name>
 		<filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
 		<init-param>
-			<param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>
-			<param-value>com.sun.jersey.api.core.PackagesResourceConfig</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>org.restsql.service</param-value>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>org.restsql.service.RestSqlApplication</param-value>
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
@@ -28,19 +24,82 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>jersey</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/conf/*</url-pattern>
+		<url-pattern>/log/*</url-pattern>
+		<url-pattern>/res/*</url-pattern>
+		<url-pattern>/tools/*</url-pattern>
+		<url-pattern>/wadl/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
+	
 	<listener>
 		<listener-class>org.restsql.service.LifecycleListener</listener-class>
 	</listener>
 
+	<!-- Performance Monitoring -->
+	<listener>
+		<listener-class>org.restsql.service.monitoring.HealthCheckServletContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.restsql.service.monitoring.MetricsServletContextListener</listener-class>
+	</listener>
+		
+	<servlet>
+		<servlet-name>ping</servlet-name>
+		<servlet-class>com.codahale.metrics.servlets.PingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ping</servlet-name>
+		<url-pattern>/monitoring/ping</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>healthcheck</servlet-name>
+		<servlet-class>com.codahale.metrics.servlets.HealthCheckServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>healthcheck</servlet-name>
+		<url-pattern>/monitoring/healthcheck</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>metrics</servlet-name>
+		<servlet-class>com.codahale.metrics.servlets.MetricsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>metrics</servlet-name>
+		<url-pattern>/monitoring/metrics</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>threads</servlet-name>
+		<servlet-class>com.codahale.metrics.servlets.ThreadDumpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>threads</servlet-name>
+		<url-pattern>/monitoring/threads</url-pattern>
+	</servlet-mapping>
+
+	<!-- Disable RestEasy Deployer package scanning for JBoss AS 6+ -->
+	<context-param>
+    		<param-name>resteasy.scan</param-name>
+    		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+    		<param-name>resteasy.scan.providers</param-name>
+    		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+    		<param-name>resteasy.scan.resources</param-name>
+    		<param-value>false</param-value>
+	</context-param>
+
 	<!-- Configure absolute path to restsql properties file -->
 	<context-param>
 		<param-name>org.restsql.properties</param-name>
-		<param-value>/restsql/eclipse-workspace/restsql-test/src/resources/properties/restsql-mysql.properties</param-value>
+		<param-value>/etc/opt/restsql/restsql.properties</param-value>
 	</context-param>
 
 	<!-- Uncomment security-roles, security-constraints and login-config for authentication/authorization -->
@@ -76,7 +135,8 @@
 			<web-resource-name>Admin Resources</web-resource-name>
 			<url-pattern>/conf/*</url-pattern>
 			<url-pattern>/log/*</url-pattern>
-			<url-pattern>/stats/*</url-pattern>
+			<url-pattern>/monitoring/*</url-pattern>
+			<url-pattern>/tools/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>admin</role-name>
@@ -89,6 +149,5 @@
 		<auth-method>BASIC</auth-method>
 		<realm-name>UserDatabase</realm-name>
 	</login-config>
- 	-->
- 	
+	-->
 </web-app>

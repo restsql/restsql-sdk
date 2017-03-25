@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>restSQL Release Notes - 0.8.11</title>
+<title>restSQL Release Notes - 0.8.12</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="../assets/favicon.ico" />
 <link rel="stylesheet" href="../assets/bootstrap.min.css">
@@ -77,51 +77,20 @@
 	<div class="container">
 
 		<div class="page-header">
-			<h1>Release Notes - 0.8.11</h1>
+			<h1>Release Notes - 0.8.12</h1>
 		</div>
 
 		<h3>Summary</h3>
-		<div class="text">restSQL 0.8.11 expands SQL operator support and improves resource customization.</div>
+		<div class="text">restSQL 0.8.12 adds Swagger</div>
 
-		<h3>Null and Not Null Operator</h3>
-		<p class="text">The SQL IS NULL and IS NOT NULL operators are supported in read, update and delete requests on any columns in query parameters (row selectors). Null is also supported in form parameters in POST with form (URL Encoded) and PUT by Query methods to set a column value to null in an insert or update.</p>
-		<p class="text">Null column values in selected rows will continue to be absent in response XML and will no longer be present in response JSON. Previous versions returned the attribute with the value null in the JSON format. The new approach is more streamlined.</p>
-		<p class="text">
-			See <a href="../api/Operators.html#NullNotNull">Null/Not Null Operators</a> for more detail.
-		</p>
-		<p class="text">
-			This addresses GitHub <a href="https://github.com/restsql/restsql/issues/69">Issue #69</a>.
-		</p>
+		<h3>Swagger</h3>
+		<p class="text">The HTTP API is now published as <a href="../../restsql-swagger.json">Swagger JSON</a> (<a href="http://swagger.io/specification/">OpenAPI Specification v2.0</a>) in addition to <a href="../../wadl/restsql-wadl.xml">WADL</a> (Web Application Description Language). The <a href="/restsql/swagger-ui/" target="_blank">interactive Swagger UI</a> is available in your local restSQL web service.</p>
 
-		<h3>Comparison and In Operators</h3>
-		<p class="text">
-			Greater than, greater than or equal to, less than and less than or equal to are now supported in update and delete parameters in addition to reads. See <a href="../ref/Operators.html#Comparison">Comparison Operators</a> for more detail.
-		</p>
-		<p class="text">
-			The SQL IN is now supported in update and delete parameters in addition to reads. See <a href="../api/Operators.html#In">In Operator</a> for more detail.
-		</p>
-
-		<h3>Not Equals Operator</h3>
-		<p class="text">
-			All columns may be queried by not equals value expression. See <a href="../api/Operators.html#EqualsNotEquals">Equals/Not Equals Operators</a> for more detail.
-		</p>
-
-		<h3>Resource Customization</h3>
-		<p class="text">
-			The
-			<code>alias</code>
-			table metadata attribute has been deprecated and replaced by the
-			<code>rowAlias</code>
-			and
-			<code>rowSetAlias</code>
-			attributes. This enables you to control the JSON object names in request/responses and Java API map child key names, whereas in previous releases the framework appended an "s" to the alias. See the aliases section in <a href="../Concepts.html#ColumnandTableAliases">Concepts</a> for more detail.
-		</p>
-		<p class="text">
-			This addresses GitHub <a href="https://github.com/restsql/restsql/issues/48">Issue #48</a>.
-		</p>
+		<h3>MySQL 5.7</h3>
+		<p class="text">The framework has been tested with the latest MySQL, version 5.7, as well as 5.6.</p>
 
 		<h3>Migration</h3>
-		<p class="text">The table metadata attribute will continue to work without errors or warnings. The alias drives the rowwAlias value and alias + "s" the rowSetAlias. Replace the alias with rowAlias and rowSetAlias at your own pace.</p>
+		<p class="text">N/A</p>
 
 	</div>
 

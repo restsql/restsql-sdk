@@ -25,13 +25,14 @@
 						<li><a href="Overview.html">Overview</a></li>
 						<li><a href="Architecture.html">Architecture</a></li>
 						<li><a href="Concepts.html">Concepts</a></li>
-						<li><a href="AdminConsole.html">Admin Console</a></li>
+						<li><a href="/restsql/" target="_blank">Explore Service &nbsp; <span class="glyphicon glyphicon-star-empty"></span></a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="api/index.html">HTTP API Reference</a></li>
 						<li><a href="api/ResHttpStatus.html">HTTP API Status Codes</a></li>
-						<li><a href="ApiExplorer.html">HTTP API Explorer</a></li>
+						<li><a href="../api-explorer/index.html" target="_blank">HTTP API Explorer</a></li>
+						<li><a href="/restsql/swagger-ui/" target="_blank">HTTP API Swagger UI &nbsp; <span class="glyphicon glyphicon-star"></span></a></li>
 						<li class="divider"></li>
 						<li><a href="../javadoc/api/index.html">Java API Javadoc</a></li>
 						<li><a href="../examples/java">Java API Examples</a></li>
@@ -79,26 +80,55 @@
 			<h1>Architecture</h1>
 		</div>
 
-		<p class="text">restSQL may be deployed in two modes: a Web Service and a Java library. The Web Service is a standard JEE web application. This deployment is also known as WAR (Web application ARchive) mode. The following diagram depicts an application using the HTTP interface:</p>
+		<p class="text">restSQL may be deployed in three modes: a Docker Container, a JEE Web Application and a Java library.
+		
+		<h3>Docker Mode</h3>
+		<p class="text">The project provides an already pre-packaged Docker image with a JDK, Tomcat and service binaries, optionally bundled with the SDK. The following diagram depicts an application using the HTTP API of the containerized service:</p>
 		<p class="image">
-			<img src="HttpApiDeployment.png" class="img-responsive" alt="HTTP API Deployment" title="HTTP API Deployment" />
+			<img src="DockerDeployment.png" class="img-responsive" alt="Docker / HTTP API Deployment" title="Docker / HTTP API Deployment" />
 		</p>
-		<p class="text">The other deployment mode is known as the JAR (Java ARchive) mode. The following diagram depicts an application using the Java interface:</p>
+		
+		<h3>WAR Mode</h3>
+		<p class="text">The Web Service is a standard JEE web application and can be deployed in your own JEE container, e.g. Apache Tomcat, WebLogic or JBoss. This WAR (Web application ARchive) mode exposes the HTTP API to the developer application: 
 		<p class="image">
-			<img src="JavaApiDeployment.png" class="img-responsive" alt="Java API Deployment" title="Java API Deployment" />
+			<img src="HttpApiDeployment.png" class="img-responsive" alt="WAR / HTTP API Deployment" title="WAR / HTTP API Deployment" />
 		</p>
-		<p class="text">The following diagram depicts the layers of the software stack:</p>
+		
+		<h3>JAR Mode</h3>
+		<p class="text">The other deployment mode is known as the JAR (Java ARchive) mode and enables the developer to use the Java API. The following diagram depicts an application using the Java interface:</p>
+		<p class="image">
+			<img src="JavaApiDeployment.png" class="img-responsive" alt="JAR / Java API Deployment" title="JAR / Java API Deployment" />
+		</p>
+		
+		<h3>Software Layers</h3>
+		<p class="text">The following diagram depicts the layers of the software stack:</p><p/>
 		<p class="image">
 			<img src="Layers.png" class="img-responsive" alt="Software Layers" title="Software Layers" />
 		</p>
 		<h2>Requirements</h2>
 		<ul>
-			<li>Platform Independent - Pure Java solution</li>
-			<li>Java Runtime Environment (JRE) - Tested with 1.7 (libs available for 1.6 as well)</li>
-			<li>SQL Database - Tested with MySQL 5.6 and PostgreSQL 9.3; framework has extension mechanisms for others</li>
-			<li>JEE Container for Web Service deployment mode - Tested with Apache Tomcat 7, JBoss AS 6 and WebLogic Server 12c (12.1.2)</li>
-			<li>Java Archive (JAR) Tool for deployment - Tested with 1.7</li>
-			<li>Web Browser for SDK - Tested with IE 7, Firefox 4, Chrome 31</li>
+			<li>Traditional Deployment
+				<ul>
+					<li>Platform Independent - Pure Java solution</li>
+					<li>Java Runtime Environment (JRE) - Tested with Java7, a.k.a. 1.7</li>
+					<li>SQL Database - Tested with MySQL 5.7 and PostgreSQL 9.3; framework has extension mechanisms for others</li>
+					<li>JEE Container for Web Service deployment mode - Tested with Apache Tomcat 7, JBoss AS 6 and WebLogic Server 12c (12.1.2)</li>
+					<li>Java Archive (JAR) Tool for deployment - Tested with Java7, a.k.a. 1.7</li>
+				</ul>
+			</li>
+			<li>Docker Deployment
+				<ul>
+					<li>Tested with Docker version 1.12.6 on Ubuntu 16.04</li>
+					<li>Run either as two containers
+						<ol>
+							<li>service or service+sdk</li>
+							<li>mysql + sakila test database</li>
+						</ol>
+						Or run one container, service or service+sdk, and configure to use your database instance.
+					</li>
+				</ul>
+			</li> 		
+			<li>Web Browser for Service Console and SDK - Tested with IE 7, Firefox 4, Chrome 56</li>
 		</ul>
 		<h2>Extensibility</h2>
 		<p class="text">The framework is very extensible. The core API is a set of interfaces, exceptions and utilities. The implementation classes implement the core interfaces. Implementations are loaded through a factory utility. The factory is configured with the restSQL properties file. You can provide custom implementations and instruct the factory to use them by registering them in the restSQL properties file.</p>

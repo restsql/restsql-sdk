@@ -39,7 +39,7 @@ public class Select_FlatResource {
 	/** Requests row with id 1000 from the Country resource. */
 	private static void doSelectWithPk() throws SqlResourceException {
 		// Get the resource object
-		SqlResource sqlResource = Factory.getSqlResource("Country");
+		SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the request
 		List<RequestValue> resIds = new ArrayList<RequestValue>(1);
@@ -59,7 +59,7 @@ public class Select_FlatResource {
 	/** Requests rows with country name like A% from the Country resource. */
 	private static void doSelectWithWildcard() throws SqlResourceException {
 		// Get the resource object
-		SqlResource sqlResource = Factory.getSqlResource("Country");
+		SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the request
 		List<RequestValue> resIds = null;
@@ -79,7 +79,7 @@ public class Select_FlatResource {
 	/** Requests second page of rows. */
 	private static void doSelectWithLimit() throws SqlResourceException {
 		// Get the resource object
-		SqlResource sqlResource = Factory.getSqlResource("Country");
+		SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the request
 		List<RequestValue> resIds = null;
@@ -100,7 +100,7 @@ public class Select_FlatResource {
 	/** Requests rows with country name like A% from the Country resource with a limit and returns XML. */
 	private static void doSelectWithNonPkAndLimitReturnXml() throws SqlResourceException {
 		// Get the resource object
-		SqlResource sqlResource = Factory.getSqlResource("Country");
+		SqlResource sqlResource = Factory.getSqlResource("sdk.Country");
 
 		// Create the request
 		List<RequestValue> resIds = null;

@@ -25,13 +25,14 @@
 						<li><a href="Overview.html">Overview</a></li>
 						<li><a href="Architecture.html">Architecture</a></li>
 						<li><a href="Concepts.html">Concepts</a></li>
-						<li><a href="AdminConsole.html">Admin Console</a></li>
+						<li><a href="/restsql/" target="_blank">Explore Service &nbsp; <span class="glyphicon glyphicon-star-empty"></span></a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="api/index.html">HTTP API Reference</a></li>
 						<li><a href="api/ResHttpStatus.html">HTTP API Status Codes</a></li>
-						<li><a href="ApiExplorer.html">HTTP API Explorer</a></li>
+						<li><a href="../api-explorer/index.html" target="_blank">HTTP API Explorer</a></li>
+						<li><a href="/restsql/swagger-ui/" target="_blank">HTTP API Swagger UI &nbsp; <span class="glyphicon glyphicon-star"></span></a></li>
 						<li class="divider"></li>
 						<li><a href="../javadoc/api/index.html">Java API Javadoc</a></li>
 						<li><a href="../examples/java">Java API Examples</a></li>
@@ -123,7 +124,7 @@
 		</ol>
 		<div class="text">The files may be called anything you wish; these are only the suggested names. Two other properties files are optional: privileges (authorization) and trigger definitions. These are referenced in the main restsql.properties file</div>
 
-		<p class="text">The general restsql.properties is set through a System Property, "org.restsql.properties". The value is an absolute path to your properties file, e.g. /etc/opt/business/restsql/restsql.properties. The WAR mode should use a context-param in the web.xml to set this (See Installation section later for details). The JAR mode will default to default-restsql.properties (source location: restsql/src/resources/properties) that is included in the jar.</p>
+		<p class="text">The general restsql.properties is set through a System Property, "org.restsql.properties". The value is an absolute path to your properties file, e.g. /etc/opt/restsql/restsql.properties. The WAR mode should use a context-param in the web.xml to set this (See Installation section later for details). The JAR mode will default to default-restsql.properties (source location: restsql/src/resources/properties) that is included in the jar.</p>
 
 		<p class="text">Note: All path separators must use the forward slash, even on Windows. To refer to a path on Windows, for example c:\tools\restsql, use the form /tools/restsql, or if the app server is on a different drive, use file:///c:/tools/restsql.</p>
 
@@ -154,21 +155,21 @@
 		<p class="text">The location of SQL Resource definitions is critical. An example:</p>
 		<pre>
    # sqlresources.dir=/absolute/path
-   sqlresources.dir=/etc/opt/business/restsql/sqlresources
+   sqlresources.dir=/etc/opt/restsql/sqlresources
 </pre>
 
 		<p class="text">The Security configuration is optional. Here is an example:</p>
 		<pre>
    # security.privileges=/absolute/path
-   security.privileges=/etc/opt/business/restsql/privileges.properties
+   security.privileges=/etc/opt/restsql/privileges.properties
 </pre>
 
 		<p class="text">The Triggers configuration is optional. Here is an example:</p>
 		<pre>
    # triggers.classpath=/absolute/path
    # triggers.definition=/absolute/path
-   triggers.classpath=/etc/opt/business/restsql/triggers
-   triggers.definition=/etc/opt/business/restsql/triggers.properties
+   triggers.classpath=/etc/opt/restsql/triggers
+   triggers.definition=/etc/opt/restsql/triggers.properties
 </pre>
 
 		<p class="text">The XML configuration is optional. The defaults are:</p>
@@ -284,7 +285,7 @@ monitoring.graphite.frequency=seconds
 		<h3>Abbreviated Deployment for Tomcat</h3>
 		<p class="text">You can use this shortcut if you are using Tomcat, do not want restSQL Authentication or Authorization and Java Security Manager is disabled (the default for Tomcat). Add a Parameter entry that indicates your absolute path to your restsql.properties in your $TOMCAT_HOME/conf/context.xml, as in:</p>
 		<pre>
-   &lt;Parameter name="org.restsql.properties" value="/etc/opt/business/restsql/restsql.properties" override="false" /&gt;
+   &lt;Parameter name="org.restsql.properties" value="/etc/opt/restsql/restsql.properties" override="false" /&gt;
 </pre>
 		<div class="text">That will override the default properties location in the web.xml of the WAR.</div>
 		<p class="text">Place the unmodified WARs (but rename them restsql.war and restsql-sdk.war) in the $TOMCAT/webapps directory and bounce the server, or deploy the webapp using your favorite method.</p>
@@ -303,11 +304,11 @@ monitoring.graphite.frequency=seconds
 		</p>
 
 		<p class="text">
-			Let's say the JEE server is Tomcat and is deployed in /opt/tomcat. The web.xml is found in /opt/tomcat/webapps/restsql/WEB-INF/web.xml. Set the
+			Let's say the JEE server is Tomcat and is deployed in /usr/local/tomcat. The web.xml is found in /usr/local/tomcat/webapps/restsql/WEB-INF/web.xml. Set the
 			<code>org.restsql.properties</code>
-			parameter to /opt/tomcat/restsql-sdk/examples/properties/restsql-mysql.properties. Set the
+			parameter to /usr/local/tomcat/webapps/restsql-sdk/examples/properties/restsql-mysql.properties. Set the
 			<code>sqlresources.dir</code>
-			property to /opt/tomcat/restsql-sdk/examples/sqlresources.
+			property to /usr/local/tomcat/webapps/restsql-sdk/examples/sqlresources.
 		</p>
 
 		<p class="text">Bounce your JEE server. See Getting Started section.</p>
@@ -324,11 +325,11 @@ monitoring.graphite.frequency=seconds
         index.html
 </pre>
 
-		<p class="text">web.xml: Change the restSQL WEB-INF/web.xml. The LifecycleManager needs to know where to load your restsql.properties. Here's an example:</p>
+		<p class="text">web.xml: Change the restSQL WEB-INF/web.xml. The LifecycleManager needs to know where to load your restsql.properties. Here's the default:</p>
 		<pre>
     &lt;context-param&gt;
         &lt;param-name&gt;org.restsql.properties&lt;/param-name&gt;
-        &lt;param-value&gt;/etc/opt/business/restsql/restsql.properties&lt;/param-value&gt;
+        &lt;param-value&gt;/etc/opt/restsql/restsql.properties&lt;/param-value&gt;
     &lt;/context-param&gt;
 </pre>
 
@@ -404,7 +405,12 @@ monitoring.graphite.frequency=seconds
 
 		<h2>Installing restSQL SDK</h2>
 		<p class="text">Requirements: JEE Container, JAR tool, MySQL or PostgreSQL, Web Browser</p>
-		<p class="text">Enable directory listings in your app container's config. For example for Tomcat, edit $TOMCAT_HOME/conf/web.xml section for the DefaultServlet, setting the directory listing value to true:</p>
+		<p class="text">
+			Database: The HTTP API Explorer requires access to an extended <a href="http://dev.mysql.com/doc/sakila/en/sakila.html">sakila</a> database. It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and for PostgreSQL. The bash script is restsql-sdk/database/&lt;database&gt;/create-sakila.sh and the Windows batch script is restsql-sdk/database/&lt;database&gt;/create-sakila.bat, where database is either mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
+		</p>
+		<p class="text">Install restsql WAR mode as above</p>
+		<p class="text">Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory, e.g. /usr/local/tomcat/webapps/restsql-sdk.</p>
+		<p class="text">Enable directory listings in your app container's config. For example for Tomcat, edit $TOMCAT_HOME/conf/web.xml section for the DefaultServlet or add the following to restsql-sdk/WEB-INF/web.xml, setting the directory listing value to true:</p>
 <pre>
     &lt;servlet&gt;
         &lt;servlet-name&gt;default&lt;/servlet-name&gt;
@@ -420,12 +426,6 @@ monitoring.graphite.frequency=seconds
         &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
     &lt;/servlet&gt; 
 </pre>
-		<p class="text">Install restsql WAR mode as above with one variation: the restsql.properties must be changed to reference the sdk's SQL Resources definition directory. Below is an example:</p>
-		<pre>
-    # sqlresources.dir=/absolute/path
-    sqlresources.dir=/opt/tomcat/webapps/restsql-sdk/examples/sqlresources
-</pre>
-		<p class="text">Deploy: Extract restsql-sdk-{version}.war to your container's webapps directory, e.g. /opt/tomcat/webapps/restsql-sdk. Restart the container or use your preferred deloyment method.</p>
 		<p class="text">The SDK war contents are:</p>
 		<pre>
      restsql-sdk/
@@ -439,8 +439,12 @@ monitoring.graphite.frequency=seconds
          wadl/
          WEB-INF/
 </pre>
+		<p class="text">You can either change restSQL's sqlresources.dir to point to the SDK's sqlresources path, or copy the SDK's resources to the existing restSQL's sqlresources.dir (default is <code>/etc/opt/restsql/sqlresources</code>). Copying is easier:</p>
+		<pre>
+   cp /usr/local/tomcat/webapps/restsql-sdk/examples/sdk /etc/opt/restsql/sqlresources/sdk
+</pre>
 		<p class="text">
-			Database: The HTTP API Explorer requires access to an extended <a href="http://dev.mysql.com/doc/sakila/en/sakila.html">sakila</a> database. It is extended for the restsql-sdk with new tables and data. Bash and Windows batch scripts are provided to create the base and extended database for MySQL and for PostgreSQL. The bash script is restsql-sdk/database/&lt;database&gt;/create-sakila.sh and the Windows batch script is restsql-sdk/database/&lt;database&gt;/create-sakila.bat, where database is either mysql or postgresql. You will need to change the user and password variables in the beginning of the script to an account that has database and table creation privileges.
+			Restart the container or use your preferred deloyment method. To see if the sdk resources are available, check the restSQL resource listing in the console, at http://host:port/restsql/res/. You should see six resources with names like sdk.Country, sdk.film.Film, etc.
 		</p>
 		<p class="text">Troubleshooting: The HTTP API Explorer requires access to a restsql service instance. If you have not deployed restsql to the same host/port as the SDK and to the location /restsql, then you will need to make one small tweak. Change two Javascript variables in restsql-sdk/api-explorer/index.html. Here is an example:</p>
 		<pre>
