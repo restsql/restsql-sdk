@@ -111,14 +111,14 @@
 				<ul>
 					<li>Platform Independent - Pure Java solution</li>
 					<li>Java Runtime Environment (JRE) - Tested with Java7, a.k.a. 1.7</li>
-					<li>SQL Database - Tested with MySQL 5.7 and PostgreSQL 9.3; framework has extension mechanisms for others</li>
+					<li>SQL Database - Tested with MySQL 5.7 and PostgreSQL 10.5; framework has extension mechanisms for others</li>
 					<li>JEE Container for Web Service deployment mode - Tested with Apache Tomcat 7, JBoss AS 6 and WebLogic Server 12c (12.1.2)</li>
 					<li>Java Archive (JAR) Tool for deployment - Tested with Java7, a.k.a. 1.7</li>
 				</ul>
 			</li>
 			<li>Docker Deployment
 				<ul>
-					<li>Tested with Docker version 1.12.6 on Ubuntu 16.04</li>
+					<li>Tested with Docker version 18.06 on Amazon Linux and Mac OS 10.13.6</li>
 					<li>Run either as two containers
 						<ol>
 							<li>service or service+sdk</li>
@@ -128,12 +128,12 @@
 					</li>
 				</ul>
 			</li> 		
-			<li>Web Browser for Service Console and SDK - Tested with IE 7, Firefox 4, Chrome 56</li>
+			<li>Web Browser for Service Console and SDK - Tested with Chrome 69, Firefox 62</li>
 		</ul>
 		<h2>Extensibility</h2>
 		<p class="text">The framework is very extensible. The core API is a set of interfaces, exceptions and utilities. The implementation classes implement the core interfaces. Implementations are loaded through a factory utility. The factory is configured with the restSQL properties file. You can provide custom implementations and instruct the factory to use them by registering them in the restSQL properties file.</p>
 		<p class="text">
-			The <a href="README-FRAMEWORK_DEVELOPERS.txt">Framework Developer Guide</a> will help you kickstart. Contact the <a href="mailto:mark.sawers@restsql.org">Project Lead</a> for more assistance.
+			The The Framework Developer Guide (<a href="README-FRAMEWORK-DEVELOPERS.md">local raw</a> or <a href="https://github.com/restsql/restsql/blob/master/README-FRAMEWORK-DEVELOPERS.md">pretty</a>) will help you kickstart. Contact the support@restsql.org for more assistance.
 		</p>
 		<h2>Database Interoperability</h2>
 		<p class="text">Currently MySQL and PostgreSQL are supported out-of-the-box by restSQL. The most common customization is expected to be for other databases. This will likely require development effort, however, this will not be a full-on project. restSQL has provided default implementations that may be extended using the template method pattern or whose core behavior may be overriden if that is more appropriate. The factory utility provides you the opportunity to add database support without changing restSQL itself. (Of course you are most encouraged to contribute your additions to the project!). Additionally, there is an extensive test harness that will be used to ensure compliance.</p>

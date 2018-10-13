@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>restSQL Release Notes - 0.8.12</title>
+<title>restSQL Release Notes - 0.8.13</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="../assets/favicon.ico" />
 <link rel="stylesheet" href="../assets/bootstrap.min.css">
@@ -77,22 +77,19 @@
 	<div class="container">
 
 		<div class="page-header">
-			<h1>Release Notes - 0.8.12</h1>
+			<h1>Release Notes - 0.8.13</h1>
 		</div>
 
 		<h3>Summary</h3>
-		<div class="text">restSQL 0.8.12 adds Swagger</div>
+		<div class="text">restSQL 0.8.13 adds tomcat log rotation</div>
 
-		<h3>Swagger</h3>
-		<p class="text">The HTTP API is now published as <a href="/restsql/restsql-swagger.json">Swagger JSON</a> (<a href="http://swagger.io/specification/">OpenAPI Specification v2.0</a>) in addition to <a href="../../wadl/restsql-wadl.xml">WADL</a> (Web Application Description Language). The <a href="/restsql/swagger-ui/" target="_blank">interactive Swagger UI</a> is available in your local restSQL web service.</p>
+		<h3>Log Rotation</h3>
+		<p class="text">The service and service-sdk docker containers now remove tomcat server and access logs by default older than three days. A cron job runs daily at 2am UTC. To change the retention, set an environment variable with the desired number of days. For example, to set to 7 days:</p>
+		<code>docker run --env TOMCAT_LOG_RETENTION_DAYS=7 ...</code>
 
-		<h3>MySQL 5.7</h3>
-		<p class="text">The framework has been tested with the latest MySQL, version 5.7, as well as 5.6.</p>
-
-        <h3>Misc</h3>
-		<p class="text">
-			This release addresses GitHub <a href="https://github.com/restsql/restsql/issues/73">Issue #73</a> and <a href="https://github.com/restsql/restsql/issues/77">Issue #77</a>.
-		</p>
+		<h3>Documentation</h3>
+		<p class="text">Docker deployment READMEs were improved (on <a href="https://hub.docker.com/r/restsql/">Docker Hub</a>).</p>
+		<p class="text">The Framework Developer Guide (<a href="README-FRAMEWORK-DEVELOPERS.md">local raw</a> or <a href="https://github.com/restsql/restsql/blob/master/README-FRAMEWORK-DEVELOPERS.md">pretty</a>) was improved.</p>
 
 		<h3>Migration</h3>
 		<p class="text">N/A</p>

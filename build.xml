@@ -2,7 +2,7 @@
 <project name="restsql-sdk" default="dist">
 	<property file="build.properties" />
 
-	<target name="dist" depends="defaults,database,javadoc,swagger-wadl,lib" description="generates distribution files" />
+	<target name="dist" depends="defaults,database,javadoc,swagger-wadl,support,lib" description="generates distribution files" />
 
 	<target name="clean" description="deletes output dir">
 		<delete dir="obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
@@ -71,6 +71,15 @@
 	<target name="javadoc">
 		<copy todir="WebContent/javadoc">
 			<fileset dir="../restsql/obj/doc/javadoc" />
+		</copy>
+	</target>
+
+	<target name="support">
+		<copy todir=".">
+			<fileset dir="../restsql" includes="*.txt" />
+		</copy>
+		<copy todir="WebContent/doc">
+			<fileset dir="../restsql" includes="README-FRAMEWORK-DEVELOPERS.md" />
 		</copy>
 	</target>
 
