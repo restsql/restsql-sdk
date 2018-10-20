@@ -84,8 +84,8 @@
 		<div class="text">restSQL 0.8.13 adds tomcat log rotation</div>
 
 		<h3>Log Rotation</h3>
-		<p class="text">The service and service-sdk docker containers now remove tomcat server and access logs by default older than three days. A cron job runs daily at 2am UTC. To change the retention, set an environment variable with the desired number of days. For example, to set to 7 days:</p>
-		<code>docker run --env TOMCAT_LOG_RETENTION_DAYS=7 ...</code>
+		<p class="text">The service and service-sdk docker containers now log rotates tomcat access logs. By default it removes logs older than three days. A cron job runs daily at 2am UTC. To change the retention, set an environment variable with the desired number of days. For example, to set to 14 days:</p>
+		<code>docker run --env TOMCAT_LOG_RETENTION_DAYS=14 ...</code>
 
 		<h3>Documentation</h3>
 		<p class="text">Docker deployment READMEs were improved (on <a href="https://hub.docker.com/r/restsql/">Docker Hub</a>).</p>
