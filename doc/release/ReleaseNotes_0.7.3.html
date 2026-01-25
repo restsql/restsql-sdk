@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>restSQL Release Notes - 0.7.3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="../assets/favicon.ico" />
+<link rel="stylesheet" href="../assets/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="../Overview.html">restSQL</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
+			<ul class="nav navbar-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../Overview.html">Overview</a></li>
+						<li><a href="../Architecture.html">Architecture</a></li>
+						<li><a href="../Concepts.html">Concepts</a></li>
+						<li><a href="/restsql/" target="_blank">Explore Service &nbsp; <span class="glyphicon glyphicon-star-empty"></span></a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="../api/index.html">HTTP API Reference</a></li>
+						<li><a href="../api/ResHttpStatus.html">HTTP API Status Codes</a></li>
+						<li><a href="../../api-explorer/index.html" target="_blank">HTTP API Explorer</a></li>
+						<li><a href="/restsql/swagger-ui/" target="_blank">HTTP API Swagger UI &nbsp; <span class="glyphicon glyphicon-star"></span></a></li>
+						<li class="divider"></li>
+						<li><a href="../../javadoc/api/index.html">Java API Javadoc</a></li>
+						<li><a href="../../examples/java">Java API Examples</a></li>
+						<li><a href="../../javadoc/full/index.html">Full Javadoc</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Config<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Deployment.html">Deployment</a></li>
+						<li><a class="nav-link" href="../../defaults/">Default Config</a></li>
+						<li><a class="nav-link" href="../../examples/">Example Config</a></li>
+						<li><a class="nav-link" href="../Logging.html">Logging</a></li>
+						<li><a class="nav-link" href="../Monitoring.html">Monitoring</a></li>
+						<li><a class="nav-link" href="../Security.html">Security</a></li>
+						<li><a href="../Triggers.html">Triggers</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Project<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a class="nav-link" href="../Roadmap.html">Roadmap</a></li>
+						<li><a class="nav-link" href="../Support.html">Support</a></li>
+						<li><a class="nav-link" href="../License.html">License</a></li>
+						<li><a href="Sponsors.html">Sponsors</a></li>
+						<li><a href="../ReleaseHistory.html">Release History</a></li>
+					</ul></li>
+
+				<li><a href="../Download.html">Download</a></li>
+			</ul>
+			<form id="searchform" class="navbar-form navbar-right" role="search" onsubmit="return search()">
+				<div id="searchicon">
+					<a onclick="toggleSearchBlock()"><img class="searchIconImg" src="../assets/search_icon.png"></a>
+				</div>
+				<div id="searchblock" class="hidden input-group input-group-sm">
+					<input id="searchtext" type="text" class="form-control searchfor" placeholder="Search for..." oninput="enableSearch()"> <span class="input-group-btn">
+						<button id="searchbutton" class="btn btn-default disabled" type="submit">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<div class="page-header">
+			<h1>Release Notes - 0.7.3</h1>
+		</div>
+
+		<h3>Summary</h3>
+		<div class="text">restSQL 0.7.3 release adds unlimited SQL Resource table extensions.</div>
+		<p class="text">SQL Resources in previous releases were constrained to a maximum of one parent and one child extension. 0.7.3 enables an SQL Resource to join an abitrary number of tables to create a flat or hierarchical application-specific view.</p>
+
+		<h3>Detail</h3>
+		<div class="text">
+			The SQL Resource definition format has changed. Metadata is now declared in an XML element
+			<code>metadata</code>
+			that is a peer to the
+			<code>query</code>
+			element. The
+			<code>metadata</code>
+			element contains a database element, with the default name, and one or more
+			<code>table</code>
+			elements. The default database and table roles are no longer defined in the document element.
+		</div>
+		<p class="text">Following is an example with three parent extensions:</p>
+		<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rs:sqlResource xmlns:rs="http://restsql.org/schema"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd "&gt;
+   &lt;query&gt;
+      select film.film_id, title, release_year "year", language_id, comment, genre, city, country
+      from film_origin, film_genre, film_comment, film
+      where film.film_id = film_comment.film_id
+      and film.film_id = film_genre.film_id
+      and film.film_id = film_origin.film_id
+   &lt;/query&gt;
+   &lt;metadata&gt;
+      &lt;database default="sakila" /&gt;
+      &lt;table name="film" role="Parent" /&gt;
+      &lt;table name="film_comment" role="ParentExtension" /&gt;
+      &lt;table name="film_genre" role="ParentExtension" /&gt;
+      &lt;table name="film_origin" role="ParentExtension" /&gt;
+   &lt;/metadata&gt;
+&lt;/rs:sqlResource&gt;
+</pre>
+
+		<p class="text">
+			The SQL Resources sections in the <a href="../Concepts.html">Concepts</a> page have been updated. SQL Resource definitions are defined one per XML file and are constained by an <a href="../../wadl/SqlResource.xsd">XML schema</a>. Examples are found <a href="../../examples/sqlresources">here</a>. These examples may also be explored with the <a href="../../api-explorer">HTTP API Explorer</a>.
+		</p>
+
+		<p class="text">
+			restSQL will throw an SqlResourceException (or 500 via HTTP API) on access of a resource whose definition is invalid. See <a href="../SqlResourceRules.html">SQL Resource Rules</a> for all constraints.
+		</p>
+
+		<p class="text">0.7.3 additionally adds an ORDER BY clause to all SELECT (GET) operations. Read results (SELECT) are ordered by the primary key(s), in ascending order. In a hierarchical query, the children are ordered within the parent by the child table's primary key(s).</p>
+
+		<h3>Migration</h3>
+		<div class="text">Pre-0.7.3 SQL Resource definitions must be changed to the new format. No changes to clients are necessary.</div>
+
+	</div>
+
+	<script src="../assets/jquery.min.js"></script>
+	<script src="../assets/bootstrap.min.js"></script>
+</body>
+</html>

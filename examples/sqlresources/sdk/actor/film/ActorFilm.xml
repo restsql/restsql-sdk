@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd ">
+	<query>
+		select actor.actor_id, first_name, last_name, film.film_id, title, release_year "year"
+		from
+		actor
+		left outer join film_actor on film_actor.actor_id = actor.actor_id
+		left join film on
+		film_actor.film_id = film.film_id
+	</query>
+	<metadata>
+		<database default="sakila" />
+		<table name="actor" role="Parent" />
+		<table name="film" role="Child" />
+		<table name="film_actor" role="Join" />
+	</metadata>
+</rs:sqlResource>

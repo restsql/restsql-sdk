@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://restsql.org/schema" elementFormDefault="unqualified"
+	jaxb:version="2.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:rs="http://restsql.org/schema">
+
+	<element name="sqlResource" type="rs:SqlResource"></element>
+
+	<complexType name="SqlResource">
+		<annotation>
+			<appinfo>
+				<jaxb:class name="SqlResourceDefinition" />
+			</appinfo>
+		</annotation>
+		<sequence>
+			<element name="query" type="rs:Query" maxOccurs="1" minOccurs="1"></element>
+			<element name="metadata" type="rs:MetaData" maxOccurs="1" minOccurs="1"></element>
+			<element name="validatedAttribute" type="rs:ValidatedAttribute" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="http" type="rs:HttpConfig" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Query">
+		<simpleContent>
+			<extension base="string">
+			</extension>
+		</simpleContent>
+	</complexType>
+
+	<complexType name="ValidatedAttribute">
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="type" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="String"></enumeration>
+					<enumeration value="Numeric"></enumeration>
+					<enumeration value="Custom"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="minLength" type="int" use="optional"></attribute>
+		<attribute name="maxLength" type="int" use="optional"></attribute>
+		<attribute name="regex" type="string" use="optional"></attribute>
+		<attribute name="minValue" type="double" use="optional"></attribute>
+		<attribute name="maxValue" type="double" use="optional"></attribute>
+		<attribute name="validatorClass" type="string" use="optional"></attribute>
+	</complexType>
+
+
+	<complexType name="MetaData">
+		<sequence>
+			<element name="database" type="rs:Database" maxOccurs="1" minOccurs="1"></element>
+			<element name="table" type="rs:Table" maxOccurs="unbounded" minOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="Database">
+		<attribute name="default" type="string" use="required">
+			<annotation>
+				<documentation>Default database name when not used to prefix the table names.</documentation>
+			</annotation></attribute>
+	</complexType>
+
+	<complexType name="Table">
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="alias" type="string" use="optional"></attribute>
+		<attribute name="role" use="required">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="Parent"></enumeration>
+					<enumeration value="ParentExtension"></enumeration>
+					<enumeration value="Child"></enumeration>
+					<enumeration value="ChildExtension"></enumeration>
+					<enumeration value="Join"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+
+	<complexType name="HttpConfig">
+		<sequence>
+			<element name="response" type="rs:HttpResponse" maxOccurs="1" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="HttpResponse">
+		<attribute name="cacheControl" type="string" use="optional">
+			<annotation>
+				<documentation>Overrides system default in restsql.properties.
+Use the RFC 2616, Section 14.9 format: {cache-directive}, {cache-directive}, ...</documentation>
+			</annotation></attribute>
+	</complexType>
+</schema>

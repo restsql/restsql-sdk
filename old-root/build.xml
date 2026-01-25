@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="restsql-sdk" default="dist">
+	<property file="build.properties" />
+
+	<target name="dist" depends="defaults,database,javadoc,swagger-wadl,support,lib" description="generates distribution files" />
+
+	<target name="clean" description="deletes output dir">
+		<delete dir="obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
+	</target>
+
+	<target name="compile-examples">
+		<!-- Create output dir -->
+		<mkdir dir="obj/bin" />
+
+		<!-- Copy supporting files -->
+		<copy todir="obj/bin">
+			<fileset dir="WebContent/examples/java">
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+
+		<!-- Compile -->
+		<javac srcdir="WebContent/examples/java" destdir="obj/bin" classpath="${compile.classpath}" includeantruntime="false" debug="true">
+			<compilerarg line="-Xlint:all" />
+		</javac>
+	</target>
+
+	<target name="database">
+		<copy todir="WebContent/database">
+			<fileset dir="../restsql-test/src/resources/database" />
+		</copy>
+	</target>
+
+	<target name="defaults">
+		<copy todir="WebContent/defaults/properties">
+			<fileset dir="../restsql/src/resources/properties/" includes="default-*.properties" />
+		</copy>
+		<copy todir="WebContent/defaults/xml">
+			<fileset dir="../restsql/WebContent/WEB-INF" includes="web.xml" />
+		</copy>
+	</target>
+
+	<target name="exec-examples" depends="compile-examples" description="executes example programs">
+		<echo message="Executing Select_FlatResource" />
+		<echo />
+		<java classpath="${exec.classpath}" classname="Select_FlatResource" fork="true" />
+		<echo />
+		<echo message="Executing InsertUpdateDelete_FlatResource" />
+		<echo />
+		<java classpath="${exec.classpath}" classname="InsertUpdateDelete_FlatResource" fork="true" />
+	</target>
+
+	<target name="lib">
+		<mkdir dir="obj/lib" />
+		<jar destfile="obj/lib/restsql-sdk-${build.version}.war">
+			<fileset dir="WebContent" excludes="**/.DS_Store"/>
+			<fileset file="CONTRIBUTORS.txt" />
+			<fileset file="LICENSE.txt" />
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Specification-Vendor" value="${manifest.vendor}" />
+				<attribute name="Specification-Title" value="${manifest.title.sdk}" />
+				<attribute name="Specification-Version" value="${build.version}" />
+				<attribute name="Implementation-Vendor" value="${manifest.vendor}" />
+				<attribute name="Implementation-Title" value="${manifest.title.sdk}" />
+				<attribute name="Implementation-Version" value="${build.version}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="javadoc">
+		<copy todir="WebContent/javadoc">
+			<fileset dir="../restsql/obj/doc/javadoc" />
+		</copy>
+	</target>
+
+	<target name="support">
+		<copy todir=".">
+			<fileset dir="../restsql" includes="*.txt" />
+		</copy>
+		<copy todir="WebContent/doc">
+			<fileset dir="../restsql" includes="README-FRAMEWORK-DEVELOPERS.md" />
+		</copy>
+	</target>
+
+	<target name="swagger-wadl">
+		<copy todir="WebContent">
+			<fileset file="../restsql/WebContent/restsql-swagger.json" />
+		</copy>
+		<copy todir="WebContent/wadl">
+			<fileset dir="../restsql/WebContent/wadl" />
+		</copy>
+	</target>
+</project>

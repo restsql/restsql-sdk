@@ -1,0 +1,70 @@
+body {
+	margin-top: 40px;
+	margin-bottom: 40px;
+	height: 100%;
+}
+
+.searchIconImg {
+	margin-top: 4px;
+	margin-right: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+.searchIconImg:hover {
+	cursor: pointer;
+}
+
+#searchblock {
+	margin-top: 2px;
+	margin-right: 20px;
+	width: 200px
+}
+
+#hidden {
+	display: none;
+}
+
+table {
+	margin: 0.5em 0 .5em 0.5em;
+	border-collapse: collapse;
+}
+
+th {
+	font-weight: bold;
+	color: black;
+	background-color: #E0E0E0;
+	border: 1pt solid #ADB9CC;
+	text-align: center;
+}
+
+td {
+	padding: 0.25em 0.5em 0.25em 0.5em;
+	border: 1pt solid #ADB9CC;
+}
+
+td p {
+	margin: 0;
+	padding: 0;
+}
+
+.image {
+	margin-left: .5em;
+}
+
+.text {
+	margin-left: .5em;
+	margin-bottom: .5em;
+}
+
+.centered {
+	margin-left: .5em;
+	text-align: center;
+}
+
+pre {
+	margin-left: .5em;
+	margin-right: .5em;
+	padding: 5pt;
+	white-space: pre;
+}

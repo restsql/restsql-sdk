@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rs:sqlResource xmlns:rs="http://restsql.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://restsql.org/schema SqlResource.xsd ">
+	<query>
+		select actor_id "id", first_name, last_name "surname"
+		from actor
+	</query>
+	<metadata>
+		<database default="sakila" />
+		<table name="actor" role="Parent" />
+	</metadata>
+	<documentation>
+		<resource>
+			<description>Actor information as resource</description>
+		</resource>
+		<columns>
+			<column label="id" >
+				<description>unique id</description>
+			</column>
+			<column label="first_name">
+				<description>First name of the actor</description>
+			</column>
+			<column label="surname">
+				<description>Last name of the actor</description>
+			</column>
+		</columns>
+		<examples>
+			<example>
+				<request method="GET" uri="res/actor.Actor?_limit=10&amp;_offset=0" />
+				<response><body>
+				<![CDATA[
+<readResponse>
+	<actor id="1" first_name="PENELOPE" surname="GUINESS" />
+	<actor id="2" first_name="NICK" surname="WAHLBERG" />
+	<actor id="3" first_name="ED" surname="CHASE" />
+	<actor id="4" first_name="JENNIFER" surname="DAVIS" />
+	<actor id="5" first_name="JOHNNY" surname="LOLLOBRIGIDA" />
+	<actor id="6" first_name="BETTE" surname="NICHOLSON" />
+	<actor id="7" first_name="GRACE" surname="MOSTEL" />
+	<actor id="8" first_name="MATTHEW" surname="JOHANSSON" />
+	<actor id="9" first_name="JOE" surname="SWANK" />
+	<actor id="10" first_name="CHRISTIAN" surname="GABLE" />
+</readResponse>
+				]]></body>
+				</response>
+			</example>
+			<example>
+				<request method="GET" uri="res/actor.Actor?first_name=SEAN" />
+				<response>
+				<body><![CDATA[
+<readResponse>
+	<actor id="72" first_name="SEAN" surname="WILLIAMS" />
+	<actor id="90" first_name="SEAN" surname="GUINESS" />
+</readResponse>
+				
+				]]>
+				</body>
+				</response>
+			</example>
+		</examples>
+	</documentation>
+</rs:sqlResource>
